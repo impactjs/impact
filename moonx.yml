@@ -1,0 +1,3 @@
+ignore-tasks:
+  - _cleanup-entry
+  - _cleanup-aggregate

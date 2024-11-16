@@ -1,0 +1,27 @@
+# https://moonrepo.dev/docs/config/tasks
+# yaml-language-server: $schema=https://moonrepo.dev/schemas/tasks.json
+$schema: "https://moonrepo.dev/schemas/tasks.json"
+
+taskOptions:
+  shell: false
+
+tasks:
+  _cleanup-entry:
+    command: rm -f
+    platform: system
+    description: remove files from the previous build / test run
+    options:
+      cache: false
+      shell: false
+
+  _cleanup-aggregate:
+    command: noop
+    platform: system
+    description: agregate cleanup tasks to ensure a simple inheritance
+    options:
+      cache: false
+      shell: false
+
+  cleanup:
+    extends: _cleanup-aggregate
+    deps: []

@@ -1,0 +1,50 @@
+# https://moonrepo.dev/docs/config/tasks
+# yaml-language-server: $schema=https://moonrepo.dev/schemas/tasks.json
+$schema: "https://moonrepo.dev/schemas/tasks.json"
+
+fileGroups:
+  sources:
+    - "src/**/*"
+  dependency-sources: []
+
+tasks:
+  make-dedicated-lockfile:
+    # prefered platform system as moon needs node workspace to be ready before running this task
+    # as this task is running while installing dependencies it should be run on system platform
+    platform: system
+    command: node $workspaceRoot/configs/split-lockfile/src/index.js
+    inputs:
+      - /configs/split-lockfile/src/**/*
+      - "/pnpm-lock.yaml"
+    outputs:
+      - ".workspace-lock.yaml"
+
+  sort:
+    command: "sort-package-json"
+    inputs:
+      - "package.json"
+
+  sort-check:
+    extends: sort
+    args: ["--check"]
+
+  format:
+    command: "biome format"
+    inputs:
+      - "@group(sources)"
+      - "/biome.jsonc"
+      - "biome.jsonc"
+
+  cleanup-dedicated-lockfile:
+    extends: "_cleanup-entry"
+    args: ".workspace-lock.yaml"
+
+  cleanup-node-modules:
+    extends: "_cleanup-entry"
+    args: ["-r", "node_modules"]
+
+  cleanup-node:
+    extends: _cleanup-aggregate
+    deps:
+      - "cleanup-dedicated-lockfile"
+      - "cleanup-node-modules"

@@ -1,0 +1,17 @@
+{
+	"name": "@template-project/ts-config",
+	"version": "1.0.0",
+	"license": "UNLICENSED",
+	"author": {
+		"name": "maastrich",
+		"email": "pinsaultm@gmail.com"
+	},
+	"type": "module",
+	"exports": {
+		".": "./tsconfig.json",
+		"./meta": "./tsconfig.meta.json"
+	},
+	"devDependencies": {
+		"typescript": "^5.6.3"
+	}
+}

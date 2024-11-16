@@ -1,0 +1,13 @@
+# https://moonrepo.dev/docs/config/template
+# yaml-language-server: $schema=https://moonrepo.dev/schemas/template.json
+$schema: "https://moonrepo.dev/schemas/template.json"
+
+title: "package"
+description: "Create packages for within the template-project packages directory."
+destination: "packages/[name]"
+
+variables:
+  name:
+    type: "string"
+    required: true
+    prompt: "What is the name of the package?"

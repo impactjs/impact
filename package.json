@@ -1,0 +1,25 @@
+{
+	"name": "template",
+	"version": "1.0.0",
+	"private": true,
+	"keywords": [],
+	"license": "UNLICENSED",
+	"author": {
+		"name": "maastrich",
+		"email": "pinsaultm@gmail.com"
+	},
+	"scripts": {
+		"check": "moonx check",
+		"format": "moonx format",
+		"dev": "moonx dev",
+		"postinstall": "moonx make-dedicated-lockfile",
+		"lint": "moonx lint"
+	},
+	"dependencies": {
+		"@biomejs/biome": "^1.9.4",
+		"@maastrich/moonx": "0.1.3",
+		"@moonrepo/cli": "^1.29.4",
+		"sort-package-json": "^2.10.1"
+	},
+	"packageManager": "pnpm@9.0.6"
+}

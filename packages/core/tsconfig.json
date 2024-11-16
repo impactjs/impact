@@ -1,0 +1,4 @@
+{
+  "extends": "@template-project/ts-config",
+  "include": ["src"]
+}

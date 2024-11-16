@@ -1,0 +1,21 @@
+{
+	"name": "@template-project/cli",
+	"version": "1.0.0",
+	"license": "UNLICENSED",
+	"author": {
+		"name": "maastrich",
+		"email": "pinsaultm@gmail.com"
+	},
+	"type": "module",
+	"exports": {
+		".": "./src/index.ts"
+	},
+	"dependencies": {
+		"@template-project/core": "workspace:*",
+		"cac": "^6.7.14"
+	},
+	"devDependencies": {
+		"@template-project/ts-config": "workspace:*",
+		"typescript": "^5.6.3"
+	}
+}
