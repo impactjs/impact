@@ -1,6 +1,7 @@
 {
   "compilerOptions": {
     "strict": true,
+    "lib": ["esnext"],
     "target": "esnext",
     "module": "nodenext",
     "skipLibCheck": true,
@@ -8,6 +9,7 @@
     "resolveJsonModule": true,
     "emitDecoratorMetadata": true,
     "moduleResolution": "nodenext",
-    "experimentalDecorators": true
+    "experimentalDecorators": true,
+    "types": ["bun"]
   }
 }

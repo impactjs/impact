@@ -4,3 +4,8 @@ $schema: "https://moonrepo.dev/schemas/project.json"
 
 platform: node
 language: other
+
+workspace:
+  inheritedTasks:
+    exclude:
+      - format

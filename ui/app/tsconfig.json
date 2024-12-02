@@ -1,0 +1,10 @@
+{
+  "extends": "@impact/ts-config",
+  "compilerOptions": {
+    "moduleResolution": "bundler",
+    "module": "esnext",
+    "jsx": "react-jsx",
+    "lib": ["dom"]
+  },
+  "include": ["src"]
+}

@@ -1,0 +1,4 @@
+{
+  "extends": "@impact/ts-config",
+  "include": ["src", "styled-system"]
+}

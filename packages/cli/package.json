@@ -1,21 +1,34 @@
 {
-	"name": "@template-project/cli",
-	"version": "1.0.0",
-	"license": "UNLICENSED",
-	"author": {
-		"name": "maastrich",
-		"email": "pinsaultm@gmail.com"
-	},
-	"type": "module",
-	"exports": {
-		".": "./src/index.ts"
-	},
-	"dependencies": {
-		"@template-project/core": "workspace:*",
-		"cac": "^6.7.14"
-	},
-	"devDependencies": {
-		"@template-project/ts-config": "workspace:*",
-		"typescript": "^5.6.3"
-	}
+  "name": "@impact/cli",
+  "version": "1.0.1-pre-1732983113.0",
+  "license": "UNLICENSED",
+  "author": {
+    "name": "maastrich",
+    "email": "pinsaultm@gmail.com"
+  },
+  "type": "module",
+  "exports": {
+    ".": "./src/index.ts"
+  },
+  "bin": {
+    "impact": "./bin/impact"
+  },
+  "files": [
+    "src"
+  ],
+  "dependencies": {
+    "@impact/config": "workspace:*",
+    "@impact/core": "workspace:*",
+    "@impact/git": "workspace:*",
+    "@impact/logger": "workspace:*",
+    "@types/node": "^22.9.0",
+    "cac": "^6.7.14",
+    "chalk": "^5.3.0",
+    "yaml": "^2.6.1"
+  },
+  "devDependencies": {
+    "@impact/ts-config": "workspace:*",
+    "@types/bun": "^1.1.14",
+    "typescript": "^5.6.3"
+  }
 }

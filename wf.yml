@@ -1,0 +1,46 @@
+on:
+  workflow_dispatch:
+    inputs:
+      branch:
+        description: "The branch you want to scan impact for."
+        required: true
+      slack_message_id:
+        description: "The slack message id to answer to."
+        required: true
+      slack_channel:
+        description: "The slack channel to send the message to."
+        required: true
+
+name: Scan impact
+
+jobs:
+  impact:
+    name: Generate client
+    runs-on: ubuntu-20.04
+    timeout-minutes: 10
+    env:
+      node-version: 20.17.0
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.node-version }}
+
+      - uses: pnpm/action-setup@v4
+
+      - run: pnpm install --frozen-lockfile
+        working-directory: .
+
+      - id: impact
+        run: pnpm exec impact --branch ${{ github.event.inputs.branch }} --outfile impact.html --format html --outfile impact.json --format json
+
+      - id: upload
+
+      - uses: impact/action-slack@v1
+        with:
+          url: ${{ steps.upload.outputs.upload_url }}
+          slack-token: ${{ secrets.SLACK_TOKEN }}
+          slack-channel: ${{ github.event.inputs.slack_channel }}
+          slack-message-id: ${{ github.event.inputs.slack_message_id }}

@@ -3,7 +3,7 @@
 $schema: "https://moonrepo.dev/schemas/template.json"
 
 title: "package"
-description: "Create packages for within the template-project packages directory."
+description: "Create packages for within the impact packages directory."
 destination: "packages/[name]"
 
 variables:

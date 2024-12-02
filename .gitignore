@@ -316,3 +316,10 @@ dist
 # .pnp.*
 
 # End of https://www.toptal.com/developers/gitignore/api/macos,node,yarn,visualstudiocode,test,git
+
+packages/cli/bin/impact
+
+## Panda
+styled-system
+styled-system-studio
+!ui/styled-system

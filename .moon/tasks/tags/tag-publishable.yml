@@ -1,0 +1,35 @@
+tasks:
+  pre-version:
+    command: pnpm version prerelease
+    args:
+      - --no-git-tag-version
+      - --no-commit-hooks
+      - --no-git-checks
+      - --allow-same-version
+      - --preid
+      - pre-$timestamp
+    options:
+      cache: false
+
+  publish:
+    command: pnpm publish
+    args:
+      - --access
+      - public
+    options:
+      cache: false
+
+  publish-local:
+    extends: publish
+    deps:
+      - pre-version
+      - target: build
+        optional: true
+    args:
+      - --no-git-checks
+      - --force
+    env:
+      npm_config_registry: http://localhost:4873
+      npm_max_body_size: 100MB
+    options:
+      cache: false

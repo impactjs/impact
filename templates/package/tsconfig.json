@@ -1,4 +1,4 @@
 {
-  "extends": "@template-project/ts-config",
+  "extends": "@impact/ts-config",
   "include": ["src"]
 }

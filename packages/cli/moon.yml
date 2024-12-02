@@ -5,8 +5,16 @@ $schema: "https://moonrepo.dev/schemas/project.json"
 platform: node
 language: typescript
 
+tags:
+  - publishable
+
 tasks:
   dev:
     command: "bun src/index.ts"
+    options:
+      cache: false
+
+  build:
+    command: bun build src/index.ts --compile --outfile bin/impact
     options:
       cache: false

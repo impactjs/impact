@@ -1,17 +1,36 @@
 {
-	"name": "@template-project/core",
-	"version": "1.0.0",
-	"license": "UNLICENSED",
-	"author": {
-		"name": "maastrich",
-		"email": "pinsaultm@gmail.com"
-	},
-	"type": "module",
-	"exports": {
-		".": "./src/index.ts"
-	},
-	"devDependencies": {
-		"@template-project/ts-config": "workspace:*",
-		"typescript": "^5.6.3"
-	}
+  "name": "@impact/core",
+  "version": "1.0.1-pre-1732983113.0",
+  "license": "UNLICENSED",
+  "author": {
+    "name": "maastrich",
+    "email": "pinsaultm@gmail.com"
+  },
+  "type": "module",
+  "exports": {
+    ".": "./src/index.ts"
+  },
+  "files": [
+    "src",
+    "dist"
+  ],
+  "dependencies": {
+    "@impact/config": "workspace:*",
+    "@impact/git": "workspace:*",
+    "@impact/logger": "workspace:*",
+    "@impact/types": "workspace:*",
+    "@swc/core": "^1.9.3",
+    "@swc/wasm": "^1.9.3",
+    "enhanced-resolve": "^5.17.1",
+    "swc-walk": "1.0.0-rc.2"
+  },
+  "devDependencies": {
+    "@impact/ts-config": "workspace:*",
+    "@types/bun": "^1.1.14",
+    "@types/node": "^22.9.0",
+    "typescript": "^5.6.3"
+  },
+  "peerDependencies": {
+    "vite": "^5.4.11"
+  }
 }
