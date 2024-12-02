@@ -126,6 +126,11 @@ jobs:
       - uses: actions/cache/restore@v4
         with:
           path: |
+            .moon/cache
+          key: ${{ needs.install.outputs.moon-cache-key }}
+      - uses: actions/cache/restore@v4
+        with:
+          path: |
             node_modules
             */*/node_modules
           key: ${{ needs.install.outputs.nm-cache-key }}
