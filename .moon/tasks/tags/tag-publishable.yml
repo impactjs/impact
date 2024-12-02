@@ -35,7 +35,7 @@ tasks:
       cache: false
 
   prepublish:
-    extends: publish
+    command: echo
     deps:
       - pre-version
       - target: build

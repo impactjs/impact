@@ -97,7 +97,7 @@ jobs:
           path: |
             **/node_modules
           key: ${{ needs.install.outputs.nm-cache-key }}
-      - run: pnpm moonx build cli --target="bun-${{ matrix.platform }}-${{ matrix.arch }}" --outfile bin/${{ matrix.platform }}-${{ matrix.arch }}
+      - run: pnpm moonx build cli -- --target="bun-${{ matrix.platform }}-${{ matrix.arch }}" --outfile bin/${{ matrix.platform }}-${{ matrix.arch }}
       - uses: actions/upload-artifact@v4
         with:
           path: packages/cli/bin
@@ -125,7 +125,7 @@ jobs:
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
       - name: publish prerelease
-        run: pnpm moonx prepublish --tag="pr-${{ github.event.number }}"
+        run: pnpm moonx prepublish -- --tag="pr-${{ github.event.number }}"
         if: github.event_name == 'pull_request'
       - name: publish
         run: pnpm moonx publish

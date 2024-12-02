@@ -15,6 +15,6 @@ tasks:
       cache: false
 
   build:
-    command: bun build src/index.ts --compile --outfile bin/impact --outfile=bin/impact2
+    command: bun build src/index.ts --compile --outfile bin/impact
     options:
       cache: false
