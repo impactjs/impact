@@ -1,5 +1,5 @@
 {
-  "name": "@impact/app",
+  "name": "@impacts/app",
   "version": "1.0.0",
   "license": "UNLICENSED",
   "author": {
@@ -7,8 +7,11 @@
     "email": "pinsaultm@gmail.com"
   },
   "type": "module",
+  "files": ["dist"],
   "exports": {
-    ".": "./src/index.tsx"
+    "css": "./dist/assets/index-CTU8u8Tm.css",
+    "js": "./dist/assets/index-dpBmdR1Y.js",
+    "html": "./dist/index.html"
   },
   "scripts": {
     "prepare": "panda codegen"
@@ -16,9 +19,9 @@
   "devDependencies": {
     "@ark-ui/react": "^4.4.4",
     "@flaticon/flaticon-uicons": "^3.3.1",
-    "@impact/styled-system": "workspace:*",
-    "@impact/ts-config": "workspace:*",
-    "@impact/types": "workspace:*",
+    "@impacts/styled-system": "workspace:*",
+    "@impacts/ts-config": "workspace:*",
+    "@impacts/types": "workspace:*",
     "@pandacss/dev": "^0.48.0",
     "@types/bun": "^1.1.14",
     "@types/react": "^18.3.12",

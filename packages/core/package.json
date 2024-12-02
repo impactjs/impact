@@ -1,5 +1,5 @@
 {
-  "name": "@impact/core",
+  "name": "@impacts/core",
   "version": "1.0.1-pre-1732983113.0",
   "license": "UNLICENSED",
   "author": {
@@ -15,17 +15,17 @@
     "dist"
   ],
   "dependencies": {
-    "@impact/config": "workspace:*",
-    "@impact/git": "workspace:*",
-    "@impact/logger": "workspace:*",
-    "@impact/types": "workspace:*",
+    "@impacts/config": "workspace:*",
+    "@impacts/git": "workspace:*",
+    "@impacts/logger": "workspace:*",
+    "@impacts/types": "workspace:*",
     "@swc/core": "^1.9.3",
     "@swc/wasm": "^1.9.3",
     "enhanced-resolve": "^5.17.1",
     "swc-walk": "1.0.0-rc.2"
   },
   "devDependencies": {
-    "@impact/ts-config": "workspace:*",
+    "@impacts/ts-config": "workspace:*",
     "@types/bun": "^1.1.14",
     "@types/node": "^22.9.0",
     "typescript": "^5.6.3"

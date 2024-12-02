@@ -3,7 +3,7 @@ import {
   findPullRequestsByMergeCommits,
   type FindPullRequestsByMergeCommitsParams,
 } from "./find-pull-requests.js";
-import type { Plugin } from "@impact/types/plugins";
+import type { Plugin } from "@impacts/types/plugins";
 
 type GithubOptions = {
   auth: string;

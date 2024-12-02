@@ -1,10 +1,10 @@
-import type { ImpactConfig } from "@impact/types/config";
+import type { ImpactConfig } from "@impacts/types/config";
 import { existsSync } from "node:fs";
 import { getImports } from "../utils/get-imports.js";
 import { dirname } from "node:path";
 import { resolve } from "../utils/resolve-file.js";
 import type { History } from "../utils/history.js";
-import { logger } from "@impact/logger";
+import { logger } from "@impacts/logger";
 
 type ScanEntryOptions = {
   path: string;

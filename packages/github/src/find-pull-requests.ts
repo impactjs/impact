@@ -1,5 +1,5 @@
-import { logger } from "@impact/logger";
-import type { ImpactPluginResultEntry } from "@impact/types/results";
+import { logger } from "@impacts/logger";
+import type { ImpactPluginResultEntry } from "@impacts/types/results";
 import type { Octokit } from "@octokit/rest";
 
 export interface FindPullRequestsByMergeCommitsParams {

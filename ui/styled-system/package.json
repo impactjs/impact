@@ -1,5 +1,5 @@
 {
-  "name": "@impact/styled-system",
+  "name": "@impacts/styled-system",
   "version": "1.0.0",
   "license": "UNLICENSED",
   "author": {
@@ -39,13 +39,13 @@
     "prepare": "panda codegen"
   },
   "dependencies": {
-    "@impact/core": "workspace:*",
+    "@impacts/core": "workspace:*",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
     "vite": "^6.0.1"
   },
   "devDependencies": {
-    "@impact/ts-config": "workspace:*",
+    "@impacts/ts-config": "workspace:*",
     "@pandacss/dev": "^0.48.0",
     "@types/bun": "^1.1.14",
     "@types/react": "^18.3.12",

@@ -1,6 +1,6 @@
-import { logger } from "@impact/logger";
+import { logger } from "@impacts/logger";
 import { extractLinearFiltersFromContext } from "./utils.js";
-import type { Plugin } from "@impact/types/plugins";
+import type { Plugin } from "@impacts/types/plugins";
 import { finsIssues } from "./find-issues.js";
 import { LinearClient } from "@linear/sdk";
 

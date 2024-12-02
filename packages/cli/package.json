@@ -1,5 +1,5 @@
 {
-  "name": "@impact/cli",
+  "name": "@impacts/cli",
   "version": "1.0.1-pre-1732983113.0",
   "license": "UNLICENSED",
   "author": {
@@ -14,20 +14,21 @@
     "impact": "./bin/impact"
   },
   "files": [
-    "src"
+    "bin",
+    "scripts/setup-binary.js"
   ],
   "dependencies": {
-    "@impact/config": "workspace:*",
-    "@impact/core": "workspace:*",
-    "@impact/git": "workspace:*",
-    "@impact/logger": "workspace:*",
+    "@impacts/config": "workspace:*",
+    "@impacts/core": "workspace:*",
+    "@impacts/git": "workspace:*",
+    "@impacts/logger": "workspace:*",
     "@types/node": "^22.9.0",
     "cac": "^6.7.14",
     "chalk": "^5.3.0",
     "yaml": "^2.6.1"
   },
   "devDependencies": {
-    "@impact/ts-config": "workspace:*",
+    "@impacts/ts-config": "workspace:*",
     "@types/bun": "^1.1.14",
     "typescript": "^5.6.3"
   }

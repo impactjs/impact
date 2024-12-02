@@ -26,6 +26,7 @@ tasks:
 
   sort-check:
     extends: sort
+    type: test
     args: ["--check"]
 
   format-check:

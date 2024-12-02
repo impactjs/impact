@@ -1,4 +1,4 @@
-import type { PluginContext } from "@impact/types/plugins";
+import type { PluginContext } from "@impacts/types/plugins";
 
 function extractIssues(text: string) {
   const matches = /([A-Z]+-\d+)/g.exec(text);

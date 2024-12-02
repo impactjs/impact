@@ -1,43 +1,13 @@
-import { VStack, HStack, styled } from "@impact/styled-system/jsx";
-import type {
-  ImpactPluginResultEntry,
-  ImpactResultSummaryUpdate,
-} from "@impact/types/results";
-import { flex } from "@impact/styled-system/patterns";
-import Markdown from "react-markdown";
-import TruncatedSection from "./Truncate";
-import reactGfm from "remark-gfm";
-import { useMemo } from "react";
+import { VStack, HStack, styled } from "@impacts/styled-system/jsx";
+import type { ImpactResultSummaryUpdate } from "@impacts/types/results";
 import { Icon } from "./Icon";
 import { Button } from "./Button";
+import { SeeMore } from "./SeeMore";
+import { UpdateId } from "./UpdateId";
 
 type CardProps = ImpactResultSummaryUpdate;
 
-function UpdateId({ origin, id, url }: ImpactPluginResultEntry) {
-  const label = useMemo(() => {
-    switch (origin) {
-      case "github":
-        return `(#${id})`;
-      case "linear":
-        return `[${id}]`;
-      case "git":
-        return `(${id.toString().slice(0, 7)})`;
-      default:
-        return "";
-    }
-  }, [origin, id]);
-
-  if (url) {
-    return (
-      <styled.a href={url} target="_blank" rel="noreferrer">
-        {label}
-      </styled.a>
-    );
-  }
-  return <styled.span>{label}</styled.span>;
-}
-
-export function Card({ main, references }: CardProps) {
+export function Card({ main, references, ...rest }: CardProps) {
   return (
     <VStack
       gap="xs"
@@ -55,7 +25,9 @@ export function Card({ main, references }: CardProps) {
           </styled.span>
         </HStack>
         <HStack width="full" justifyContent="space-between">
-          <Button variant="linear">See more</Button>
+          <SeeMore main={main} references={references} {...rest}>
+            <Button variant="linear">See more</Button>
+          </SeeMore>
           <HStack>
             {references.map((reference) => {
               return (

@@ -1,4 +1,4 @@
-import { logger } from "@impact/logger";
+import { logger } from "@impacts/logger";
 import { join } from "node:path";
 
 export class Git {

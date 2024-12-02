@@ -1,4 +1,4 @@
-import { type ImpactConfig, impactConfigSchema } from "@impact/types/config";
+import { type ImpactConfig, impactConfigSchema } from "@impacts/types/config";
 import { cosmiconfig } from "cosmiconfig";
 
 const explorer = cosmiconfig("impact");

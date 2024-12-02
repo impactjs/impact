@@ -1,10 +1,10 @@
-import { logger } from "@impact/logger";
-import type { ImpactConfig } from "@impact/types/config";
+import { logger } from "@impacts/logger";
+import type { ImpactConfig } from "@impacts/types/config";
 import type {
   Plugin,
   PluginContext,
   TransformPlugin,
-} from "@impact/types/plugins";
+} from "@impacts/types/plugins";
 import { EventEmitter } from "node:stream";
 
 export class PluginOrchestrator {

@@ -1,4 +1,4 @@
-import type { ImpactConfig } from "@impact/types/config";
+import type { ImpactConfig } from "@impacts/types/config";
 
 type RequiredKeys = "entries";
 

@@ -1,5 +1,5 @@
 {
-  "name": "@impact/logger",
+  "name": "@impacts/logger",
   "version": "1.0.1-pre-1732983113.0",
   "license": "UNLICENSED",
   "author": {
@@ -16,7 +16,7 @@
     "signale": "^1.4.0"
   },
   "devDependencies": {
-    "@impact/ts-config": "workspace:*",
+    "@impacts/ts-config": "workspace:*",
     "@types/bun": "^1.1.14",
     "@types/signale": "^1.4.7",
     "typescript": "^5.6.3"

@@ -1,5 +1,5 @@
-import { cva } from "@impact/styled-system/css";
-import { styled } from "@impact/styled-system/jsx";
+import { cva } from "@impacts/styled-system/css";
+import { styled } from "@impacts/styled-system/jsx";
 
 const styles = cva({
   base: {
@@ -15,6 +15,11 @@ const styles = cva({
         backgroundColor: "inherit",
         color: "interface.600",
         border: "1px solid token(colors.interface)",
+        transition: "all 0.2s",
+        _hover: {
+          scale: "1.05",
+          boxShadow: "sm",
+        },
       },
     },
   },

@@ -323,3 +323,4 @@ packages/cli/bin/impact
 styled-system
 styled-system-studio
 !ui/styled-system
+example.ts

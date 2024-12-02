@@ -1,6 +1,6 @@
 import { simpleGit } from "simple-git";
 import { join } from "node:path";
-import { logger } from "@impact/logger";
+import { logger } from "@impacts/logger";
 
 const repo = simpleGit();
 

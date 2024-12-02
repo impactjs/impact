@@ -1,5 +1,5 @@
 {
-  "name": "@impact/{{ name }}",
+  "name": "@impacts/{{ name }}",
   "version": "1.0.0",
   "license": "UNLICENSED",
   "author": {
@@ -11,10 +11,10 @@
     ".": "./src/index.ts"
   },
   "dependencies": {
-    "@impact/core": "workspace:*"
+    "@impacts/core": "workspace:*"
   },
   "devDependencies": {
-    "@impact/ts-config": "workspace:*",
+    "@impacts/ts-config": "workspace:*",
     "typescript": "^5.6.3"
   }
 }

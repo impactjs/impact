@@ -1,8 +1,8 @@
 import { join } from "node:path";
 import { History } from "../utils/history.js";
 import { scanEntry } from "./scan-entry.js";
-import { logger } from "@impact/logger";
-import type { ImpactConfig } from "@impact/types/config";
+import { logger } from "@impacts/logger";
+import type { ImpactConfig } from "@impacts/types/config";
 
 export async function scan(config: ImpactConfig) {
   const history = new History();

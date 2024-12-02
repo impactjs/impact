@@ -1,5 +1,5 @@
 {
-  "name": "@impact/types",
+  "name": "@impacts/types",
   "version": "1.0.1-pre-1732983113.0",
   "license": "UNLICENSED",
   "author": {
@@ -15,7 +15,7 @@
     "zod": "^3.23.8"
   },
   "devDependencies": {
-    "@impact/ts-config": "workspace:*",
+    "@impacts/ts-config": "workspace:*",
     "@types/bun": "^1.1.14",
     "typescript": "^5.6.3"
   }

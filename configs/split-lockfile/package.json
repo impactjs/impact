@@ -1,5 +1,5 @@
 {
-  "name": "@impact/split-lockfile",
+  "name": "@impacts/split-lockfile",
   "version": "1.0.0",
   "private": true,
   "license": "UNLICENSED",
@@ -18,7 +18,7 @@
     "rename-overwrite": "^6.0.0"
   },
   "devDependencies": {
-    "@impact/ts-config": "workspace:*",
+    "@impacts/ts-config": "workspace:*",
     "@types/bun": "^1.1.14",
     "@types/node": "^22.9.0",
     "typescript": "^5.6.3"

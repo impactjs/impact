@@ -1,5 +1,5 @@
 {
-  "name": "@impact/config",
+  "name": "@impacts/config",
   "version": "1.0.1-pre-1732983113.0",
   "license": "UNLICENSED",
   "author": {
@@ -15,8 +15,8 @@
     "src"
   ],
   "devDependencies": {
-    "@impact/ts-config": "workspace:*",
-    "@impact/types": "workspace:*",
+    "@impacts/ts-config": "workspace:*",
+    "@impacts/types": "workspace:*",
     "@types/bun": "^1.1.14",
     "cosmiconfig": "^9.0.0",
     "typescript": "^5.6.3",

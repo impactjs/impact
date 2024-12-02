@@ -2,9 +2,9 @@
 
 import { cac } from "cac";
 import { version } from "../package.json";
-import { loadConfig } from "@impact/config/internal";
-import { impact } from "@impact/core";
-import { logger } from "@impact/logger";
+import { loadConfig } from "@impacts/config/internal";
+import { impact } from "@impacts/core";
+import { logger } from "@impacts/logger";
 import yaml from "yaml";
 
 const cli = cac("impact");

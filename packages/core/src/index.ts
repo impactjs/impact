@@ -1,6 +1,6 @@
-import type { ImpactConfig } from "@impact/types/config";
+import type { ImpactConfig } from "@impacts/types/config";
 import { scan } from "./scan/index.js";
-import { Git } from "@impact/git";
+import { Git } from "@impacts/git";
 import { join } from "node:path";
 import { PluginOrchestrator } from "./utils/plugin-orchestrator.js";
 import type {
@@ -8,7 +8,7 @@ import type {
   ImpactResult,
   ImpactResultRawEntry,
   ImpactResultSummaryEntry,
-} from "@impact/types/results";
+} from "@impacts/types/results";
 
 type ImpactOptions = {
   /**

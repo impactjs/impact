@@ -1,8 +1,8 @@
-import { HStack, styled, VStack } from "@impact/styled-system/jsx";
-import { sva } from "@impact/styled-system/css";
+import { HStack, styled, VStack } from "@impacts/styled-system/jsx";
+import { sva } from "@impacts/styled-system/css";
 import { Tabs } from "../../components/Tabs";
 import { example } from "../../assets/example";
-import { flex } from "@impact/styled-system/patterns";
+import { flex } from "@impacts/styled-system/patterns";
 import { Fragment } from "react/jsx-runtime";
 import { FaGithub, FaGitAlt } from "react-icons/fa"; // Import specific icons
 import { SiLinear } from "react-icons/si"; // For Linear

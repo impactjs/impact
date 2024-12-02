@@ -3,7 +3,7 @@ import { semanticTokens, tokens } from "./tokens.js";
 import { globalStyles } from "./global-styles.js";
 
 export const preset = definePreset({
-  name: "@impact/styled-system",
+  name: "@impacts/styled-system",
 
   conditions: {
     _light: "&.light",
@@ -36,5 +36,5 @@ export const config = defineConfig({
   preflight: true,
   jsxFramework: "react",
   outdir: "styled-system",
-  importMap: "@impact/styled-system",
+  importMap: "@impacts/styled-system",
 });
