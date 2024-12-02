@@ -53,9 +53,9 @@ jobs:
             **/node_modules
           key: ${{ needs.install.outputs.nm-cache-key }}
       - run: pnpm install --frozen-lockfile
-      - run: pnpm run check
-      - run: pnpm run sort-check
-      - run: pnpm run format-check
+      - run: pnpm moonx check
+      - run: pnpm moonx sort-check
+      - run: pnpm moonx format-check
   
   build:
     name: build artifacts
