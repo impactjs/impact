@@ -26,14 +26,19 @@ tasks:
 
   sort-check:
     extends: sort
+    type: test
     args: ["--check"]
 
-  format:
-    command: "biome format"
+  format-check:
+    command: "biome format src"
     inputs:
       - "@group(sources)"
       - "/biome.jsonc"
       - "biome.jsonc"
+
+  format:
+    extends: format-check
+    args: ["--write"]
 
   cleanup-dedicated-lockfile:
     extends: "_cleanup-entry"
