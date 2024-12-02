@@ -50,7 +50,8 @@ jobs:
         id: cache-node-modules
         with:
           path: |
-            **/node_modules
+                node_modules
+                */*/node_modules
           key: ${{ steps.create-cache-key.outputs.key }}
 
   lint:
@@ -74,7 +75,8 @@ jobs:
       - uses: actions/cache/restore@v4
         with:
           path: |
-            **/node_modules
+            node_modules
+            */*/node_modules
           key: ${{ needs.install.outputs.nm-cache-key }}
       - run: pnpm install --frozen-lockfile
       - run: pnpm moonx check
@@ -100,7 +102,8 @@ jobs:
       - uses: actions/cache/restore@v4
         with:
           path: |
-            **/node_modules
+            node_modules
+            */*/node_modules
           key: ${{ needs.install.outputs.nm-cache-key }}
       - run: pnpm moonx build cli -- --target="bun-${{ matrix.platform }}-${{ matrix.arch }}" --outfile bin/${{ matrix.platform }}-${{ matrix.arch }}
       - uses: actions/upload-artifact@v4
@@ -123,7 +126,8 @@ jobs:
       - uses: actions/cache/restore@v4
         with:
           path: |
-            **/node_modules
+            node_modules
+            */*/node_modules
           key: ${{ needs.install.outputs.nm-cache-key }}
       - uses: actions/download-artifact@v4
         with:
