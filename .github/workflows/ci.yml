@@ -12,6 +12,7 @@ jobs:
     runs-on: ubuntu-latest
     env:
       node-modules-cache-name: node-modules
+      moon-cache-name: moon-cache
       node-version: 21
       pnmp-version: 9.0.6
       bun-version: 1.1.36
@@ -20,6 +21,7 @@ jobs:
       pnmp-version: ${{ env.pnmp-version }}
       bun-version: ${{ env.bun-version }}
       nm-cache-key: ${{ steps.create-cache-key.outputs.key }}
+      moon-cache-key: ${{ steps.create-cache-key-moon.outputs.key }}
     steps:
       - uses: actions/checkout@v4
       - uses: pnpm/action-setup@v4
@@ -28,6 +30,18 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: ${{ env.node-version }}
+      - id: create-cache-key-moon
+        run: echo "key=moon-${{ env.moon-cache-name }}-${{ github.ref }}-${{ github.run_id }}-${{ github.run_attempt}}" >> $GITHUB_OUTPUT
+      - uses: actions/cache@v4
+        with:
+          path: |
+            .moon/cache
+          key: ${{ steps.create-cache-key-moon.outputs.key }}
+          restore-keys: |
+            moon-${{ env.moon-cache-name }}-${{ github.ref }}-${{ github.run_id }}-
+            moon-${{ env.moon-cache-name }}-${{ github.ref }}-
+            moon-${{ env.moon-cache-name }}-
+            moon-
       - run: pnpm install --frozen-lockfile
       - id: create-cache-key
         run: echo "key=node-modules-${{runner.os}}-${{env.node-modules-cache-name}}-${{hashFiles('**/pnpm-lock.yaml')}}-${{github.run_id}}-${{github.run_attempt}}" >> $GITHUB_OUTPUT
@@ -47,6 +61,11 @@ jobs:
       - uses: pnpm/action-setup@v4
         with:
           version: ${{ needs.install.outputs.pnmp-version }}
+      - uses: actions/cache/@v4
+        with:
+          path: |
+            .moon/cache
+          key: ${{ needs.install.outputs.moon-cache-key }}
       - uses: actions/cache/restore@v4
         with:
           path: |
