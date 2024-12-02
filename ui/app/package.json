@@ -7,12 +7,14 @@
     "email": "pinsaultm@gmail.com"
   },
   "type": "module",
-  "files": ["dist"],
   "exports": {
     "css": "./dist/assets/index-CTU8u8Tm.css",
     "js": "./dist/assets/index-dpBmdR1Y.js",
     "html": "./dist/index.html"
   },
+  "files": [
+    "dist"
+  ],
   "scripts": {
     "prepare": "panda codegen"
   },

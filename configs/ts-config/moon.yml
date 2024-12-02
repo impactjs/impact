@@ -9,3 +9,4 @@ workspace:
   inheritedTasks:
     exclude:
       - format
+      - format-check
