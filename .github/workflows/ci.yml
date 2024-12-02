@@ -129,6 +129,7 @@ jobs:
             node_modules
             */*/node_modules
           key: ${{ needs.install.outputs.nm-cache-key }}
+      - run: pnpm install --frozen-lockfile # ensure all dependencies are installed and make sure to run `prepare` scripts
       - uses: actions/download-artifact@v4
         with:
           path: packages/cli/bin
