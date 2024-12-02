@@ -106,7 +106,7 @@ jobs:
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
       - name: publish prerelease
-        run: pnpm moonx prepuplish --tag="pr-${{ github.event.number }}"
+        run: pnpm moonx prepublish --tag="pr-${{ github.event.number }}"
         if: github.event_name == 'pull_request'
       - name: publish
         run: pnpm moonx publish
