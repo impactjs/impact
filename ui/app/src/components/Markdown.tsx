@@ -1,5 +1,4 @@
 import reactGfm from "remark-gfm";
-import remarkMdx from "remark-mdx";
 import ReactMarkdown from "react-markdown";
 
 const remarkPlugins = [reactGfm];
