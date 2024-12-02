@@ -58,8 +58,8 @@ importers:
         specifier: ^1.9.4
         version: 1.9.4
       '@maastrich/moonx':
-        specifier: 0.1.4
-        version: 0.1.4
+        specifier: 0.1.6
+        version: 0.1.6
       '@moonrepo/cli':
         specifier: ^1.30.0
         version: 1.30.0
@@ -137,8 +137,8 @@ packages:
     resolution: {integrity: sha512-7bQW+gkKa2kKZPeJf6+c6gFK9ARxQfn+FKy9ScTBppyKRWH2KzsmweXUoklqeEiHiNVWaeP5csIdsNq6w7QhzA==}
     engines: {node: '>=12.20'}
 
-  '@maastrich/moonx@0.1.4':
-    resolution: {integrity: sha512-aFn5wX3GOVIXSlSLZH2OamgrP5/8lcf16di7XcJMW9uDhIfRlKB21mFlruo4gtMbbCyOWfb4MdFRlcnbBjEIeA==}
+  '@maastrich/moonx@0.1.6':
+    resolution: {integrity: sha512-glQ2dooWW+shXgfcOz8OYz0chHmcTJiGj0Q0ZHTLvKOrL3Dk16vw/L2vyRYQm98TkRshl+aTdDGkTK8Q7Mm7Qw==}
     hasBin: true
 
   '@moonrepo/cli@1.30.0':
@@ -984,7 +984,7 @@ snapshots:
 
   '@gwhitney/detect-indent@7.0.1': {}
 
-  '@maastrich/moonx@0.1.4': {}
+  '@maastrich/moonx@0.1.6': {}
 
   '@moonrepo/cli@1.30.0':
     dependencies:

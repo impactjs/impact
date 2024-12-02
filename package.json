@@ -17,7 +17,7 @@
   },
   "dependencies": {
     "@biomejs/biome": "^1.9.4",
-    "@maastrich/moonx": "0.1.4",
+    "@maastrich/moonx": "0.1.6",
     "@moonrepo/cli": "^1.30.0",
     "knip": "^5.38.0",
     "sort-package-json": "^2.12.0"
