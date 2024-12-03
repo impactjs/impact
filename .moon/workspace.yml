@@ -8,3 +8,4 @@ projects:
   globs:
     - packages/*
     - configs/*
+    - ui/*
