@@ -107,9 +107,6 @@ jobs:
             */*/node_modules
           key: ${{ needs.install.outputs.nm-cache-key }}
       - run: pnpm install --frozen-lockfile # ensure all dependencies are installed and make sure to run `prepare` scripts
-      - uses: actions/download-artifact@v4
-        with:
-          path: packages/cli/bin
       - name: authenticate with npm
         run: echo "//registry.npmjs.org/:_authToken=${NODE_AUTH_TOKEN}" > ~/.npmrc
         env:
@@ -122,7 +119,7 @@ jobs:
         if: github.event_name == 'push' && github.ref == 'refs/heads/main'
 
   create-release-artifacts:
-    name: release artifacts
+    name: create release artifacts
     needs: [install, lint, deploy]
     runs-on: ubuntu-latest
     strategy:
@@ -150,7 +147,7 @@ jobs:
           name: ${{ matrix.platform }}-${{ matrix.arch }}
 
   create-release:
-    name: create release
+    name: publish release
     needs: [install, lint, deploy, create-release-artifacts]
     runs-on: ubuntu-latest
     steps:
@@ -164,14 +161,14 @@ jobs:
       - id: gh-prerelease
         if: github.event_name == 'pull_request'
         run: |
-          version=$(pnpm show @impact/cli@pr-${{ github.event.number }} version)
+          version=$(pnpm show @impacts/cli@pr-${{ github.event.number }} version)
           gh release create "cli@v$version" packages/cli/bin/*/* --title "cli pr-${{ github.event.number }}" --target "${{ github.sha }}" --latest=false --prerelease
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       - id: gh-release
         if: github.event_name == 'push'
         run: |
-          version=$(pnpm show @impact/cli@latest version)
+          version=$(pnpm show @impacts/cli@latest version)
           gh release create "cli@v$version" packages/cli/bin/*/* --title "cli v${{ github.run_number }}" --target "${{ github.sha }}"
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
