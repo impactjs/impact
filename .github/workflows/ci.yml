@@ -150,6 +150,8 @@ jobs:
     name: publish release
     needs: [install, lint, deploy, create-release-artifacts]
     runs-on: ubuntu-latest
+    permissions:
+      contents: write
     steps:
       - uses: actions/checkout@v4
       - uses: pnpm/action-setup@v2
