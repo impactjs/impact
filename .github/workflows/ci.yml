@@ -86,7 +86,7 @@ jobs:
   deploy:
     name: deploy
     runs-on: ubuntu-latest
-    needs: [install]
+    needs: [install, lint]
     steps:
       - uses: actions/checkout@v4
       - uses: pnpm/action-setup@v2
@@ -164,13 +164,17 @@ jobs:
         if: github.event_name == 'pull_request'
         run: |
           version=$(pnpm show @impacts/cli@pr-${{ github.event.number }} version)
-          gh release create "cli@v$version" packages/cli/bin/*/* --title "cli pr-${{ github.event.number }}" --target "${{ github.sha }}" --latest=false --prerelease
+          echo "version: $version"
+          ls packages/cli/bin
+          gh release create "cli@v$version" packages/cli/bin/* --title "cli pr-${{ github.event.number }}" --target "${{ github.sha }}" --latest=false --prerelease
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       - id: gh-release
         if: github.event_name == 'push'
         run: |
           version=$(pnpm show @impacts/cli@latest version)
-          gh release create "cli@v$version" packages/cli/bin/*/* --title "cli v${{ github.run_number }}" --target "${{ github.sha }}"
+          echo "version: $version"
+          ls packages/cli/bin
+          gh release create "cli@v$version" packages/cli/bin/* --title "cli v${{ github.run_number }}" --target "${{ github.sha }}"
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
