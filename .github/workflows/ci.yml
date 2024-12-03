@@ -165,8 +165,8 @@ jobs:
         run: |
           version=$(pnpm show @impacts/cli@pr-${{ github.event.number }} version)
           echo "version: $version"
-          ls packages/cli/bin
-          gh release create "cli@v$version" packages/cli/bin/* --title "cli pr-${{ github.event.number }}" --target "${{ github.sha }}" --latest=false --prerelease
+          ls packages/cli/bin/*/*
+          gh release create "cli@v$version" packages/cli/bin/*/* --title "cli pr-${{ github.event.number }}" --latest=false --prerelease
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       - id: gh-release
@@ -174,7 +174,7 @@ jobs:
         run: |
           version=$(pnpm show @impacts/cli@latest version)
           echo "version: $version"
-          ls packages/cli/bin
-          gh release create "cli@v$version" packages/cli/bin/* --title "cli v${{ github.run_number }}" --target "${{ github.sha }}"
+          ls packages/cli/bin/*/*
+          gh release create "cli@v$version" packages/cli/bin/*/* --title "cli v${{ github.run_number }}"
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
