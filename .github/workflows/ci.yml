@@ -82,39 +82,11 @@ jobs:
       - run: pnpm moonx check
       - run: pnpm moonx sort-check
       - run: pnpm moonx format-check
-  
-  build:
-    name: build artifacts
-    needs: [install, lint]
-    runs-on: ubuntu-latest
-    strategy:
-      matrix:
-        platform: [darwin, linux]
-        arch: [x64, arm64]
-    steps:
-      - uses: actions/checkout@v4
-      - uses: oven-sh/setup-bun@v2
-        with:
-          bun-version: ${{ needs.install.outputs.bun-version }}
-      - uses: pnpm/action-setup@v2
-        with:
-          version: ${{ needs.install.outputs.pnmp-version }}
-      - uses: actions/cache/restore@v4
-        with:
-          path: |
-            node_modules
-            */*/node_modules
-          key: ${{ needs.install.outputs.nm-cache-key }}
-      - run: pnpm moonx build cli -- --target="bun-${{ matrix.platform }}-${{ matrix.arch }}" --outfile bin/${{ matrix.platform }}-${{ matrix.arch }}
-      - uses: actions/upload-artifact@v4
-        with:
-          path: packages/cli/bin
-          name: ${{ matrix.platform }}-${{ matrix.arch }}
 
   deploy:
     name: deploy
     runs-on: ubuntu-latest
-    needs: [install, build]
+    needs: [install]
     steps:
       - uses: actions/checkout@v4
       - uses: pnpm/action-setup@v2
@@ -148,3 +120,58 @@ jobs:
       - name: publish
         run: pnpm moonx publish
         if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+
+  create-release-artifacts:
+    name: release artifacts
+    needs: [install, lint, deploy]
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        platform: [darwin, linux]
+        arch: [x64, arm64]
+    steps:
+      - uses: actions/checkout@v4
+      - uses: oven-sh/setup-bun@v2
+        with:
+          bun-version: ${{ needs.install.outputs.bun-version }}
+      - uses: pnpm/action-setup@v2
+        with:
+          version: ${{ needs.install.outputs.pnmp-version }}
+      - uses: actions/cache/restore@v4
+        with:
+          path: |
+            node_modules
+            */*/node_modules
+          key: ${{ needs.install.outputs.nm-cache-key }}
+      - run: pnpm moonx build cli -- --target="bun-${{ matrix.platform }}-${{ matrix.arch }}" --outfile bin/${{ matrix.platform }}-${{ matrix.arch }}
+      - uses: actions/upload-artifact@v4
+        with:
+          path: packages/cli/bin
+          name: ${{ matrix.platform }}-${{ matrix.arch }}
+
+  create-release:
+    name: create release
+    needs: [install, lint, deploy, create-release-artifacts]
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: pnpm/action-setup@v2
+        with:
+          version: ${{ needs.install.outputs.pnmp-version }}
+      - uses: actions/download-artifact@v4
+        with:
+          path: packages/cli/bin
+      - id: gh-prerelease
+        if: github.event_name == 'pull_request'
+        run: |
+          version=$(pnpm show @impact/cli@pr-${{ github.event.number }} version)
+          gh release create "cli@v$version" packages/cli/bin/*/* --title "cli pr-${{ github.event.number }}" --target "${{ github.sha }}" --latest=false --prerelease
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - id: gh-release
+        if: github.event_name == 'push'
+        run: |
+          version=$(pnpm show @impact/cli@latest version)
+          gh release create "cli@v$version" packages/cli/bin/*/* --title "cli v${{ github.run_number }}" --target "${{ github.sha }}"
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

@@ -38,7 +38,5 @@ tasks:
     extends: publish
     deps:
       - pre-version
-      - target: build
-        optional: true
     options:
       cache: false
