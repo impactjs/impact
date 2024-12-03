@@ -174,7 +174,7 @@ jobs:
         run: |
           version=$(pnpm show @impacts/cli@latest version)
           echo "version: $version"
-          ls packages/cli/bin/*/*
+          rm packages/cli/bin/*/impact
           gh release create "cli@v$version" packages/cli/bin/*/* --title "cli v${{ github.run_number }}"
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
