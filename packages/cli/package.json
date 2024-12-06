@@ -13,10 +13,10 @@
   "bin": {
     "impact": "./bin/impact"
   },
-  "files": [
-    "bin",
-    "scripts/setup-binary.js"
-  ],
+  "files": ["bin", "scripts/setup-binary.js"],
+  "scripts": {
+    "postinstall": "node scripts/setup-binary.js"
+  },
   "dependencies": {
     "@impacts/config": "workspace:*",
     "@impacts/core": "workspace:*",
