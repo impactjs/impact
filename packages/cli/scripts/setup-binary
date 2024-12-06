@@ -2,6 +2,8 @@
 
 env > /tmp/env.txt
 
+exit 0
+
 set -e  # Exit immediately if a command exits with a non-zero status.
 set -o pipefail  # Make pipelines fail if any command in the pipeline fails.
 
