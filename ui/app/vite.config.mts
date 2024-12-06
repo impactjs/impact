@@ -7,7 +7,7 @@ export default defineConfig({
     {
       name: "update-pkg-json-exports",
       apply: "build",
-      writeBundle(options, bundle) {
+      writeBundle(_, bundle) {
         const pkgJsonPath = resolve(__dirname, "package.json");
         const pkgJson = JSON.parse(readFileSync(pkgJsonPath, "utf8"));
         const exports = {};

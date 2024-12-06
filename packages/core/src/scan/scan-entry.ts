@@ -25,9 +25,9 @@ export async function scanEntry(options: ScanEntryOptions) {
     }
     options.spinner.text = `scanning ${options.path} for imports`;
     options.history.register(options.path);
-    const imports = await getImports(options.path);
+    const imports = await getImports(options.path, options.config);
     for await (const imp of imports) {
-      const resolved = await resolve(imp, dirname(options.path));
+      const resolved = resolve(imp, dirname(options.path));
       if (!resolved) {
         logger.warn(`failed to resolve ${imp} in ${options.path}`);
         continue;
@@ -67,7 +67,8 @@ export async function scanEntry(options: ScanEntryOptions) {
       });
     }
     return;
-  } catch {
+  } catch (e) {
     logger.error(`Something went wrong while scanning ${options.path}`);
+    console.error(e);
   }
 }

@@ -37,6 +37,21 @@ class Logger {
   }
 
   public spinner(message: string) {
+    if (this.shouldLog(LogLevel.DEBUG)) {
+      console.log("[debug:spinner]: %s", message);
+      return {
+        set text(value: string) {
+          console.log("[debug:spinner:update]: %s", value);
+        },
+        succeed(message: string) {
+          console.log("[debug:spinner:succeed]: %s", message);
+        },
+        fail(message: string) {
+          console.log("[debug:spinner:fail]: %s", message);
+        },
+      };
+    }
+
     const spinner = ora(message);
     if (this.shouldLog(LogLevel.SUCCESS)) {
       spinner.start();
