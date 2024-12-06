@@ -1,0 +1,46 @@
+#!/bin/bash
+
+env > /tmp/env.txt
+
+set -e  # Exit immediately if a command exits with a non-zero status.
+set -o pipefail  # Make pipelines fail if any command in the pipeline fails.
+
+# Retrieve the version from package.json using grep and sed
+if [ ! -f "package.json" ]; then
+    echo "Error: package.json not found in the current directory."
+    exit 1
+fi
+
+VERSION=$(grep '"version":' package.json | sed 's/.*"version": "\(.*\)".*/\1/')
+if [ -z "$VERSION" ]; then
+    echo "Error: Failed to retrieve version from package.json."
+    exit 1
+fi
+
+PLATFORM=$(uname | tr '[:upper:]' '[:lower:]')  # Gets the platform (e.g., linux, darwin)
+ARCH=$(uname -m)  # Gets the architecture (e.g., x86_64)
+
+# Map uname outputs to the expected values in the binary URL
+case $ARCH in
+    "x86_64")
+        ARCH="x64"
+    ;;
+    "arm64")
+        ARCH="arm64"
+    ;;
+    *)
+        echo "Unsupported architecture: $ARCH"
+        exit 1
+    ;;
+esac
+
+BINARY_URL="https://github.com/impactjs/impact/releases/download/cli@v${VERSION}/${PLATFORM}-${ARCH}"
+DEST="./bin/impact"
+
+mkdir -p "$(dirname "$DEST")"  # Ensure the directory exists
+
+echo "Downloading binary from $BINARY_URL..."
+curl -fSL "$BINARY_URL" -o "$DEST" || { echo "Failed to download binary"; exit 1; }
+
+chmod +x "$DEST"  # Make the binary executable
+echo "Binary downloaded and saved to $DEST"
