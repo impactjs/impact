@@ -1,13 +1,14 @@
 #!/bin/sh
 
-env > /tmp/env.txt
-
-exit 0
+# if grep '"name": "@impacts/monorepo"' success it should fail early
+if grep '"name": "@impacts/monorepo"' "$INIT_CWD/package.json" > /dev/null; then
+    echo "Binary not needed in development environment."
+    exit 0
+fi
 
 set -e  # Exit immediately if a command exits with a non-zero status.
 set -o pipefail  # Make pipelines fail if any command in the pipeline fails.
 
-# Retrieve the version from package.json using grep and sed
 if [ ! -f "package.json" ]; then
     echo "Error: package.json not found in the current directory."
     exit 1
