@@ -1,12 +1,5 @@
 import { type ImpactConfig, impactConfigSchema } from "@impacts/types/config";
-import {
-  parseJsonConfigFileContent,
-  sys,
-  readConfigFile,
-  type CompilerOptions,
-} from "typescript";
 import { cosmiconfig } from "cosmiconfig";
-import { dirname, relative } from "node:path";
 
 const explorer = cosmiconfig("impact");
 
