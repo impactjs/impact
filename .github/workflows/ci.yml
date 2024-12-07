@@ -52,6 +52,7 @@ jobs:
           path: |
                 node_modules
                 */*/node_modules
+                plugins/*/*/node_modules
           key: ${{ steps.create-cache-key.outputs.key }}
 
   lint:
@@ -77,6 +78,7 @@ jobs:
           path: |
             node_modules
             */*/node_modules
+            plugins/*/*/node_modules
           key: ${{ needs.install.outputs.nm-cache-key }}
       - run: pnpm install --frozen-lockfile
       - run: pnpm moonx check
@@ -105,6 +107,7 @@ jobs:
           path: |
             node_modules
             */*/node_modules
+            plugins/*/*/node_modules
           key: ${{ needs.install.outputs.nm-cache-key }}
       - run: pnpm install --frozen-lockfile # ensure all dependencies are installed and make sure to run `prepare` scripts
       - name: authenticate with npm
@@ -139,6 +142,7 @@ jobs:
           path: |
             node_modules
             */*/node_modules
+            plugins/*/*/node_modules
           key: ${{ needs.install.outputs.nm-cache-key }}
       - run: pnpm moonx build cli -- --target="bun-${{ matrix.platform }}-${{ matrix.arch }}" --outfile bin/${{ matrix.platform }}-${{ matrix.arch }}
       - uses: actions/upload-artifact@v4
