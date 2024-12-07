@@ -13,12 +13,9 @@
   "bin": {
     "impact": "./bin/impact"
   },
-  "files": [
-    "bin",
-    "scripts/setup-binary"
-  ],
+  "files": ["bin", "scripts/setup-binary"],
   "scripts": {
-    "postinstall": "sh scripts/setup-binary"
+    "prepare": "sh scripts/setup-binary"
   },
   "dependencies": {
     "@impacts/config": "workspace:*",
