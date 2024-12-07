@@ -1,5 +1,5 @@
 {
-  "name": "@impacts/linear",
+  "name": "@impacts/github",
   "version": "1.0.1-pre-1732983113.0",
   "license": "UNLICENSED",
   "author": {
@@ -8,12 +8,14 @@
   },
   "type": "module",
   "exports": {
-    ".": "./src/index.ts"
+    ".": "./src/index.ts",
+    "./gql": "./gql.d.ts"
   },
   "dependencies": {
     "@impacts/logger": "workspace:*",
     "@impacts/types": "workspace:*",
-    "@linear/sdk": "^33.0.0"
+    "@octokit/rest": "^21.0.2",
+    "zod": "^3.23.8"
   },
   "devDependencies": {
     "@impacts/ts-config": "workspace:*",

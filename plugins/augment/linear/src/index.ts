@@ -1,19 +1,20 @@
-import { logger } from "@impacts/logger";
 import { extractLinearFiltersFromContext } from "./utils.js";
-import type { Plugin } from "@impacts/types/plugins";
+import type { AugmentPlugin } from "@impacts/types/plugins";
 import { finsIssues } from "./find-issues.js";
 import { LinearClient } from "@linear/sdk";
+import { z } from "zod";
 
-type LinearOptions = {
-  workspace: string;
-  apiKey: string;
-};
+const linearOptionsSchema = z.object({
+  apiKey: z.string(),
+});
 
-export function linear(options: LinearOptions): Plugin {
-  logger.debug(`using workspace: ${options.workspace}`);
+type LinearOptions = z.infer<typeof linearOptionsSchema>;
+
+export function linear(options: LinearOptions): AugmentPlugin {
   return {
+    type: "augment",
     name: "linear",
-    async transform(context) {
+    async augment(context) {
       const linearClient = new LinearClient({
         apiKey: options.apiKey,
       });
@@ -25,4 +26,8 @@ export function linear(options: LinearOptions): Plugin {
       });
     },
   };
+}
+
+export function createLinearPlugin(options: unknown) {
+  return linear(linearOptionsSchema.parse(options));
 }

@@ -10,12 +10,13 @@ export const pluginContext = z.object({
 
 const basePluginSchema = z.object({
   name: z.string(),
-  transform: z.undefined(),
-  awaits: z.array(z.string()).optional(),
+  augment: z.undefined(),
 });
 
-const transformPluginSchema = basePluginSchema.extend({
-  transform: z
+const augmentPluginSchema = basePluginSchema.extend({
+  type: z.literal("augment"),
+  awaits: z.array(z.string()).optional(),
+  augment: z
     .function()
     .args(
       pluginContext,
@@ -24,8 +25,33 @@ const transformPluginSchema = basePluginSchema.extend({
     .returns(z.promise(z.map(z.string(), z.array(impactPluginResultEntry)))),
 });
 
-export const pluginSchema = z.union([basePluginSchema, transformPluginSchema]);
+const scanPluginSchema = basePluginSchema.extend({
+  type: z.literal("scan"),
+  shouldScan: z
+    .function()
+    .args(
+      z.string(),
+      z.lazy(() => baseConfigSchema),
+    )
+    .returns(z.boolean()),
+  scan: z
+    .function()
+    .args(
+      z.string(),
+      z.lazy(() => baseConfigSchema),
+    )
+    .returns(z.promise(z.set(z.string()))),
+});
+
+export const knownPluginNameSchema = z.union([
+  z.literal("github"),
+  z.literal("linear"),
+  z.literal("ecmascript"),
+]);
+
+export const pluginSchema = z.union([scanPluginSchema, augmentPluginSchema]);
 
 export type Plugin = z.infer<typeof pluginSchema>;
 export type PluginContext = z.infer<typeof pluginContext>;
-export type TransformPlugin = z.infer<typeof transformPluginSchema>;
+export type ScanPlugin = z.infer<typeof scanPluginSchema>;
+export type AugmentPlugin = z.infer<typeof augmentPluginSchema>;

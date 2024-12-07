@@ -133,9 +133,18 @@ importers:
       '@impacts/config':
         specifier: workspace:*
         version: link:../config
+      '@impacts/ecmascript':
+        specifier: workspace:*
+        version: link:../../plugins/scan/ecmascript
       '@impacts/git':
         specifier: workspace:*
         version: link:../git
+      '@impacts/github':
+        specifier: workspace:*
+        version: link:../../plugins/augment/github
+      '@impacts/linear':
+        specifier: workspace:*
+        version: link:../../plugins/augment/linear
       '@impacts/logger':
         specifier: workspace:*
         version: link:../logger
@@ -187,50 +196,6 @@ importers:
         specifier: ^5.6.3
         version: 5.6.3
 
-  packages/github:
-    dependencies:
-      '@impacts/logger':
-        specifier: workspace:*
-        version: link:../logger
-      '@impacts/types':
-        specifier: workspace:*
-        version: link:../types
-      '@octokit/rest':
-        specifier: ^21.0.2
-        version: 21.0.2
-    devDependencies:
-      '@impacts/ts-config':
-        specifier: workspace:*
-        version: link:../../configs/ts-config
-      '@types/bun':
-        specifier: ^1.1.14
-        version: 1.1.14
-      typescript:
-        specifier: ^5.6.3
-        version: 5.6.3
-
-  packages/linear:
-    dependencies:
-      '@impacts/logger':
-        specifier: workspace:*
-        version: link:../logger
-      '@impacts/types':
-        specifier: workspace:*
-        version: link:../types
-      '@linear/sdk':
-        specifier: ^33.0.0
-        version: 33.0.0
-    devDependencies:
-      '@impacts/ts-config':
-        specifier: workspace:*
-        version: link:../../configs/ts-config
-      '@types/bun':
-        specifier: ^1.1.14
-        version: 1.1.14
-      typescript:
-        specifier: ^5.6.3
-        version: 5.6.3
-
   packages/logger:
     dependencies:
       chalk:
@@ -265,6 +230,78 @@ importers:
       '@impacts/ts-config':
         specifier: workspace:*
         version: link:../../configs/ts-config
+      '@types/bun':
+        specifier: ^1.1.14
+        version: 1.1.14
+      typescript:
+        specifier: ^5.6.3
+        version: 5.6.3
+
+  plugins/augment/github:
+    dependencies:
+      '@impacts/logger':
+        specifier: workspace:*
+        version: link:../../../packages/logger
+      '@impacts/types':
+        specifier: workspace:*
+        version: link:../../../packages/types
+      '@octokit/rest':
+        specifier: ^21.0.2
+        version: 21.0.2
+      zod:
+        specifier: ^3.23.8
+        version: 3.23.8
+    devDependencies:
+      '@impacts/ts-config':
+        specifier: workspace:*
+        version: link:../../../configs/ts-config
+      '@types/bun':
+        specifier: ^1.1.14
+        version: 1.1.14
+      typescript:
+        specifier: ^5.6.3
+        version: 5.6.3
+
+  plugins/augment/linear:
+    dependencies:
+      '@impacts/logger':
+        specifier: workspace:*
+        version: link:../../../packages/logger
+      '@impacts/types':
+        specifier: workspace:*
+        version: link:../../../packages/types
+      '@linear/sdk':
+        specifier: ^33.0.0
+        version: 33.0.0
+      zod:
+        specifier: ^3.23.8
+        version: 3.23.8
+    devDependencies:
+      '@impacts/ts-config':
+        specifier: workspace:*
+        version: link:../../../configs/ts-config
+      '@types/bun':
+        specifier: ^1.1.14
+        version: 1.1.14
+      typescript:
+        specifier: ^5.6.3
+        version: 5.6.3
+
+  plugins/scan/ecmascript:
+    dependencies:
+      '@impacts/logger':
+        specifier: workspace:*
+        version: link:../../../packages/logger
+      '@impacts/types':
+        specifier: workspace:*
+        version: link:../../../packages/types
+      zod:
+        specifier: ^3.23.8
+        version: 3.23.8
+    devDependencies:
+      '@impacts/ts-config':
+        specifier: workspace:*
+        version: link:../../../configs/ts-config
       '@types/bun':
         specifier: ^1.1.14
         version: 1.1.14
@@ -855,8 +892,8 @@ packages:
   '@octokit/openapi-types@22.2.0':
     resolution: {integrity: sha512-QBhVjcUa9W7Wwhm6DBFu6ZZ+1/t/oYxqc2tp81Pi41YNuJinbFRx8B133qVOrAaBbF7D/m0Et6f9/pZt9Rc+tg==}
 
-  '@octokit/plugin-paginate-rest@11.3.5':
-    resolution: {integrity: sha512-cgwIRtKrpwhLoBi0CUNuY83DPGRMaWVjqVI/bGKsLJ4PzyWZNaEmhHroI2xlrVXkk6nFv0IsZpOp+ZWSWUS2AQ==}
+  '@octokit/plugin-paginate-rest@11.3.6':
+    resolution: {integrity: sha512-zcvqqf/+TicbTCa/Z+3w4eBJcAxCFymtc0UAIsR3dEVoNilWld4oXdscQ3laXamTszUZdusw97K8+DrbFiOwjw==}
     engines: {node: '>= 18'}
     peerDependencies:
       '@octokit/core': '>=6'
@@ -3553,7 +3590,7 @@ snapshots:
 
   '@octokit/openapi-types@22.2.0': {}
 
-  '@octokit/plugin-paginate-rest@11.3.5(@octokit/core@6.1.2)':
+  '@octokit/plugin-paginate-rest@11.3.6(@octokit/core@6.1.2)':
     dependencies:
       '@octokit/core': 6.1.2
       '@octokit/types': 13.6.2
@@ -3581,7 +3618,7 @@ snapshots:
   '@octokit/rest@21.0.2':
     dependencies:
       '@octokit/core': 6.1.2
-      '@octokit/plugin-paginate-rest': 11.3.5(@octokit/core@6.1.2)
+      '@octokit/plugin-paginate-rest': 11.3.6(@octokit/core@6.1.2)
       '@octokit/plugin-request-log': 5.3.1(@octokit/core@6.1.2)
       '@octokit/plugin-rest-endpoint-methods': 13.2.6(@octokit/core@6.1.2)
 

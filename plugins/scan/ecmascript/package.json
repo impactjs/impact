@@ -1,5 +1,5 @@
 {
-  "name": "@impacts/github",
+  "name": "@impacts/ecmascript",
   "version": "1.0.1-pre-1732983113.0",
   "license": "UNLICENSED",
   "author": {
@@ -8,13 +8,12 @@
   },
   "type": "module",
   "exports": {
-    ".": "./src/index.ts",
-    "./gql": "./gql.d.ts"
+    ".": "./src/index.ts"
   },
   "dependencies": {
     "@impacts/logger": "workspace:*",
     "@impacts/types": "workspace:*",
-    "@octokit/rest": "^21.0.2"
+    "zod": "^3.23.8"
   },
   "devDependencies": {
     "@impacts/ts-config": "workspace:*",

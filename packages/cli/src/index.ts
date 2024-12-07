@@ -66,6 +66,9 @@ cli.version(version);
 
 try {
   const { options } = cli.parse(process.argv, { run: false });
+  if (options.cwd) {
+    process.chdir(options.cwd);
+  }
   if (options.logLevel) {
     logger.setLogLevel(options.logLevel);
   }

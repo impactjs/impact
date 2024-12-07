@@ -1,8 +1,7 @@
 import type { ImpactConfig } from "@impacts/types/config";
-import { scan } from "./scan/index.js";
 import { Git } from "@impacts/git";
-import { join } from "node:path";
 import { PluginOrchestrator } from "./utils/plugin-orchestrator.js";
+import { join } from "node:path";
 import type {
   ImpactPluginResultEntry,
   ImpactResult,
@@ -21,15 +20,16 @@ export async function impact(
   config: ImpactConfig,
   options: ImpactOptions,
 ): Promise<ImpactResult> {
-  const scanResult = await scan(config);
   const repository = new Git(options.branch);
   const diff = repository.diff();
   const result = new Array<ImpactResultRawEntry>();
+  const orchestrator = new PluginOrchestrator(config);
+
   for await (const entry of config.entries) {
-    const files = [...scanResult.flat(join(process.cwd(), entry.path))].filter(
-      (file) => diff.has(file),
-    );
-    if (!files.length) {
+    const tree = await orchestrator.scan(join(process.cwd(), entry.path));
+    const files = tree.intersection(diff);
+    console.log(entry.id, files.size, tree.size);
+    if (!files.size) {
       continue;
     }
     const commits = repository.log(files);
@@ -37,7 +37,7 @@ export async function impact(
       id: entry.id,
       path: entry.path,
       description: entry.description,
-      diff: files,
+      diff: Array.from(files),
       commits,
     });
   }
@@ -55,7 +55,6 @@ export async function impact(
     commits.set(commit.hash, commit);
   }
 
-  const orchestrator = new PluginOrchestrator(config);
   const updates = await orchestrator.transform({
     commits,
     plugins: {},

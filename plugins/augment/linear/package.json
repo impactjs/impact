@@ -1,5 +1,5 @@
 {
-  "name": "@impacts/core",
+  "name": "@impacts/linear",
   "version": "1.0.1-pre-1732983113.0",
   "license": "UNLICENSED",
   "author": {
@@ -10,27 +10,15 @@
   "exports": {
     ".": "./src/index.ts"
   },
-  "files": [
-    "src",
-    "dist"
-  ],
   "dependencies": {
-    "@impacts/config": "workspace:*",
-    "@impacts/ecmascript": "workspace:*",
-    "@impacts/git": "workspace:*",
-    "@impacts/github": "workspace:*",
-    "@impacts/linear": "workspace:*",
     "@impacts/logger": "workspace:*",
     "@impacts/types": "workspace:*",
-    "@swc/core": "^1.9.3",
-    "@swc/wasm": "^1.9.3",
-    "enhanced-resolve": "^5.17.1",
-    "swc-walk": "1.0.0-rc.2"
+    "@linear/sdk": "^33.0.0",
+    "zod": "^3.23.8"
   },
   "devDependencies": {
     "@impacts/ts-config": "workspace:*",
     "@types/bun": "^1.1.14",
-    "@types/node": "^22.9.0",
     "typescript": "^5.6.3"
   }
 }

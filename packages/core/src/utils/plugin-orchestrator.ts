@@ -1,31 +1,66 @@
+import { createEcmascriptPlugin } from "@impacts/ecmascript";
+import { createGithubPlugin } from "@impacts/github";
+import { createLinearPlugin } from "@impacts/linear";
 import { logger } from "@impacts/logger";
 import type { ImpactConfig } from "@impacts/types/config";
 import type {
   Plugin,
   PluginContext,
-  TransformPlugin,
+  AugmentPlugin,
+  ScanPlugin,
 } from "@impacts/types/plugins";
 import { EventEmitter } from "node:stream";
 
 export class PluginOrchestrator {
   private enventHistory = new Set<string>();
   private eventsManager: EventEmitter = new EventEmitter();
-  private plugins: {
-    transform: Array<TransformPlugin>;
-  } = {
-    transform: [],
+  private plugins = {
+    scan: new Array<ScanPlugin>(),
+    augment: new Array<AugmentPlugin>(),
   };
 
   constructor(private config: ImpactConfig) {
     for (const plugin of config.plugins) {
-      if (plugin.transform) {
-        plugin.awaits = plugin.awaits ?? [];
-        logger.debug(`adding transform plugin: ${plugin.name}`);
-        this.plugins.transform.push(plugin);
-      } else {
-        logger.debug(`plugin ${plugin.name} is not a transform plugin`);
+      if (Array.isArray(plugin)) {
+        const [name, options] = plugin;
+        switch (name) {
+          case "ecmascript":
+            this.plugins.scan.push(createEcmascriptPlugin(options));
+            break;
+          case "linear":
+            this.plugins.augment.push(createLinearPlugin(options));
+            break;
+          case "github":
+            this.plugins.augment.push(createGithubPlugin(options));
+            break;
+          default:
+            logger.warn(`unknown plugin: ${name}`);
+            break;
+        }
+        continue;
+      }
+      switch (plugin.type) {
+        case "augment":
+          this.plugins.augment.push(plugin);
+          break;
+        case "scan":
+          this.plugins.scan.push(plugin);
+          break;
+        default:
+          logger.warn(`unknown plugin: ${plugin}`);
+          break;
       }
     }
+  }
+
+  public async scan(entry: string) {
+    const plugin = this.plugins.scan.find((plugin) =>
+      plugin.shouldScan(entry, this.config),
+    );
+    if (!plugin) {
+      throw new Error(`no scan plugin found for entry: ${entry}`);
+    }
+    return plugin.scan(entry, this.config);
   }
 
   private async awaitEvent(event: string) {
@@ -42,10 +77,7 @@ export class PluginOrchestrator {
 
   getOutputPriority() {
     const outputPriority = [...(this.config.outputPriority ?? [])];
-    const keys = [
-      ...this.plugins.transform.map((plugin) => plugin.name),
-      "git",
-    ];
+    const keys = [...this.plugins.augment.map((plugin) => plugin.name), "git"];
     for (const key of keys) {
       if (!outputPriority.includes(key)) {
         outputPriority.push(key);
@@ -66,7 +98,7 @@ export class PluginOrchestrator {
   async transform(context: PluginContext) {
     logger.debug("apllying transform plugins");
     await Promise.all(
-      this.plugins.transform.map(async (plugin) => {
+      this.plugins.augment.map(async (plugin) => {
         await Promise.all(
           (plugin.awaits ?? []).map((dependency) => {
             logger.debug(
@@ -76,7 +108,7 @@ export class PluginOrchestrator {
           }),
         );
         logger.debug(`applying transform plugin: ${plugin.name}`);
-        const result = await plugin.transform(context, this.config);
+        const result = await plugin.augment(context, this.config);
         context.plugins[plugin.name] = result;
         logger.debug(`plugin: ${plugin.name} finished`);
         this.eventsManager.emit(`plugin:transformed:${plugin.name}`, result);

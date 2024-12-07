@@ -2,4 +2,5 @@ packages:
   - "packages/*"
   - "configs/*"
   - "ui/*"
-  
+  - "plugins/augment/*"
+  - "plugins/scan/*"
