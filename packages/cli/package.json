@@ -18,7 +18,7 @@
     "scripts/setup-binary"
   ],
   "scripts": {
-    "prepare": "sh scripts/setup-binary"
+    "postinstall": "sh scripts/setup-binary"
   },
   "dependencies": {
     "@impacts/config": "workspace:*",
