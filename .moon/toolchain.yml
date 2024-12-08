@@ -9,3 +9,5 @@ node:
   dedupeOnLockfileChange: false
   pnpm:
     version: 9.0.6
+    installArgs:
+      - --frozen-lockfile
