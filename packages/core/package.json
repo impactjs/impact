@@ -21,11 +21,7 @@
     "@impacts/github": "workspace:*",
     "@impacts/linear": "workspace:*",
     "@impacts/logger": "workspace:*",
-    "@impacts/types": "workspace:*",
-    "@swc/core": "^1.9.3",
-    "@swc/wasm": "^1.9.3",
-    "enhanced-resolve": "^5.17.1",
-    "swc-walk": "1.0.0-rc.2"
+    "@impacts/types": "workspace:*"
   },
   "devDependencies": {
     "@impacts/ts-config": "workspace:*",
