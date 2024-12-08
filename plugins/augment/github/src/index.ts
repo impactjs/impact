@@ -35,12 +35,18 @@ const githubOptionsSchema = z.object({
 type GithubOptions = z.infer<typeof githubOptionsSchema>;
 
 export function github(options: GithubOptions): AugmentPlugin {
+  const auth = !options.auth
+    ? undefined
+    : options.auth.startsWith("env:")
+      ? process.env[options.auth.slice(4)]
+      : options.auth;
+
   return {
     name: "github",
     type: "augment",
     async augment(context) {
       const octokit = new Octokit({
-        auth: options.auth,
+        auth,
       });
       return await findPullRequestsByMergeCommits({
         octokit,

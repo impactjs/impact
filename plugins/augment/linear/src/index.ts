@@ -11,12 +11,17 @@ const linearOptionsSchema = z.object({
 type LinearOptions = z.infer<typeof linearOptionsSchema>;
 
 export function linear(options: LinearOptions): AugmentPlugin {
+  const apiKey = !options.apiKey
+    ? undefined
+    : options.apiKey.startsWith("env:")
+      ? process.env[options.apiKey.slice(4)]
+      : options.apiKey;
   return {
     type: "augment",
     name: "linear",
     async augment(context) {
       const linearClient = new LinearClient({
-        apiKey: options.apiKey,
+        apiKey,
       });
       const { teams, issues } = extractLinearFiltersFromContext(context);
       return await finsIssues({
