@@ -157,10 +157,3 @@ export const composition = {
     return composition;
   },
 };
-
-export class CompositionError extends Error {
-  constructor(component: string, parent: string) {
-    super(`[react-ui] ${component} must be used within a ${parent} component`);
-    this.name = "CompositionError";
-  }
-}

@@ -18,7 +18,6 @@
     "rename-overwrite": "^6.0.0"
   },
   "devDependencies": {
-    "@impacts/ts-config": "workspace:*",
     "@types/bun": "^1.1.14",
     "@types/node": "^22.9.0",
     "typescript": "^5.6.3"

@@ -11,7 +11,7 @@ export default defineConfig({
         const pkgJsonPath = resolve(__dirname, "package.json");
         const pkgJson = JSON.parse(readFileSync(pkgJsonPath, "utf8"));
         const exports = {};
-        for (const [fileName, chunkInfo] of Object.entries(bundle)) {
+        for (const [fileName] of Object.entries(bundle)) {
           const fileType = extname(fileName);
           exports[fileType.replace(/^\./, "")] = `./${join(
             "./dist",

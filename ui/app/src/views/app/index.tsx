@@ -1,41 +1,8 @@
-import { HStack, styled, VStack } from "@impacts/styled-system/jsx";
-import { sva } from "@impacts/styled-system/css";
+import { VStack } from "@impacts/styled-system/jsx";
 import { Tabs } from "../../components/Tabs";
 import { example } from "../../assets/example";
-import { flex } from "@impacts/styled-system/patterns";
 import { Fragment } from "react/jsx-runtime";
-import { FaGithub, FaGitAlt } from "react-icons/fa"; // Import specific icons
-import { SiLinear } from "react-icons/si"; // For Linear
-import Markdown from "react-markdown";
-import TruncatedSection from "../../components/Truncate";
-import reactGfm from "remark-gfm";
 import { Card } from "../../components/Card";
-
-function Icon({ icon }: { icon: string }) {
-  switch (icon) {
-    case "github":
-      return <FaGithub />;
-    case "git":
-      return <FaGitAlt />;
-    case "linear":
-      return <SiLinear />;
-    default:
-      return null;
-  }
-}
-
-function renderId(origin: string, id: string | number) {
-  switch (origin) {
-    case "github":
-      return `(#${id})`;
-    case "linear":
-      return `[${id}]`;
-    case "git":
-      return `(${id.toString().slice(0, 7)})`;
-    default:
-      return "";
-  }
-}
 
 export function App() {
   return (
@@ -76,8 +43,3 @@ export function App() {
     </VStack>
   );
 }
-
-const styles = sva({
-  slots: ["root", "title"],
-  base: {},
-});

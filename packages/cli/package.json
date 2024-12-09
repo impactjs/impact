@@ -23,12 +23,10 @@
   "dependencies": {
     "@impacts/config": "workspace:*",
     "@impacts/core": "workspace:*",
-    "@impacts/git": "workspace:*",
     "@impacts/logger": "workspace:*",
     "@impacts/types": "workspace:*",
     "@types/node": "^22.9.0",
     "cac": "^6.7.14",
-    "chalk": "^5.3.0",
     "yaml": "^2.6.1"
   },
   "devDependencies": {

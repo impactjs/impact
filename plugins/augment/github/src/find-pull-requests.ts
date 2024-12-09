@@ -2,7 +2,7 @@ import { logger } from "@impacts/logger";
 import type { ImpactPluginResultEntry } from "@impacts/types/results";
 import type { Octokit } from "@octokit/rest";
 
-export interface FindPullRequestsByMergeCommitsParams {
+interface FindPullRequestsByMergeCommitsParams {
   /**
    * @description The github client to use for making api-calls (may need to be authenticated)
    */

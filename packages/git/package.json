@@ -11,8 +11,7 @@
     ".": "./src/index.ts"
   },
   "dependencies": {
-    "@impacts/logger": "workspace:*",
-    "simple-git": "^3.27.0"
+    "@impacts/logger": "workspace:*"
   },
   "devDependencies": {
     "@impacts/ts-config": "workspace:*",

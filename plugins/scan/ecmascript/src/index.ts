@@ -78,17 +78,12 @@ async function scanEntrypoint(
       for (const entry of tree) {
         files.add(entry);
       }
-    } catch (error) {
+    } catch {
       logger.warn(`failed to resolve ${imp.path} from ${dirname(id)}`);
     }
   }
   history.set(id, files);
   return files;
-}
-
-function debug<T>(value: T, label: string) {
-  console.log(label, value);
-  return value;
 }
 
 async function createTranspiler(

@@ -20,7 +20,6 @@
   },
   "devDependencies": {
     "@ark-ui/react": "^4.4.4",
-    "@flaticon/flaticon-uicons": "^3.3.1",
     "@impacts/styled-system": "workspace:*",
     "@impacts/ts-config": "workspace:*",
     "@impacts/types": "workspace:*",

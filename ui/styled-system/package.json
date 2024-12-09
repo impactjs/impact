@@ -10,46 +10,38 @@
   "exports": {
     "./config": "./src/index.ts",
     "./css": {
-      "types": "./styled-system/css/index.d.ts",
-      "require": "./styled-system/css/index.mjs",
-      "import": "./styled-system/css/index.mjs"
+      "types": "./dist/css/index.d.ts",
+      "require": "./dist/css/index.mjs",
+      "import": "./dist/css/index.mjs"
     },
     "./tokens": {
-      "types": "./styled-system/tokens/index.d.ts",
-      "require": "./styled-system/tokens/index.mjs",
-      "import": "./styled-system/tokens/index.mjs"
+      "types": "./dist/tokens/index.d.ts",
+      "require": "./dist/tokens/index.mjs",
+      "import": "./dist/tokens/index.mjs"
     },
     "./types": {
-      "types": "./styled-system/types/index.d.ts",
-      "require": "./styled-system/types/index.mjs",
-      "import": "./styled-system/types/index.mjs"
+      "types": "./dist/types/index.d.ts",
+      "require": "./dist/types/index.mjs",
+      "import": "./dist/types/index.mjs"
     },
     "./patterns": {
-      "types": "./styled-system/patterns/index.d.ts",
-      "require": "./styled-system/patterns/index.mjs",
-      "import": "./styled-system/patterns/index.mjs"
+      "types": "./dist/patterns/index.d.ts",
+      "require": "./dist/patterns/index.mjs",
+      "import": "./dist/patterns/index.mjs"
     },
     "./jsx": {
-      "types": "./styled-system/jsx/index.d.ts",
-      "require": "./styled-system/jsx/index.mjs",
-      "import": "./styled-system/jsx/index.mjs"
+      "types": "./dist/jsx/index.d.ts",
+      "require": "./dist/jsx/index.mjs",
+      "import": "./dist/jsx/index.mjs"
     }
   },
   "scripts": {
     "prepare": "panda codegen"
   },
-  "dependencies": {
-    "@impacts/core": "workspace:*",
-    "react": "^18.3.1",
-    "react-dom": "^18.3.1",
-    "vite": "^6.0.1"
-  },
   "devDependencies": {
     "@impacts/ts-config": "workspace:*",
     "@pandacss/dev": "^0.48.0",
     "@types/bun": "^1.1.14",
-    "@types/react": "^18.3.12",
-    "@types/react-dom": "^18.3.1",
     "typescript": "^5.6.3"
   }
 }

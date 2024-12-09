@@ -30,24 +30,12 @@ importers:
         specifier: ^6.0.0
         version: 6.0.0
     devDependencies:
-      '@impacts/ts-config':
-        specifier: workspace:*
-        version: link:../ts-config
       '@types/bun':
         specifier: ^1.1.14
         version: 1.1.14
       '@types/node':
         specifier: ^22.9.0
         version: 22.9.0
-      typescript:
-        specifier: ^5.6.3
-        version: 5.6.3
-
-  configs/ts-config:
-    devDependencies:
-      '@types/bun':
-        specifier: ^1.1.14
-        version: 1.1.14
       typescript:
         specifier: ^5.6.3
         version: 5.6.3
@@ -60,9 +48,6 @@ importers:
       '@maastrich/moonx':
         specifier: 0.1.6
         version: 0.1.6
-      '@moonrepo/cli':
-        specifier: ^1.30.0
-        version: 1.30.0
       knip:
         specifier: ^5.38.0
         version: 5.38.0(@types/node@22.9.0)(typescript@5.6.3)
@@ -140,45 +125,6 @@ packages:
   '@maastrich/moonx@0.1.6':
     resolution: {integrity: sha512-glQ2dooWW+shXgfcOz8OYz0chHmcTJiGj0Q0ZHTLvKOrL3Dk16vw/L2vyRYQm98TkRshl+aTdDGkTK8Q7Mm7Qw==}
     hasBin: true
-
-  '@moonrepo/cli@1.30.0':
-    resolution: {integrity: sha512-NX90mw3uMbos47EMMCycovSFNsGm6tlVhh/4/YyCWzm/wy4pKsH+onJvAWV40HA+cXf8nUlA8EVIEZZWIWVT4w==}
-    hasBin: true
-
-  '@moonrepo/core-linux-arm64-gnu@1.30.0':
-    resolution: {integrity: sha512-ifMh7n37KlpUrE9SHpeV38e/dj1V6HdLwAoNuq1e8MuEhxQIgxKhmxEjJy4N50pQM3mlIP3ae0MJP9jZ/2VlBQ==}
-    cpu: [arm64]
-    os: [linux]
-
-  '@moonrepo/core-linux-arm64-musl@1.30.0':
-    resolution: {integrity: sha512-IAv7V6XpKYxbd7Npc8/o4+RHDNRQ3s0sZGXYvH0pc9BmgX83CYWI+Mf0BC7y8rZwQrF7AADXxE32r+hQ2yLApw==}
-    cpu: [arm64]
-    os: [linux]
-
-  '@moonrepo/core-linux-x64-gnu@1.30.0':
-    resolution: {integrity: sha512-Fp9adnbUsySC1CPgMc1lJvUxKQsYNfR+RzgZA/Mzt/WvTAh8gfH/N5pcpo1Jo3tVDZwLzqcYmkCpIdw0QKqxEA==}
-    cpu: [x64]
-    os: [linux]
-
-  '@moonrepo/core-linux-x64-musl@1.30.0':
-    resolution: {integrity: sha512-p9D0BfbP9r6tKii1vc98Zv6ym1ZgRVzBUG45jWit6iwfWJZDOVJhvMueULSqdB4U7YIv49N2nLVHNQRyTlUZlw==}
-    cpu: [x64]
-    os: [linux]
-
-  '@moonrepo/core-macos-arm64@1.30.0':
-    resolution: {integrity: sha512-qB3gbd5Qp456SwPcQ401HNC3ceNnutXrsOtadTOUztr0r8h7KGEcARyrlet1EWjz0jXD+60k4DIbFpCBfkAUSA==}
-    cpu: [arm64]
-    os: [darwin]
-
-  '@moonrepo/core-macos-x64@1.30.0':
-    resolution: {integrity: sha512-48c76Gu1wzThBf8+8h3rMvBa1Z/Yl12Ij3IQp6iQl8yGJPnvDixoX31P/Tky5ZOJj94EHiPkmWnqioMR+0hTvg==}
-    cpu: [x64]
-    os: [darwin]
-
-  '@moonrepo/core-windows-x64-msvc@1.30.0':
-    resolution: {integrity: sha512-bNl86LZHIXGH54dEMDDb13WzthP9mdhAUR+7mkWVbp3dgsq/vTYU+i5If+b8wJLYajH/ehu9SnXNRRHF/+C9Ug==}
-    cpu: [x64]
-    os: [win32]
 
   '@nodelib/fs.scandir@2.1.5':
     resolution: {integrity: sha512-vq24Bq3ym5HEQm2NKCr3yXDwjc7vTsEThRDnkp2DK9p1uqLR+DHurm/NOTo0KG7HYHU7eppKZj3MyqYuMBf62g==}
@@ -451,10 +397,6 @@ packages:
   detect-indent@7.0.1:
     resolution: {integrity: sha512-Mc7QhQ8s+cLrnUfU/Ji94vG/r8M26m8f++vyres4ZoojaRDpZ1eSIh/EpzLNwlWuvzSZ3UbDFspjFvTDXe6e/g==}
     engines: {node: '>=12.20'}
-
-  detect-libc@2.0.3:
-    resolution: {integrity: sha512-bwy0MGW55bG41VqxxypOsdSdGqLwXPI/focwgTYCFMbdUiBAxLg9CFzG08sz2aqzknwiX7Hkl0bQENjg8iLByw==}
-    engines: {node: '>=8'}
 
   detect-newline@4.0.1:
     resolution: {integrity: sha512-qE3Veg1YXzGHQhlA6jzebZN2qVf6NX+A7m7qlhCGG30dJixrAQhYOsJjsnBjJkCSmuOPpCk30145fr8FV0bzog==}
@@ -986,39 +928,6 @@ snapshots:
 
   '@maastrich/moonx@0.1.6': {}
 
-  '@moonrepo/cli@1.30.0':
-    dependencies:
-      detect-libc: 2.0.3
-    optionalDependencies:
-      '@moonrepo/core-linux-arm64-gnu': 1.30.0
-      '@moonrepo/core-linux-arm64-musl': 1.30.0
-      '@moonrepo/core-linux-x64-gnu': 1.30.0
-      '@moonrepo/core-linux-x64-musl': 1.30.0
-      '@moonrepo/core-macos-arm64': 1.30.0
-      '@moonrepo/core-macos-x64': 1.30.0
-      '@moonrepo/core-windows-x64-msvc': 1.30.0
-
-  '@moonrepo/core-linux-arm64-gnu@1.30.0':
-    optional: true
-
-  '@moonrepo/core-linux-arm64-musl@1.30.0':
-    optional: true
-
-  '@moonrepo/core-linux-x64-gnu@1.30.0':
-    optional: true
-
-  '@moonrepo/core-linux-x64-musl@1.30.0':
-    optional: true
-
-  '@moonrepo/core-macos-arm64@1.30.0':
-    optional: true
-
-  '@moonrepo/core-macos-x64@1.30.0':
-    optional: true
-
-  '@moonrepo/core-windows-x64-msvc@1.30.0':
-    optional: true
-
   '@nodelib/fs.scandir@2.1.5':
     dependencies:
       '@nodelib/fs.stat': 2.0.5
@@ -1359,8 +1268,6 @@ snapshots:
   depd@1.1.2: {}
 
   detect-indent@7.0.1: {}
-
-  detect-libc@2.0.3: {}
 
   detect-newline@4.0.1: {}
 

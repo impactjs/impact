@@ -15,7 +15,6 @@
     "dist"
   ],
   "dependencies": {
-    "@impacts/config": "workspace:*",
     "@impacts/ecmascript": "workspace:*",
     "@impacts/git": "workspace:*",
     "@impacts/github": "workspace:*",

@@ -82,7 +82,7 @@ export async function finsIssues({
     }
     spinner.succeed(`retrieved ${issuesRetrieved} issues`);
     return shas;
-  } catch (error) {
+  } catch {
     spinner.fail("failed to retrieve issues");
     return new Map();
   }

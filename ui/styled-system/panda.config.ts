@@ -1,3 +1,6 @@
 import { config } from "./src/index";
 
-export default config;
+export default {
+  ...config,
+  outdir: "dist",
+};

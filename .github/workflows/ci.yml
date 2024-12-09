@@ -81,9 +81,7 @@ jobs:
             plugins/*/*/node_modules
           key: ${{ needs.install.outputs.nm-cache-key }}
       - run: pnpm install --frozen-lockfile
-      - run: pnpm moonx check
-      - run: pnpm moonx sort-check
-      - run: pnpm moonx format-check
+      - run: pnpm moon :sort-check :format-check :check :lint
 
   deploy:
     name: deploy
