@@ -6,6 +6,7 @@ import { loadConfig } from "@impacts/config/internal";
 import { impact } from "@impacts/core";
 import { logger } from "@impacts/logger";
 import yaml from "yaml";
+import { write } from "./utils/output.js";
 
 const cli = cac("impact");
 
@@ -22,7 +23,7 @@ cli
   .command("", "run impact")
   .option("--branch <branch>", "Use branch")
   .option("-o, --outfile <outfile>", "Output file")
-  .option("-f, --format <format>", "Output format")
+  .option("--format <format>", "Output format")
   .action(async (options) => {
     console.log("main action", options);
     const config = await loadConfig({
@@ -40,16 +41,10 @@ cli
       branch,
     });
 
-    const format = config.format ?? options.format ?? "yaml";
-    const outfile = config.outfile ?? options.outfile;
-    const output =
-      format === "json" ? JSON.stringify(result) : yaml.stringify(result);
-
-    if (!outfile) {
-      console.log(output);
-      return;
-    }
-    await Bun.write(outfile, output);
+    await write(result, {
+      outfile: options.outfile ?? config.outfile,
+      format: options.format ?? config.format,
+    });
   });
 
 cli.command("show-config", "Show config").action(async (options) => {

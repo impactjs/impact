@@ -84,6 +84,9 @@ importers:
       '@impacts/logger':
         specifier: workspace:*
         version: link:../logger
+      '@impacts/types':
+        specifier: workspace:*
+        version: link:../types
       '@types/node':
         specifier: ^22.9.0
         version: 22.9.0
