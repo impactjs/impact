@@ -1,0 +1,39 @@
+{
+  "name": "@impacts/app",
+  "version": "1.0.0",
+  "license": "UNLICENSED",
+  "author": {
+    "name": "maastrich",
+    "email": "pinsaultm@gmail.com"
+  },
+  "type": "module",
+  "exports": {
+    "css": "./dist/assets/index-CTU8u8Tm.css",
+    "js": "./dist/assets/index-C6Y5LqJu.js",
+    "html": "./dist/index.html"
+  },
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "prepare": "panda codegen"
+  },
+  "dependencies": {
+    "@impacts/styled-system": "workspace:*"
+  },
+  "devDependencies": {
+    "@ark-ui/react": "^4.4.4",
+    "@impacts/ts-config": "workspace:*",
+    "@pandacss/dev": "^0.48.0",
+    "@types/bun": "^1.1.14",
+    "@types/react": "^18.3.12",
+    "@types/react-dom": "^18.3.1",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1",
+    "react-icons": "^5.3.0",
+    "react-markdown": "^9.0.1",
+    "remark-gfm": "^4.0.0",
+    "typescript": "^5.6.3",
+    "vite": "^6.0.1"
+  }
+}
