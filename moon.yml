@@ -11,3 +11,5 @@ workspace:
       - make-dedicated-lockfile
       - format-check
       - format
+      - lint
+      - knip

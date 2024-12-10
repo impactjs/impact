@@ -10,9 +10,6 @@
   "exports": {
     ".": "./src/index.ts"
   },
-  "dependencies": {
-    "@impacts/logger": "workspace:*"
-  },
   "devDependencies": {
     "@impacts/ts-config": "workspace:*",
     "@types/bun": "^1.1.14",

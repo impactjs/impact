@@ -66,18 +66,6 @@ importers:
 
   packages/cli:
     dependencies:
-      '@impacts/config':
-        specifier: workspace:*
-        version: link:../config
-      '@impacts/core':
-        specifier: workspace:*
-        version: link:../core
-      '@impacts/logger':
-        specifier: workspace:*
-        version: link:../logger
-      '@impacts/types':
-        specifier: workspace:*
-        version: link:../types
       '@types/node':
         specifier: ^22.9.0
         version: 22.9.0
@@ -151,10 +139,6 @@ importers:
         version: 5.6.3
 
   packages/git:
-    dependencies:
-      '@impacts/logger':
-        specifier: workspace:*
-        version: link:../logger
     devDependencies:
       '@impacts/ts-config':
         specifier: workspace:*
@@ -271,19 +255,17 @@ importers:
         version: 5.6.3
 
   ui/app:
+    dependencies:
+      '@impacts/styled-system':
+        specifier: workspace:*
+        version: link:../styled-system
     devDependencies:
       '@ark-ui/react':
         specifier: ^4.4.4
         version: 4.4.4(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
-      '@impacts/styled-system':
-        specifier: workspace:*
-        version: link:../styled-system
       '@impacts/ts-config':
         specifier: workspace:*
         version: link:../../configs/ts-config
-      '@impacts/types':
-        specifier: workspace:*
-        version: link:../../packages/types
       '@pandacss/dev':
         specifier: ^0.48.0
         version: 0.48.0(typescript@5.6.3)

@@ -21,10 +21,6 @@
     "postinstall": "sh scripts/setup-binary"
   },
   "dependencies": {
-    "@impacts/config": "workspace:*",
-    "@impacts/core": "workspace:*",
-    "@impacts/logger": "workspace:*",
-    "@impacts/types": "workspace:*",
     "@types/node": "^22.9.0",
     "cac": "^6.7.14",
     "yaml": "^2.6.1"

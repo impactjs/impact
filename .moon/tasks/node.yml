@@ -19,6 +19,14 @@ tasks:
     outputs:
       - ".workspace-lock.yaml"
 
+  knip:
+    command: knip
+    inputs:
+      - src
+      - package.json
+      - .workspace-lock.yaml
+      - tsconfig.json
+
   sort:
     command: "sort-package-json"
     inputs:
