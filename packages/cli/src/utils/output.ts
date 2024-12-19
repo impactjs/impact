@@ -65,7 +65,7 @@ const html = `
   <link rel="stylesheet" crossorigin href="https://unpkg.com/@impacts/app@__VERSION__/dist/index.css">
 </head>
 
-<body class="standalone">
+<body class="standalone light">
     <div id="root" class="light"></div>
 </body>
 
