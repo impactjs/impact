@@ -1,6 +1,5 @@
 import type { ImpactResult } from "@impacts/types/results";
 import yaml from "yaml";
-import pkg from "../../package.json" with { type: "json" };
 
 type WriteOptions = {
   outfile?: string;
@@ -18,14 +17,19 @@ export async function write(result: ImpactResult, options: WriteOptions = {}) {
   await Bun.write(options.outfile, output);
 }
 
-function render(result: ImpactResult, format = "yaml") {
-  switch (format) {
+function render(result: ImpactResult, format: string | undefined) {
+  switch (format ?? "yaml") {
     case "json":
       return JSON.stringify(result);
     case "yaml":
       return yaml.stringify(result);
     case "html":
-      return html.replace("__RESULT__", JSON.stringify(result));
+      return (
+        html
+          .replace("__VERSION__", String(Bun.env.IMPACTS_CLI_VERSION))
+          // replace the __RESULT__ placeholder with the result (ensure escaping for quotes)
+          .replace("__RESULT__", JSON.stringify(result).replace(/"/g, '\\"'))
+      );
     default:
       throw new Error(`Unsupported format: ${format}`);
   }
@@ -53,14 +57,15 @@ const html = `
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=block" rel="stylesheet"
         rel="preload" crossorigin="anonymous" />
 
+  <script>
+      window.result = "__RESULT__";
+  </script>
+  <script type="module" crossorigin src="https://unpkg.com/@impacts/app/__VERSION__/dist/index.js"></script>
+  <link rel="stylesheet" crossorigin href="https://unpkg.com/@impacts/app/__VERSION__/dist/index.css">
 </head>
 
 <body class="standalone">
     <div id="root" class="light"></div>
-    <script>
-        window.result = "__RESULT__";
-    </script>
-    <script type="module" src="https://unpkg.com/@impacts/app/${pkg.version}/dist/index.js"></script>
 </body>
 
 </html>
