@@ -1,4 +1,4 @@
-import { readFileSync, writeFileSync } from "node:fs";
+import { copyFileSync, readFileSync, writeFileSync } from "node:fs";
 import { extname, join, resolve } from "node:path";
 import { defineConfig } from "vite";
 
@@ -17,6 +17,8 @@ export default defineConfig({
             "./dist",
             `./${fileName}`,
           )}`;
+          // write the file to the dist folder (with filename index.ext)
+          copyFileSync(fileName, join("dist", `./index${fileType}`));
         }
         pkgJson.exports = exports;
         writeFileSync(pkgJsonPath, JSON.stringify(pkgJson, null, 2));
