@@ -1,5 +1,6 @@
 import type { ImpactResult } from "@impacts/types/results";
 import yaml from "yaml";
+import { cliVersion } from "./env.js" with { type: "macro" };
 
 type WriteOptions = {
   outfile?: string;
@@ -26,7 +27,7 @@ function render(result: ImpactResult, format: string | undefined) {
     case "html":
       return (
         html
-          .replace(/__VERSION__/g, String(Bun.env.VITE_IMPACTS_CLI_VERSION))
+          .replace(/__VERSION__/g, cliVersion)
           // replace the __RESULT__ placeholder with the result (ensure escaping for quotes)
           .replace("__RESULT__", JSON.stringify(result).replace(/"/g, '\\"'))
       );
