@@ -1,1 +1,3 @@
-export const cliVersion = String(Bun.env.IMPACTS_CLI_VERSION);
+export function getVersion() {
+  return process.env.IMPACTS_CLI_VERSION ?? "not set";
+}

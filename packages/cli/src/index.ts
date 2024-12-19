@@ -24,7 +24,6 @@ cli
   .option("-o, --outfile <outfile>", "Output file")
   .option("--format <format>", "Output format")
   .action(async (options) => {
-    console.log("main action", options);
     const config = await loadConfig({
       cwd: options.cwd,
       config: options.config,
