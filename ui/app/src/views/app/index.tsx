@@ -1,9 +1,9 @@
 import { css } from "@impacts/styled-system/css";
 import { VStack } from "@impacts/styled-system/jsx";
+import { impactResultSchema } from "@impacts/types/results";
 import { Fragment } from "react/jsx-runtime";
 import { Card } from "../../components/Card";
 import { Tabs } from "../../components/Tabs";
-import { impactResultSchema } from "@impacts/types/results";
 
 declare global {
   const result: string;
