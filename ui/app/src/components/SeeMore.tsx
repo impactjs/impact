@@ -21,11 +21,10 @@ export function SeeMore({ children, main, references }: SeeMoreProps) {
   );
   return (
     <Dialog.Root lazyMount>
-      {/* open={main.id === "FRONT-2085"}> */}
       <Dialog.Trigger asChild className={classes.trigger}>
         {children}
       </Dialog.Trigger>
-      <Portal container={{ current: document.getElementById("root") }}>
+      <Portal>
         <Dialog.Backdrop className={classes.backdrop} />
         <Dialog.Positioner className={classes.positioner}>
           <Dialog.Content className={classes.content}>

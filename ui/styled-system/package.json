@@ -38,13 +38,13 @@
   "scripts": {
     "prepare": "panda codegen"
   },
+  "dependencies": {
+    "react": "^19.0.0"
+  },
   "devDependencies": {
     "@impacts/ts-config": "workspace:*",
     "@pandacss/dev": "^0.49.0",
     "@types/bun": "^1.1.14",
     "typescript": "^5.7.2"
-  },
-  "dependencies": {
-    "react": "^19.0.0"
   }
 }
