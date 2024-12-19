@@ -31,12 +31,12 @@ const impactResultSummaryEntry = z.object({
   updates: z.array(impactResultSummaryUpdate),
 });
 
-const impactResult = z.object({
+export const impactResultSchema = z.object({
   raw: z.array(impactResultRawEntry),
   entrypoints: z.array(impactResultSummaryEntry),
 });
 
-export type ImpactResult = z.infer<typeof impactResult>;
+export type ImpactResult = z.infer<typeof impactResultSchema>;
 export type ImpactResultRawEntry = z.infer<typeof impactResultRawEntry>;
 export type ImpactPluginResultEntry = z.infer<typeof impactPluginResultEntry>;
 export type ImpactResultSummaryEntry = z.infer<typeof impactResultSummaryEntry>;

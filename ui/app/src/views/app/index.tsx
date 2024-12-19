@@ -1,11 +1,30 @@
 import { css } from "@impacts/styled-system/css";
 import { VStack } from "@impacts/styled-system/jsx";
 import { Fragment } from "react/jsx-runtime";
-import { example } from "../../assets/example";
 import { Card } from "../../components/Card";
 import { Tabs } from "../../components/Tabs";
+import { impactResultSchema } from "@impacts/types/results";
+
+declare global {
+  const result: string;
+}
+
+const parsed = impactResultSchema.safeParse(JSON.parse(result));
 
 export function App() {
+  if (!parsed.success) {
+    return (
+      <VStack
+        backgroundColor="interface.100"
+        padding="md"
+        size="full"
+        overflow="hidden"
+      >
+        <pre>{parsed.error.message}</pre>
+      </VStack>
+    );
+  }
+
   return (
     <VStack
       backgroundColor="interface.100"
@@ -17,9 +36,9 @@ export function App() {
         lazyMount
         orientation="vertical"
         className={css({ size: "full" })}
-        defaultValue={example.entrypoints[0].id}
+        defaultValue={parsed.data.entrypoints[0].id}
       >
-        {example.entrypoints.map((summary) => (
+        {parsed.data.entrypoints.map((summary) => (
           <Fragment key={summary.id}>
             <Tabs.Trigger key={summary.id} value={summary.id}>
               {summary.description} ({Object.values(summary.updates).length})

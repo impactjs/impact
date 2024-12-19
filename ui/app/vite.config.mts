@@ -18,7 +18,10 @@ export default defineConfig({
             `./${fileName}`,
           )}`;
           // write the file to the dist folder (with filename index.ext)
-          copyFileSync(fileName, join("dist", `./index${fileType}`));
+          copyFileSync(
+            join("dist", fileName),
+            join("dist", `./index${fileType}`),
+          );
         }
         pkgJson.exports = exports;
         writeFileSync(pkgJsonPath, JSON.stringify(pkgJson, null, 2));
