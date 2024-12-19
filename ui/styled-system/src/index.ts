@@ -1,6 +1,6 @@
 import { defineConfig, definePreset, defineUtility } from "@pandacss/dev";
-import { semanticTokens, tokens } from "./tokens.js";
 import { globalStyles } from "./global-styles.js";
+import { semanticTokens, tokens } from "./tokens.js";
 
 export const preset = definePreset({
   name: "@impacts/styled-system",

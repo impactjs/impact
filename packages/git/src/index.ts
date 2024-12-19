@@ -1,5 +1,5 @@
-import { logger } from "@impacts/logger";
 import { join } from "node:path";
+import { logger } from "@impacts/logger";
 
 export class Git {
   private _root?: string;

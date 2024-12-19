@@ -1,15 +1,14 @@
 import { Dialog, Portal } from "@ark-ui/react";
 import { sva } from "@impacts/styled-system/css";
-import { Fragment, useState, type ReactNode } from "react";
-import { Markdown } from "./Markdown";
-import reactGfm from "remark-gfm";
-import { Button } from "./Button";
+import { Flex } from "@impacts/styled-system/jsx";
 import { center } from "@impacts/styled-system/patterns";
 import type { ImpactResultSummaryUpdate } from "@impacts/types/results";
-import { UpdateId } from "./UpdateId";
-import { Box, Flex } from "@impacts/styled-system/jsx";
-import { Tabs } from "./Tabs";
+import { Fragment, type ReactNode, useState } from "react";
+import { Button } from "./Button";
 import { Icon } from "./Icon";
+import { Markdown } from "./Markdown";
+import { Tabs } from "./Tabs";
+import { UpdateId } from "./UpdateId";
 
 type SeeMoreProps = {
   children: ReactNode;

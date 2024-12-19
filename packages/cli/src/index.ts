@@ -1,11 +1,10 @@
 #! /usr/bin/env bun
 
-import { cac } from "cac";
-import { version } from "../package.json";
 import { loadConfig } from "@impacts/config/internal";
 import { impact } from "@impacts/core";
 import { logger } from "@impacts/logger";
-import yaml from "yaml";
+import { cac } from "cac";
+import { version } from "../package.json";
 import { write } from "./utils/output.js";
 
 const cli = cac("impact");

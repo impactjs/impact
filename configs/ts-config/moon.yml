@@ -8,5 +8,6 @@ language: other
 workspace:
   inheritedTasks:
     exclude:
+      - knip
       - format
       - format-check

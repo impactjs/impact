@@ -1,8 +1,9 @@
+import { css } from "@impacts/styled-system/css";
 import { VStack } from "@impacts/styled-system/jsx";
-import { Tabs } from "../../components/Tabs";
-import { example } from "../../assets/example";
 import { Fragment } from "react/jsx-runtime";
+import { example } from "../../assets/example";
 import { Card } from "../../components/Card";
+import { Tabs } from "../../components/Tabs";
 
 export function App() {
   return (
@@ -13,9 +14,9 @@ export function App() {
       overflow="hidden"
     >
       <Tabs.Root
-        size="full"
         lazyMount
         orientation="vertical"
+        className={css({ size: "full" })}
         defaultValue={example.entrypoints[0].id}
       >
         {example.entrypoints.map((summary) => (

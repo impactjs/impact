@@ -1,12 +1,11 @@
 import {
   Tabs as ArkTabs,
-  tabsAnatomy,
   type TabsRootProps as ArkTabsRootProps,
+  tabsAnatomy,
 } from "@ark-ui/react";
-import { composition } from "../utils/composition";
 import { cx, sva } from "@impacts/styled-system/css";
 import { cloneElement } from "react";
-import { styled } from "@impacts/styled-system/jsx";
+import { composition } from "../utils/composition";
 
 type TabsRootProps = ArkTabsRootProps;
 function TabsRoot(props: TabsRootProps) {
@@ -127,7 +126,7 @@ const styles = sva({
 });
 
 export const Tabs = {
-  Root: styled(TabsRoot),
+  Root: TabsRoot,
   Trigger: ArkTabs.Trigger,
   Content: ArkTabs.Content,
 };

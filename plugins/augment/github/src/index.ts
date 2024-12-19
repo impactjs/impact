@@ -1,7 +1,7 @@
-import { Octokit } from "@octokit/rest";
-import { findPullRequestsByMergeCommits } from "./find-pull-requests.js";
 import type { AugmentPlugin } from "@impacts/types/plugins";
+import { Octokit } from "@octokit/rest";
 import { z } from "zod";
+import { findPullRequestsByMergeCommits } from "./find-pull-requests.js";
 
 const githubOptionsSchema = z.object({
   /**

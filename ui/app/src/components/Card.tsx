@@ -1,7 +1,7 @@
-import { VStack, HStack, styled } from "@impacts/styled-system/jsx";
+import { HStack, VStack, styled } from "@impacts/styled-system/jsx";
 import type { ImpactResultSummaryUpdate } from "@impacts/types/results";
-import { Icon } from "./Icon";
 import { Button } from "./Button";
+import { Icon } from "./Icon";
 import { SeeMore } from "./SeeMore";
 import { UpdateId } from "./UpdateId";
 

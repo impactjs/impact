@@ -1,8 +1,8 @@
-import { extractLinearFiltersFromContext } from "./utils.js";
 import type { AugmentPlugin } from "@impacts/types/plugins";
-import { finsIssues } from "./find-issues.js";
 import { LinearClient } from "@linear/sdk";
 import { z } from "zod";
+import { finsIssues } from "./find-issues.js";
+import { extractLinearFiltersFromContext } from "./utils.js";
 
 const linearOptionsSchema = z.object({
   apiKey: z.string(),

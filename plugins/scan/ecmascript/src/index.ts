@@ -1,9 +1,9 @@
+import { dirname, extname } from "node:path";
+import { logger } from "@impacts/logger";
 import type { BaseConfig } from "@impacts/types/config";
 import type { ScanPlugin } from "@impacts/types/plugins";
-import { z } from "zod";
-import { dirname, extname } from "node:path";
 import { Glob } from "bun";
-import { logger } from "@impacts/logger";
+import { z } from "zod";
 
 const ecmaScriptOptionsSchema = z
   .object({

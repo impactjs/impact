@@ -1,15 +1,14 @@
+import { EventEmitter } from "node:stream";
 import { createEcmascriptPlugin } from "@impacts/ecmascript";
 import { createGithubPlugin } from "@impacts/github";
 import { createLinearPlugin } from "@impacts/linear";
 import { logger } from "@impacts/logger";
 import type { ImpactConfig } from "@impacts/types/config";
 import type {
-  Plugin,
-  PluginContext,
   AugmentPlugin,
+  PluginContext,
   ScanPlugin,
 } from "@impacts/types/plugins";
-import { EventEmitter } from "node:stream";
 
 export class PluginOrchestrator {
   private enventHistory = new Set<string>();

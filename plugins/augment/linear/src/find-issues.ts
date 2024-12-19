@@ -1,6 +1,6 @@
-import type { LinearClient, LinearDocument } from "@linear/sdk";
-import type { ImpactPluginResultEntry } from "@impacts/types/results";
 import { logger } from "@impacts/logger";
+import type { ImpactPluginResultEntry } from "@impacts/types/results";
+import type { LinearClient, LinearDocument } from "@linear/sdk";
 
 type FindIssuesOptions = {
   /**

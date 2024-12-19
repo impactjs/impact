@@ -1,6 +1,6 @@
+import { readFileSync, writeFileSync } from "node:fs";
 import { extname, join, resolve } from "node:path";
 import { defineConfig } from "vite";
-import { readFileSync, writeFileSync } from "node:fs";
 
 export default defineConfig({
   plugins: [

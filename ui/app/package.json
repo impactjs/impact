@@ -24,6 +24,7 @@
   "devDependencies": {
     "@ark-ui/react": "^4.4.4",
     "@impacts/ts-config": "workspace:*",
+    "@impacts/types": "workspace:*",
     "@pandacss/dev": "^0.48.0",
     "@types/bun": "^1.1.14",
     "@types/react": "^18.3.12",

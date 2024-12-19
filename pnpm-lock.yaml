@@ -65,26 +65,34 @@ importers:
         version: 5.6.3
 
   packages/cli:
-    dependencies:
-      '@types/node':
-        specifier: ^22.9.0
-        version: 22.9.0
-      cac:
-        specifier: ^6.7.14
-        version: 6.7.14
-      yaml:
-        specifier: ^2.6.1
-        version: 2.6.1
     devDependencies:
+      '@impacts/config':
+        specifier: workspace:*
+        version: link:../config
+      '@impacts/core':
+        specifier: workspace:*
+        version: link:../core
+      '@impacts/logger':
+        specifier: workspace:*
+        version: link:../logger
       '@impacts/ts-config':
         specifier: workspace:*
         version: link:../../configs/ts-config
+      '@impacts/types':
+        specifier: workspace:*
+        version: link:../types
       '@types/bun':
         specifier: ^1.1.14
         version: 1.1.14
+      cac:
+        specifier: ^6.7.14
+        version: 6.7.14
       typescript:
         specifier: ^5.6.3
         version: 5.6.3
+      yaml:
+        specifier: ^2.6.1
+        version: 2.6.1
 
   packages/config:
     devDependencies:
@@ -140,6 +148,9 @@ importers:
 
   packages/git:
     devDependencies:
+      '@impacts/logger':
+        specifier: workspace:*
+        version: link:../logger
       '@impacts/ts-config':
         specifier: workspace:*
         version: link:../../configs/ts-config
@@ -266,6 +277,9 @@ importers:
       '@impacts/ts-config':
         specifier: workspace:*
         version: link:../../configs/ts-config
+      '@impacts/types':
+        specifier: workspace:*
+        version: link:../../packages/types
       '@pandacss/dev':
         specifier: ^0.48.0
         version: 0.48.0(typescript@5.6.3)

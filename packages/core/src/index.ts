@@ -1,13 +1,13 @@
-import type { ImpactConfig } from "@impacts/types/config";
-import { Git } from "@impacts/git";
-import { PluginOrchestrator } from "./utils/plugin-orchestrator.js";
 import { join } from "node:path";
+import { Git } from "@impacts/git";
+import type { ImpactConfig } from "@impacts/types/config";
 import type {
   ImpactPluginResultEntry,
   ImpactResult,
   ImpactResultRawEntry,
   ImpactResultSummaryEntry,
 } from "@impacts/types/results";
+import { PluginOrchestrator } from "./utils/plugin-orchestrator.js";
 
 type ImpactOptions = {
   /**
