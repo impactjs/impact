@@ -61,8 +61,8 @@ const html = `
   <script>
       window.result = "__RESULT__";
   </script>
-  <script type="module" crossorigin src="https://unpkg.com/@impacts/app/__VERSION__/dist/index.js"></script>
-  <link rel="stylesheet" crossorigin href="https://unpkg.com/@impacts/app/__VERSION__/dist/index.css">
+  <script type="module" crossorigin src="https://unpkg.com/@impacts/app@__VERSION__/dist/index.js"></script>
+  <link rel="stylesheet" crossorigin href="https://unpkg.com/@impacts/app@__VERSION__/dist/index.css">
 </head>
 
 <body class="standalone">
