@@ -1,17 +1,31 @@
 {
-	"name": "@template-project/core",
-	"version": "1.0.0",
-	"license": "UNLICENSED",
-	"author": {
-		"name": "maastrich",
-		"email": "pinsaultm@gmail.com"
-	},
-	"type": "module",
-	"exports": {
-		".": "./src/index.ts"
-	},
-	"devDependencies": {
-		"@template-project/ts-config": "workspace:*",
-		"typescript": "^5.6.3"
-	}
+  "name": "@impacts/core",
+  "version": "1.0.1",
+  "license": "UNLICENSED",
+  "author": {
+    "name": "maastrich",
+    "email": "pinsaultm@gmail.com"
+  },
+  "type": "module",
+  "exports": {
+    ".": "./src/index.ts"
+  },
+  "files": [
+    "src",
+    "dist"
+  ],
+  "dependencies": {
+    "@impacts/ecmascript": "workspace:*",
+    "@impacts/git": "workspace:*",
+    "@impacts/github": "workspace:*",
+    "@impacts/linear": "workspace:*",
+    "@impacts/logger": "workspace:*",
+    "@impacts/types": "workspace:*"
+  },
+  "devDependencies": {
+    "@impacts/ts-config": "workspace:*",
+    "@types/bun": "^1.1.14",
+    "@types/node": "^22.10.2",
+    "typescript": "^5.7.2"
+  }
 }

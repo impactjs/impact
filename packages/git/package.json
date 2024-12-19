@@ -1,0 +1,19 @@
+{
+  "name": "@impacts/git",
+  "version": "1.0.1",
+  "license": "UNLICENSED",
+  "author": {
+    "name": "maastrich",
+    "email": "pinsaultm@gmail.com"
+  },
+  "type": "module",
+  "exports": {
+    ".": "./src/index.ts"
+  },
+  "devDependencies": {
+    "@impacts/logger": "workspace:*",
+    "@impacts/ts-config": "workspace:*",
+    "@types/bun": "^1.1.14",
+    "typescript": "^5.7.2"
+  }
+}

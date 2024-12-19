@@ -1,0 +1,20 @@
+# https://moonrepo.dev/docs/config/project
+# yaml-language-server: $schema=https://moonrepo.dev/schemas/project.json
+$schema: "https://moonrepo.dev/schemas/project.json"
+
+platform: node
+language: typescript
+
+tags:
+  - publishable
+
+tasks:
+  dev:
+    command: vite
+    preset: server
+
+  build:
+    command: vite build
+
+  publish:
+    deps: [build]
