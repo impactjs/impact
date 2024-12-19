@@ -9,3 +9,7 @@ workspace:
   inheritedTasks:
     exclude:
       - make-dedicated-lockfile
+      - format-check
+      - format
+      - lint
+      - knip
