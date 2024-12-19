@@ -26,7 +26,7 @@ function render(result: ImpactResult, format: string | undefined) {
     case "html":
       return (
         html
-          .replace("__VERSION__", String(Bun.env.IMPACTS_CLI_VERSION))
+          .replace(/__VERSION__/g, String(Bun.env.VITE_IMPACTS_CLI_VERSION))
           // replace the __RESULT__ placeholder with the result (ensure escaping for quotes)
           .replace("__RESULT__", JSON.stringify(result).replace(/"/g, '\\"'))
       );

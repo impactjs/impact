@@ -148,7 +148,7 @@ jobs:
           key: ${{ needs.install.outputs.nm-cache-key }}
       - run: pnpm moonx build cli -- --target="bun-${{ matrix.platform }}-${{ matrix.arch }}" --outfile bin/${{ matrix.platform }}-${{ matrix.arch }}
         env:
-          IMPACTS_CLI_VERSION: ${{ needs.deploy.outputs.impacts-cli-version }}
+          VITE_IMPACTS_CLI_VERSION: ${{ needs.deploy.outputs.impacts-cli-version }}
       - uses: actions/upload-artifact@v4
         with:
           path: packages/cli/bin
