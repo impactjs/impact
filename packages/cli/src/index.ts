@@ -4,7 +4,7 @@ import { loadConfig } from "@impacts/config/internal";
 import { impact } from "@impacts/core";
 import { logger } from "@impacts/logger";
 import { cac } from "cac";
-import { version } from "../package.json";
+import pkg from "../package.json" with { type: "json" };
 import { write } from "./utils/output.js";
 
 const cli = cac("impact");
@@ -58,7 +58,7 @@ cli.command("show-config", "Show config").action(async (options) => {
 
 cli.help();
 
-cli.version(version);
+cli.version(pkg.version);
 
 try {
   const { options } = cli.parse(process.argv, { run: false });
