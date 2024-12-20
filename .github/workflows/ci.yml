@@ -185,6 +185,6 @@ jobs:
           echo "version: $version"
           rm packages/cli/bin/*/impact
           ls packages/cli/bin/*/*
-          gh release create "cli@v$version" packages/cli/bin/*/* --title "cli v${{ github.run_number }}"
+          gh release create "cli@v$version" packages/cli/bin/*/* --title "cli v$version"
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
