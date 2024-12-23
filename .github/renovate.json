@@ -1,0 +1,9 @@
+{
+  "extends": ["config:base"],
+  "minor": {
+    "groupName": "all-minor-updates",
+    "groupSlug": "minor-all"
+  },
+  "schedule": ["before 4am on monday"],
+  "labels": ["dependencies", "minor"]
+}
