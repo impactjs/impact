@@ -230,8 +230,8 @@ importers:
         specifier: workspace:*
         version: link:../../../packages/types
       '@linear/sdk':
-        specifier: ^35.0.0
-        version: 35.0.0
+        specifier: ^37.0.0
+        version: 37.0.0
       zod:
         specifier: ^3.24.1
         version: 3.24.1
@@ -747,8 +747,8 @@ packages:
   '@jridgewell/sourcemap-codec@1.5.0':
     resolution: {integrity: sha512-gv3ZRaISU3fjPAgNsriBRqGWQL6quFx04YMPW/zD8XMLsU32mhCCbfbO6KZFLjvYpCZ8zyDEgqsgf+PwPaM7GQ==}
 
-  '@linear/sdk@35.0.0':
-    resolution: {integrity: sha512-fQiMH48imUkkloaXsAKQ+p3EnYUStC8lvg8WNB8UibLb5N5JPJp9DWKew+h2k10maErFBaMULnXA3SAsj1jaAQ==}
+  '@linear/sdk@37.0.0':
+    resolution: {integrity: sha512-EAZCXtV414Nwtvrwn7Ucu3E8BbYYKsc3HqZCGf1mHUE7FhZGtfISu295DOVv89WhhXlp2N344EMg3K0nnhLxtA==}
     engines: {node: '>=12.x', yarn: 1.x}
 
   '@maastrich/moonx@0.1.6':
@@ -3260,7 +3260,7 @@ snapshots:
 
   '@jridgewell/sourcemap-codec@1.5.0': {}
 
-  '@linear/sdk@35.0.0':
+  '@linear/sdk@37.0.0':
     dependencies:
       '@graphql-typed-document-node/core': 3.2.0(graphql@15.9.0)
       graphql: 15.9.0
