@@ -29,7 +29,7 @@ function render(result: ImpactResult, format: string | undefined) {
         html
           .replace(/__VERSION__/g, getVersion())
           // replace the __RESULT__ placeholder with the result (ensure escaping for quotes)
-          .replace("__RESULT__", JSON.stringify(result).replace(/"/g, '\\"'))
+          .replace("__RESULT__", JSON.stringify(result, null, 2))
       );
     default:
       throw new Error(`Unsupported format: ${format}`);
@@ -59,7 +59,7 @@ const html = `
         rel="preload" crossorigin="anonymous" />
 
   <script>
-      window.result = "__RESULT__";
+      window.result = __RESULT__;
   </script>
   <script type="module" crossorigin src="https://unpkg.com/@impacts/app@__VERSION__/dist/index.js"></script>
   <link rel="stylesheet" crossorigin href="https://unpkg.com/@impacts/app@__VERSION__/dist/index.css">

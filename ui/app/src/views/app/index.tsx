@@ -6,10 +6,12 @@ import { Card } from "../../components/Card";
 import { Tabs } from "../../components/Tabs";
 
 declare global {
-  const result: string;
+  const result: unknown;
 }
 
-const parsed = impactResultSchema.safeParse(JSON.parse(result));
+const parsed = impactResultSchema.safeParse(
+  typeof result === "string" ? JSON.parse(result) : result,
+);
 
 export function App() {
   if (!parsed.success) {
