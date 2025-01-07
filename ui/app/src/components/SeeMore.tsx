@@ -6,7 +6,6 @@ import type { ImpactResultSummaryUpdate } from "@impacts/types/results";
 import { Fragment, type ReactNode, useState } from "react";
 import { Button } from "./Button";
 import { Icon } from "./Icon";
-import { Markdown } from "./Markdown";
 import { Tabs } from "./Tabs";
 import { UpdateId } from "./UpdateId";
 
@@ -68,9 +67,7 @@ export function SeeMore({ children, main, references }: SeeMoreProps) {
                         key={reference.id}
                         value={reference.id.toString()}
                       >
-                        <Markdown>
-                          {`# ${reference.title}\n${reference.description}`}
-                        </Markdown>
+                        s
                       </Tabs.Content>
                     </Fragment>
                   );

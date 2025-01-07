@@ -273,6 +273,9 @@ importers:
       '@impacts/styled-system':
         specifier: workspace:*
         version: link:../styled-system
+      lucide-react:
+        specifier: ^0.469.0
+        version: 0.469.0(react@19.0.0)
     devDependencies:
       '@ark-ui/react':
         specifier: ^4.5.0
@@ -2176,6 +2179,11 @@ packages:
   lru-cache@7.10.1:
     resolution: {integrity: sha512-BQuhQxPuRl79J5zSXRP+uNzPOyZw2oFI9JLRQ80XswSvg21KMKNtQza9eF42rfI/3Z40RvzBdXgziEkudzjo8A==}
     engines: {node: '>=12'}
+
+  lucide-react@0.469.0:
+    resolution: {integrity: sha512-28vvUnnKQ/dBwiCQtwJw7QauYnE7yd2Cyp4tTTJpvglX4EMpbflcdBgrgToX2j71B3YvugK/NH3BGUk+E/p/Fw==}
+    peerDependencies:
+      react: ^16.5.1 || ^17.0.0 || ^18.0.0 || ^19.0.0
 
   magic-string@0.30.14:
     resolution: {integrity: sha512-5c99P1WKTed11ZC0HMJOj6CDIue6F8ySu+bJL+85q1zBEIY8IklrJ1eiKC2NDRh3Ct3FcvmJPyQHb9erXMTJNw==}
@@ -5103,6 +5111,10 @@ snapshots:
       yallist: 4.0.0
 
   lru-cache@7.10.1: {}
+
+  lucide-react@0.469.0(react@19.0.0):
+    dependencies:
+      react: 19.0.0
 
   magic-string@0.30.14:
     dependencies:

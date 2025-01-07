@@ -76,11 +76,9 @@ export async function impact(
               "git",
               [
                 {
-                  url: "",
                   origin: "git",
                   id: commit.hash,
                   title: commit.message,
-                  description: "",
                 },
               ],
             ];

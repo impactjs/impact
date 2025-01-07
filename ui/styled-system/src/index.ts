@@ -14,6 +14,28 @@ export const preset = definePreset({
     extend: {
       tokens,
       semanticTokens,
+      keyframes: {
+        accordionIn: {
+          from: {
+            opacity: 0.01,
+            height: 0,
+          },
+          to: {
+            opacity: 1,
+            height: "var(--height)",
+          },
+        },
+        accordionOut: {
+          from: {
+            opacity: 1,
+            height: "var(--height)",
+          },
+          to: {
+            opacity: 0.01,
+            height: 0,
+          },
+        },
+      },
     },
   },
   globalCss: globalStyles,

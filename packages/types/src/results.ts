@@ -1,13 +1,31 @@
 import { z } from "zod";
 import { commitSchema } from "./git.js";
 
-export const impactPluginResultEntry = z.object({
-  url: z.string(),
+export const baseImpactPluginResultEntry = z.object({
   title: z.string(),
-  origin: z.string(),
-  description: z.string(),
   id: z.union([z.string(), z.number()]),
 });
+
+export const impactPluginResultEntry = z.union([
+  baseImpactPluginResultEntry.extend({
+    origin: z.literal("git"),
+  }),
+  baseImpactPluginResultEntry.extend({
+    url: z.string(),
+    description: z.string(),
+    origin: z.literal("github"),
+  }),
+  baseImpactPluginResultEntry.extend({
+    url: z.string(),
+    description: z.string(),
+    origin: z.literal("linear"),
+    project: z.string().nullable().optional(),
+    milestone: z.string().nullable().optional(),
+    dueDate: z.string().nullable().optional(),
+    priority: z.number().nullable().optional(),
+    estimate: z.number().nullable().optional(),
+  }),
+]);
 
 const impactResultRawEntry = z.object({
   id: z.string(),
