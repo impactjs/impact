@@ -1,4 +1,4 @@
-import { css, sva } from "@impacts/styled-system/css";
+import { css } from "@impacts/styled-system/css";
 import ReactMarkdown from "react-markdown";
 import reactGfm from "remark-gfm";
 import { ImagePreview } from "./ImagePreview";
@@ -18,26 +18,6 @@ export function Markdown({ children }: { children: string }) {
     </ReactMarkdown>
   );
 }
-
-const styles = sva({
-  slots: [
-    "image",
-    "link",
-    "heading",
-    "paragraph",
-    "list",
-    "listItem",
-    "blockquote",
-    "code",
-    "inlineCode",
-    "table",
-    "tableHead",
-    "tableBody",
-    "tableRow",
-    "tableCell",
-    "thematicBreak",
-  ],
-});
 
 const markdownCss = css({
   "& h1": {

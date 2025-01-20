@@ -1,5 +1,5 @@
 import { z } from "zod";
-import { commitSchema } from "./git.js";
+import { vcsUpdateSchema } from "./plugins.js";
 
 export const baseImpactPluginResultEntry = z.object({
   title: z.string(),
@@ -32,7 +32,7 @@ const impactResultRawEntry = z.object({
   path: z.string(),
   description: z.string(),
   diff: z.array(z.string()),
-  commits: z.array(commitSchema),
+  updates: z.array(vcsUpdateSchema),
 });
 
 const impactResultSummaryUpdate = z.object({

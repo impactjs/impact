@@ -24,6 +24,7 @@
     "@impacts/config": "workspace:*",
     "@impacts/core": "workspace:*",
     "@impacts/logger": "workspace:*",
+    "@impacts/runtime-bun": "workspace:*",
     "@impacts/ts-config": "workspace:*",
     "@impacts/types": "workspace:*",
     "@types/bun": "^1.1.14",

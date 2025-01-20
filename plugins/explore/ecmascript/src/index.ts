@@ -20,13 +20,13 @@ type EcmaScriptOptions = z.infer<typeof ecmaScriptOptionsSchema>;
 export function ecmascript(options: EcmaScriptOptions = {}): ScanPlugin {
   const history = new Map<string, Set<string>>();
   return {
-    type: "scan",
+    type: "explore",
     name: "ecmascript",
     shouldScan(id, config) {
       return shouldScan(id, config);
     },
-    async scan(id, config) {
-      return scanEntrypoint(
+    async explore(id, config) {
+      return exploreEntrypoint(
         id,
         process.cwd(),
         new Set(),
@@ -46,7 +46,7 @@ function shouldScan(id: string, config: BaseConfig) {
   return !ignore && /.+\.(t|j)sx?$/.test(id);
 }
 
-async function scanEntrypoint(
+async function exploreEntrypoint(
   id: string,
   base: string,
   files: Set<string>,
@@ -67,7 +67,7 @@ async function scanEntrypoint(
       if (!resolved) {
         continue;
       }
-      const tree = await scanEntrypoint(
+      const tree = await exploreEntrypoint(
         resolved,
         base,
         files,

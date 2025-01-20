@@ -1,5 +1,5 @@
 {
-  "name": "@impacts/git",
+  "name": "@impacts/runtime-node",
   "version": "1.0.3",
   "license": "UNLICENSED",
   "author": {
@@ -10,10 +10,10 @@
   "exports": {
     ".": "./src/index.ts"
   },
+  "files": [
+    "src"
+  ],
   "devDependencies": {
-    "@impacts/logger": "workspace:*",
-    "@impacts/ts-config": "workspace:*",
-    "@types/bun": "^1.1.14",
-    "typescript": "^5.7.2"
+    "@types/node": "22.10.5"
   }
 }

@@ -1,62 +1,51 @@
 import { join } from "node:path";
-import { Git } from "@impacts/git";
 import type { ImpactConfig } from "@impacts/types/config";
+import type { VcsUpdate } from "@impacts/types/plugins";
 import type {
   ImpactPluginResultEntry,
   ImpactResult,
   ImpactResultRawEntry,
   ImpactResultSummaryEntry,
 } from "@impacts/types/results";
+import type { Runtime } from "@impacts/types/runtime";
 import { PluginOrchestrator } from "./utils/plugin-orchestrator.js";
 
 type ImpactOptions = {
-  /**
-   * @description The branch to compare against
-   */
-  branch: string;
+  runtime: Runtime;
 };
 
 export async function impact(
   config: ImpactConfig,
   options: ImpactOptions,
 ): Promise<ImpactResult> {
-  const repository = new Git(options.branch);
-  const diff = repository.diff();
+  const orchestrator = new PluginOrchestrator(config, options.runtime);
+  const diff = await orchestrator.listFiles();
   const result = new Array<ImpactResultRawEntry>();
-  const orchestrator = new PluginOrchestrator(config);
 
   for await (const entry of config.entries) {
-    const tree = await orchestrator.scan(join(process.cwd(), entry.path));
+    const tree = await orchestrator.explore(join(process.cwd(), entry.path));
     const files = tree.intersection(diff);
     console.log(entry.id, files.size, tree.size);
     if (!files.size) {
       continue;
     }
-    const commits = repository.log(files);
+    const updates = await orchestrator.listUpdates(files);
     result.push({
       id: entry.id,
       path: entry.path,
       description: entry.description,
       diff: Array.from(files),
-      commits,
+      updates,
     });
   }
 
-  const commits = new Map<
-    string,
-    {
-      hash: string;
-      date: string;
-      author: string;
-      message: string;
-    }
-  >();
-  for (const commit of result.flatMap((entry) => entry.commits)) {
-    commits.set(commit.hash, commit);
+  const vcsUpdates = new Map<string, VcsUpdate>();
+  for (const update of result.flatMap((entry) => entry.updates)) {
+    vcsUpdates.set(update.id, update);
   }
 
   const updates = await orchestrator.transform({
-    commits,
+    updates: vcsUpdates,
     plugins: {},
   });
 
@@ -66,7 +55,7 @@ export async function impact(
         id: entry.id,
         description: entry.description,
         path: entry.path,
-        updates: entry.commits.reduce<ImpactResultSummaryEntry["updates"]>(
+        updates: entry.updates.reduce<ImpactResultSummaryEntry["updates"]>(
           (acc, commit) => {
             const outputPriority = orchestrator.getOutputPriority();
             const createGitReference = (): readonly [
@@ -77,8 +66,8 @@ export async function impact(
               [
                 {
                   origin: "git",
-                  id: commit.hash,
-                  title: commit.message,
+                  id: commit.id,
+                  title: commit.title,
                 },
               ],
             ];
@@ -86,7 +75,7 @@ export async function impact(
               createGitReference(),
               ...Object.entries(updates.plugins).map(
                 ([plugin, pluginUpdates]) => {
-                  const update = pluginUpdates.get(commit.hash);
+                  const update = pluginUpdates.get(commit.id);
                   if (!update) {
                     return null;
                   }

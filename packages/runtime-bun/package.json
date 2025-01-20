@@ -1,0 +1,19 @@
+{
+  "name": "@impacts/runtime-bun",
+  "version": "1.0.3",
+  "license": "UNLICENSED",
+  "author": {
+    "name": "maastrich",
+    "email": "pinsaultm@gmail.com"
+  },
+  "type": "module",
+  "exports": {
+    ".": "./src/index.ts"
+  },
+  "files": [
+    "src"
+  ],
+  "devDependencies": {
+    "@types/bun": "^1.1.14"
+  }
+}
