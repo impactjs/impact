@@ -3,6 +3,7 @@
 import { loadConfig } from "@impacts/config/internal";
 import { impact } from "@impacts/core";
 import { logger } from "@impacts/logger";
+import { createRuntime } from "@impacts/runtime-bun";
 import { cac } from "cac";
 import pkg from "../package.json" with { type: "json" };
 import { write } from "./utils/output.js";
@@ -36,7 +37,7 @@ cli
     }
 
     const result = await impact(config, {
-      branch,
+      runtime: createRuntime(),
     });
 
     await write(result, {

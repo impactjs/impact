@@ -61,7 +61,7 @@ const styles = sva({
       padding: "sm",
       borderRadius: "sm",
       flex: 1,
-      backgroundColor: "interface.200",
+      // backgroundColor: "interface.200",
       border: "1px solid",
       borderColor: "interface.300",
       height: "full",

@@ -18,6 +18,33 @@ type FindIssuesOptions = {
    */
   teams: Set<string>;
 
+  fields: {
+    /**
+     * The project field to include in the result
+     */
+    project?: boolean;
+
+    /**
+     * The milestone field to include in the result
+     */
+    milestone?: boolean;
+
+    /**
+     * The dueDate field to include in the result
+     */
+    dueDate?: boolean;
+
+    /**
+     * The priority field to include in the result
+     */
+    priority?: boolean;
+
+    /**
+     * The estimate field to include in the result
+     */
+    estimate?: boolean;
+  };
+
   /**
    * @description Limit the number api-calls to find the PRs
    * @summary When one or more commits cannot be found in the PRs, the function will make additional api-calls to find them (due to pagination)
@@ -26,10 +53,11 @@ type FindIssuesOptions = {
   limit?: number;
 };
 
-export async function finsIssues({
+export async function findIssues({
   linear,
   issues,
   teams,
+  fields,
   limit = 3,
 }: FindIssuesOptions): Promise<Map<string, ImpactPluginResultEntry[]>> {
   const uniqueComits = new Set(
@@ -62,13 +90,29 @@ export async function finsIssues({
         spinner.text = `retrieving issues (${shas.size}/${issues.size})`;
         for (const sha of issues.get(issue.identifier) ?? []) {
           const existing = shas.get(sha) ?? [];
-          existing.push({
+          const reference: ImpactPluginResultEntry = {
             url: issue.url,
             origin: "linear",
             title: issue.title,
             id: issue.identifier,
             description: issue.description ?? "",
-          });
+          };
+          if (fields.project) {
+            reference.project = (await issue.project)?.name ?? "";
+          }
+          if (fields.milestone) {
+            reference.milestone = (await issue.projectMilestone)?.name ?? "";
+          }
+          if (fields.dueDate) {
+            reference.dueDate = issue.dueDate;
+          }
+          if (fields.priority) {
+            reference.priority = issue.priority;
+          }
+          if (fields.estimate) {
+            reference.estimate = issue.estimate;
+          }
+          existing.push(reference);
           shas.set(sha, existing);
         }
       }
