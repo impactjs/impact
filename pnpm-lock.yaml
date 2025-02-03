@@ -59,7 +59,7 @@ importers:
         version: 5.7.2
 
   configs/ts-config:
-    devDependencies:
+    dependencies:
       '@types/bun':
         specifier: ^1.1.14
         version: 1.1.14
@@ -169,10 +169,20 @@ importers:
         version: 5.7.2
 
   packages/runtime-bun:
+    dependencies:
+      '@impacts/types':
+        specifier: workspace:*
+        version: link:../types
     devDependencies:
+      '@impacts/ts-config':
+        specifier: workspace:*
+        version: link:../../configs/ts-config
       '@types/bun':
         specifier: ^1.1.14
         version: 1.1.14
+      typescript:
+        specifier: ^5.7.2
+        version: 5.7.2
 
   packages/runtime-node:
     dependencies:
@@ -180,9 +190,15 @@ importers:
         specifier: workspace:*
         version: link:../types
     devDependencies:
+      '@impacts/ts-config':
+        specifier: workspace:*
+        version: link:../../configs/ts-config
       '@types/node':
         specifier: 22.10.5
         version: 22.10.5
+      typescript:
+        specifier: ^5.7.2
+        version: 5.7.2
 
   packages/types:
     dependencies:

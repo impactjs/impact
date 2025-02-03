@@ -13,7 +13,12 @@
   "files": [
     "src"
   ],
+  "dependencies": {
+    "@impacts/types": "workspace:*"
+  },
   "devDependencies": {
-    "@types/bun": "^1.1.14"
+    "@impacts/ts-config": "workspace:*",
+    "@types/bun": "^1.1.14",
+    "typescript": "^5.7.2"
   }
 }
