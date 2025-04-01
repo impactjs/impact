@@ -1,6 +1,6 @@
 {
-  "name": "@impacts/git",
-  "version": "1.0.3",
+  "name": "@impacts/runtime-bun",
+  "version": "1.0.4",
   "license": "UNLICENSED",
   "author": {
     "name": "maastrich",
@@ -10,10 +10,16 @@
   "exports": {
     ".": "./src/index.ts"
   },
+  "files": [
+    "src"
+  ],
+  "dependencies": {
+    "@impacts/types": "workspace:*"
+  },
   "devDependencies": {
-    "@impacts/logger": "workspace:*",
     "@impacts/ts-config": "workspace:*",
     "@types/bun": "^1.1.14",
+    "bun": "^1.2.8",
     "typescript": "^5.7.2"
   }
 }

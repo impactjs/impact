@@ -24,7 +24,6 @@ export async function loadConfig(
   }
   const result = await explorer.search();
   if (!result) {
-    console.trace("Config not found");
     throw new Error("Config not found");
   }
   const validate = impactConfigSchema.safeParse(result.config);

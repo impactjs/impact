@@ -55,7 +55,7 @@ export function github(options: GithubOptions): AugmentPlugin {
           repo: options.repo,
         },
         limit: options.limit,
-        shas: new Set(context.commits.keys()),
+        shas: new Set(context.updates.keys()),
       });
     },
   };

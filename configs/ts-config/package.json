@@ -1,6 +1,6 @@
 {
   "name": "@impacts/ts-config",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "license": "UNLICENSED",
   "author": {
     "name": "maastrich",
@@ -11,7 +11,7 @@
     ".": "./tsconfig.json",
     "./meta": "./tsconfig.meta.json"
   },
-  "devDependencies": {
+  "dependencies": {
     "@types/bun": "^1.1.14",
     "typescript": "^5.7.2"
   }

@@ -25,6 +25,8 @@ tasks:
     deps:
       - pre-version
       - target: build
+        args:
+          - --outfile=bin/darwin-arm64
         optional: true
     args:
       - --no-git-checks

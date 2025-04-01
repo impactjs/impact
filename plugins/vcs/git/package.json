@@ -1,5 +1,5 @@
 {
-  "name": "@impacts/linear",
+  "name": "@impacts/git",
   "version": "1.0.4",
   "license": "UNLICENSED",
   "author": {
@@ -11,13 +11,12 @@
     ".": "./src/index.ts"
   },
   "dependencies": {
-    "@impacts/logger": "workspace:*",
-    "@impacts/types": "workspace:*",
-    "@linear/sdk": "^35.0.0",
     "zod": "^3.24.1"
   },
   "devDependencies": {
+    "@impacts/logger": "workspace:*",
     "@impacts/ts-config": "workspace:*",
+    "@impacts/types": "workspace:*",
     "@types/bun": "^1.1.14",
     "typescript": "^5.7.2"
   }

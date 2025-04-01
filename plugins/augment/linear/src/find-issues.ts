@@ -1,5 +1,5 @@
 import { logger } from "@impacts/logger";
-import type { ImpactPluginResultEntry } from "@impacts/types/results";
+import type { ImpactPluginResultEntryReference } from "@impacts/types/results";
 import type { LinearClient, LinearDocument } from "@linear/sdk";
 
 type FindIssuesOptions = {
@@ -26,12 +26,14 @@ type FindIssuesOptions = {
   limit?: number;
 };
 
-export async function finsIssues({
+export async function findIssues({
   linear,
   issues,
   teams,
   limit = 3,
-}: FindIssuesOptions): Promise<Map<string, ImpactPluginResultEntry[]>> {
+}: FindIssuesOptions): Promise<
+  Map<string, ImpactPluginResultEntryReference[]>
+> {
   const uniqueComits = new Set(
     Array.from(issues.values()).flatMap((s) => Array.from(s)),
   );
@@ -46,7 +48,7 @@ export async function finsIssues({
     },
   };
 
-  const shas = new Map<string, ImpactPluginResultEntry[]>();
+  const shas = new Map<string, ImpactPluginResultEntryReference[]>();
 
   const spinner = logger.spinner(`retrieving issues (0/${issues.size})`);
 
@@ -62,13 +64,14 @@ export async function finsIssues({
         spinner.text = `retrieving issues (${shas.size}/${issues.size})`;
         for (const sha of issues.get(issue.identifier) ?? []) {
           const existing = shas.get(sha) ?? [];
-          existing.push({
+          const reference: ImpactPluginResultEntryReference = {
+            meta: [],
             url: issue.url,
             origin: "linear",
             title: issue.title,
             id: issue.identifier,
-            description: issue.description ?? "",
-          });
+          };
+          existing.push(reference);
           shas.set(sha, existing);
         }
       }
@@ -84,6 +87,7 @@ export async function finsIssues({
     return shas;
   } catch {
     spinner.fail("failed to retrieve issues");
+    console.error("failed to retrieve issues");
     return new Map();
   }
 }

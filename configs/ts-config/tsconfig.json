@@ -9,7 +9,6 @@
     "resolveJsonModule": true,
     "emitDecoratorMetadata": true,
     "moduleResolution": "nodenext",
-    "experimentalDecorators": true,
-    "types": ["bun"]
+    "experimentalDecorators": true
   }
 }

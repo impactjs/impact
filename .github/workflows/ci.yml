@@ -97,6 +97,11 @@ jobs:
       - uses: oven-sh/setup-bun@v2
         with:
           bun-version: ${{ needs.install.outputs.bun-version }}
+      - uses: actions/setup-node@v4
+        with:
+          node-version: ${{ needs.install.outputs.node-version }}
+          registry-url: 'https://registry.npmjs.org/'
+          scope: '@impacts'
       - uses: actions/cache/restore@v4
         with:
           path: |
@@ -114,12 +119,20 @@ jobs:
         run: echo "//registry.npmjs.org/:_authToken=${NODE_AUTH_TOKEN}" > ~/.npmrc
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+      - name: check auth using whoami
+        run: pnpm whoami
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
       - name: publish prerelease
         run: pnpm moonx prepublish -- --tag="pr-${{ github.event.number }}"
         if: github.event_name == 'pull_request'
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
       - name: publish
         run: pnpm moonx publish
         if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
       - id: expose-cli-version
         run: echo "impacts-cli-version=$(jq -r '.version' packages/cli/package.json)" >> $GITHUB_OUTPUT
 

@@ -3,6 +3,7 @@
 import { loadConfig } from "@impacts/config/internal";
 import { impact } from "@impacts/core";
 import { logger } from "@impacts/logger";
+import { createRuntime } from "@impacts/runtime-bun";
 import { cac } from "cac";
 import pkg from "../package.json" with { type: "json" };
 import { write } from "./utils/output.js";
@@ -29,14 +30,8 @@ cli
       config: options.config,
     });
 
-    const branch = config.branch ?? options.branch;
-
-    if (!branch) {
-      throw new Error("Branch is required");
-    }
-
     const result = await impact(config, {
-      branch,
+      runtime: createRuntime(),
     });
 
     await write(result, {
@@ -81,6 +76,7 @@ try {
     error.stack && logger.debug(error.stack);
     process.exit(1);
   }
-  logger.error(String(error));
-  process.exit(1);
+  logger.error("Unknown error type");
+  logger.error(JSON.stringify(error));
+  process.exit(2);
 }

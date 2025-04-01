@@ -1,5 +1,5 @@
 import { logger } from "@impacts/logger";
-import type { ImpactPluginResultEntry } from "@impacts/types/results";
+import type { ImpactPluginResultEntryReference } from "@impacts/types/results";
 import type { Octokit } from "@octokit/rest";
 
 interface FindPullRequestsByMergeCommitsParams {
@@ -43,21 +43,20 @@ export async function findPullRequestsByMergeCommits({
   limit = 3,
   repository,
 }: FindPullRequestsByMergeCommitsParams) {
-  const pullRequests = new Map<string, ImpactPluginResultEntry[]>();
+  const pullRequests = new Map<string, ImpactPluginResultEntryReference[]>();
 
   const payload = {
     page: 1,
     per_page: 100,
     ...repository,
     state: "closed" as const,
-    sort: "updated" as const,
     direction: "desc" as const,
   };
 
   const spinner = logger.spinner(`retreiving pull requests (0/${shas.size})`);
 
   try {
-    while (payload.page < limit) {
+    while (payload.page <= limit) {
       const { data } = await octokit.pulls.list(payload);
       for (const pr of data) {
         if (!pr.merge_commit_sha || !shas.has(pr.merge_commit_sha)) {
@@ -70,7 +69,7 @@ export async function findPullRequestsByMergeCommits({
           title: pr.title,
           url: pr.html_url,
           origin: "github",
-          description: pr.body ?? "",
+          meta: [pr.head.ref],
         });
         pullRequests.set(pr.merge_commit_sha, existing);
       }
@@ -83,9 +82,16 @@ export async function findPullRequestsByMergeCommits({
       payload.page++;
     }
     spinner.succeed(`found pull requests ${pullRequests.size}`);
+    if (pullRequests.size !== shas.size) {
+      logger.warn(
+        `could not find all pull requests for: ${[
+          ...shas.difference(new Set(pullRequests.keys())),
+        ].join(", ")}`,
+      );
+    }
     return pullRequests;
-  } catch (error) {
-    console.error("Error fetching pull requests:", error);
+  } catch {
+    spinner.fail("failed to find pull requests");
     return new Map();
   }
 }

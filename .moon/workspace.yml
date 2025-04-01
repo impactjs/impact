@@ -10,4 +10,5 @@ projects:
     - configs/*
     - ui/*
     - "plugins/augment/*"
-    - "plugins/scan/*"
+    - "plugins/explore/*"
+    - "plugins/vcs/*"
