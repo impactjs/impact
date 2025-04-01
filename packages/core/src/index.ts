@@ -25,7 +25,7 @@ export async function impact(
   for await (const entry of config.entries) {
     const tree = await orchestrator.explore(join(process.cwd(), entry.path));
     const files = tree.intersection(diff);
-    console.log(entry.id, files.size, tree.size);
+
     if (!files.size) {
       continue;
     }
@@ -58,46 +58,31 @@ export async function impact(
         updates: entry.updates.reduce<ImpactResultSummaryEntry["updates"]>(
           (acc, commit) => {
             const outputPriority = orchestrator.getOutputPriority();
-            const createGitReference = (): readonly [
-              string,
-              ImpactPluginResultEntry[],
-            ] => [
-              "git",
-              [
-                {
-                  origin: "git",
-                  id: commit.id,
-                  title: commit.title,
-                },
-              ],
-            ];
-            const [main, ...references] = [
-              createGitReference(),
-              ...Object.entries(updates.plugins).map(
-                ([plugin, pluginUpdates]) => {
-                  const update = pluginUpdates.get(commit.id);
-                  if (!update) {
-                    return null;
-                  }
-                  return [plugin, update] as const;
-                },
-              ),
-            ]
+            const references = Object.entries(updates.plugins)
+              .map(([plugin, pluginUpdates]) => {
+                const update = pluginUpdates.get(commit.id);
+                if (!update) {
+                  return null;
+                }
+                return [plugin, update] as const;
+              })
               .filter((entry) => !!entry)
               .sort(([left], [right]) => {
                 return (
                   outputPriority.indexOf(left) - outputPriority.indexOf(right)
                 );
               });
-            const [plugin, entries] = main;
-            for (const update of entries) {
-              acc.push({
-                main: update,
-                origin: plugin,
-                timestamp: new Date(commit.date).getTime(),
-                references: references.flatMap(([, entries]) => entries),
-              });
-            }
+            acc.push({
+              main: {
+                meta: [],
+                origin: "git",
+                id: commit.id,
+                title: commit.title,
+                author: commit.author,
+              },
+              timestamp: new Date(commit.date).getTime(),
+              references: references.flatMap(([, entries]) => entries),
+            });
             return acc;
           },
           [],

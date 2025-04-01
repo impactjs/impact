@@ -1,16 +1,25 @@
 import type { PluginContext } from "@impacts/types/plugins";
 
-function extractIssues(text: string) {
-  const matches = /([A-Z]+-\d+)/g.exec(text);
-  return new Set(matches);
+function extractIssues(text: string, availableTeams: Array<string>) {
+  const pattern = availableTeams
+    .map((team) => `${team}-\\d+|${team.toLocaleLowerCase()}-\\d+`)
+    .join("|");
+  const regex = new RegExp(`(${pattern})`, "g");
+  const matches = regex.exec(text);
+  return new Set(
+    matches?.map((match) => match.trim().toLocaleUpperCase()) ?? [],
+  );
 }
 
-export function extractLinearFiltersFromContext(context: PluginContext) {
+export function extractLinearFiltersFromContext(
+  context: PluginContext,
+  availableTeams: Array<string>,
+) {
   const teams = new Set<string>();
   const issuesMap = new Map<string, Set<string>>();
 
   for (const [sha, commit] of context.updates) {
-    const issues = extractIssues(commit.title);
+    const issues = extractIssues(commit.title, availableTeams);
     for (const issue of issues) {
       const team = issue.split("-")[0];
       teams.add(team);
@@ -24,7 +33,12 @@ export function extractLinearFiltersFromContext(context: PluginContext) {
         [entity]
           .flat()
           .flatMap((entity) =>
-            Array.from(extractIssues(entity.title).values()),
+            [
+              [...extractIssues(entity.title, availableTeams).values()],
+              ...entity.meta.map((meta) => [
+                ...extractIssues(meta, availableTeams),
+              ]),
+            ].flat(),
           ),
       );
       for (const issue of issues) {

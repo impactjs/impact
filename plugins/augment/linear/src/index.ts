@@ -28,11 +28,17 @@ export function linear(options: LinearOptions): AugmentPlugin {
   return {
     type: "augment",
     name: "linear",
+    awaits: ["github"],
     async augment(context) {
       const linearClient = new LinearClient({
         apiKey,
       });
-      const { teams, issues } = extractLinearFiltersFromContext(context);
+
+      const availableTeams = await linearClient.teams();
+      const { teams, issues } = extractLinearFiltersFromContext(
+        context,
+        availableTeams.nodes.map((team) => team.key),
+      );
       return await findIssues({
         teams,
         issues,

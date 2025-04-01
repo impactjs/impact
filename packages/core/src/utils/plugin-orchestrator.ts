@@ -94,8 +94,8 @@ export class PluginOrchestrator {
   getOutputPriority() {
     const outputPriority = [...(this.config.outputPriority ?? [])];
     const keys = [
-      ...this.plugins.augment.map((plugin) => plugin.name),
       this.vcs.name,
+      ...this.plugins.augment.map((plugin) => plugin.name),
     ];
     for (const key of keys) {
       if (!outputPriority.includes(key)) {
@@ -119,12 +119,16 @@ export class PluginOrchestrator {
     await Promise.all(
       this.plugins.augment.map(async (plugin) => {
         await Promise.all(
-          (plugin.awaits ?? []).map((dependency) => {
-            logger.debug(
-              `waiting for plugin: ${dependency} to finish before running ${plugin.name}`,
-            );
-            this.awaitEvent(`plugin:transformed:${dependency}`);
-          }),
+          (plugin.awaits ?? [])
+            .filter((dependency) =>
+              this.plugins.augment.some((plugin) => plugin.name === dependency),
+            )
+            .map((dependency) => {
+              logger.debug(
+                `waiting for plugin: ${dependency} to finish before running ${plugin.name}`,
+              );
+              return this.awaitEvent(`plugin:transformed:${dependency}`);
+            }),
         );
         logger.debug(`applying transform plugin: ${plugin.name}`);
         const result = await plugin.augment(context, this.config);
