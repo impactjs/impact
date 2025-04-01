@@ -97,6 +97,11 @@ jobs:
       - uses: oven-sh/setup-bun@v2
         with:
           bun-version: ${{ needs.install.outputs.bun-version }}
+      - uses: actions/setup-node@v4
+        with:
+          node-version: ${{ needs.install.outputs.node-version }}
+          registry-url: 'https://registry.npmjs.org/'
+          scope: '@impacts'
       - uses: actions/cache/restore@v4
         with:
           path: |
