@@ -30,12 +30,6 @@ cli
       config: options.config,
     });
 
-    const branch = config.branch ?? options.branch;
-
-    if (!branch) {
-      throw new Error("Branch is required");
-    }
-
     const result = await impact(config, {
       runtime: createRuntime(),
     });
@@ -82,6 +76,7 @@ try {
     error.stack && logger.debug(error.stack);
     process.exit(1);
   }
+  logger.error("Unknown error type");
   logger.error(String(error));
   process.exit(1);
 }

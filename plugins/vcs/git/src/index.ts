@@ -1,3 +1,5 @@
+import { join } from "node:path";
+
 import type { VcsPlugin } from "@impacts/types/plugins";
 import type { Runtime } from "@impacts/types/runtime";
 import { z } from "zod";
@@ -26,7 +28,12 @@ export function git(options: GitOptions): VcsPlugin {
       if (!success) {
         throw new Error("Failed to get git diff");
       }
-      return new Set(output.split("\n").filter((file) => !!file));
+      return new Set(
+        output
+          .split("\n")
+          .filter((file) => !!file)
+          .map((file) => join(process.cwd(), file.trim())),
+      );
     },
     async updates(files, runtime) {
       const current = await getCurrentBranch(runtime);
