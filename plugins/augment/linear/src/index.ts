@@ -2,6 +2,7 @@ import type { AugmentPlugin } from "@impacts/types/plugins";
 import { LinearClient } from "@linear/sdk";
 import { z } from "zod";
 import { findIssues } from "./find-issues.js";
+
 import { extractLinearFiltersFromUpdates } from "./utils.js";
 
 const linearOptionsSchema = z.object({

@@ -1,5 +1,7 @@
 import { join } from "node:path";
+
 import { logger } from "@impacts/logger";
+
 import type { ImpactConfig } from "@impacts/types/config";
 import type {
   ImpactResult,
