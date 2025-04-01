@@ -71,7 +71,6 @@ try {
   logger.debug(`Options: ${JSON.stringify(options)}`);
   await cli.runMatchedCommand();
 } catch (error) {
-  console.log(error);
   if (error instanceof Error) {
     logger.error(error.message);
     error.stack && logger.debug(error.stack);
