@@ -71,12 +71,13 @@ try {
   logger.debug(`Options: ${JSON.stringify(options)}`);
   await cli.runMatchedCommand();
 } catch (error) {
+  console.log(error);
   if (error instanceof Error) {
     logger.error(error.message);
     error.stack && logger.debug(error.stack);
     process.exit(1);
   }
   logger.error("Unknown error type");
-  logger.error(String(error));
-  process.exit(1);
+  logger.error(JSON.stringify(error));
+  process.exit(2);
 }
