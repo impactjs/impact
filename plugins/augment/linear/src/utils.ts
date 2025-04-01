@@ -19,8 +19,6 @@ export function extractLinearFiltersFromUpdates(
   const issuesMap = new Map<string, Set<string>>();
 
   for (const update of updates.values()) {
-    // const issues = extractIssues(update.title, availableTeams);
-
     const issues = new Set(
       [
         extractIssues(update.title, availableTeams),

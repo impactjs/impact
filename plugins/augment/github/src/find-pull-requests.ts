@@ -1,5 +1,7 @@
 import { logger } from "@impacts/logger";
+
 import type { ImpactResultUpdateReference } from "@impacts/types/results";
+
 import type { Octokit } from "@octokit/rest";
 
 interface FindPullRequestsByMergeCommitsParams {
