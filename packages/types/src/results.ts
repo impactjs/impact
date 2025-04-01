@@ -10,6 +10,12 @@ export const baseImpactPluginResultEntry = z.object({
 const gitPluginResultEntry = baseImpactPluginResultEntry.extend({
   author: z.string(),
   origin: z.literal("git"),
+  files: z.array(
+    z.object({
+      path: z.string(),
+      status: z.enum(["added", "modified", "deleted"]),
+    }),
+  ),
 });
 
 const githubPluginResultEntry = baseImpactPluginResultEntry.extend({

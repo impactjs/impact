@@ -76,6 +76,7 @@ export async function impact(
                 meta: [],
                 origin: "git",
                 id: commit.id,
+                files: commit.files,
                 title: commit.title,
                 author: commit.author,
               },

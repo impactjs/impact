@@ -45,20 +45,53 @@ export function git(options: GitOptions): VcsPlugin {
         "--",
         ...Array.from(files),
       ]);
-      return output
-        .toString()
-        .split("\n")
-        .filter(Boolean)
-        .map((line) => {
-          const [hash, date, author, message] = line.split("::::");
-          return {
-            date,
-            author,
-            id: hash,
-            title: message,
-            description: message,
-          };
-        });
+      return await Promise.all(
+        output
+          .toString()
+          .split("\n")
+          .filter(Boolean)
+          .map((line) => {
+            const [hash, date, author, message] = line.split("::::");
+            return {
+              date,
+              author,
+              id: hash,
+              title: message,
+              description: message,
+            };
+          })
+          .map(async (update) => {
+            const { output } = await runtime.exec([
+              "git",
+              "diff",
+              "--name-status",
+              update.id,
+              "--",
+              ...Array.from(files),
+            ]);
+
+            const concernedFiles = output
+              .toString()
+              .split("\n")
+              .filter(Boolean)
+              .map((line) => {
+                const [status, file] = line.split(/\s+/);
+                return {
+                  status:
+                    status === "A"
+                      ? ("added" as const)
+                      : status === "D"
+                        ? ("deleted" as const)
+                        : ("modified" as const),
+                  path: join(process.cwd(), file.trim()),
+                };
+              });
+            return {
+              ...update,
+              files: concernedFiles,
+            };
+          }),
+      );
     },
   };
 }

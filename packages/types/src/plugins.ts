@@ -14,6 +14,12 @@ export const vcsUpdateSchema = z.object({
   description: z.string(),
   date: z.string(),
   author: z.string(),
+  files: z.array(
+    z.object({
+      path: z.string(),
+      status: z.enum(["added", "modified", "deleted"]),
+    }),
+  ),
 });
 
 const vcsPluginSchema = basePluginSchema.extend({
