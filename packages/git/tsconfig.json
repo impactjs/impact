@@ -1,4 +1,0 @@
-{
-  "extends": "@impacts/ts-config",
-  "include": ["src"]
-}

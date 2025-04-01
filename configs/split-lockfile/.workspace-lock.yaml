@@ -53,7 +53,7 @@ importers:
         version: 1.30.5
       knip:
         specifier: ^5.41.1
-        version: 5.41.1(@types/node@22.10.2)(typescript@5.7.2)
+        version: 5.41.1(@types/node@22.10.5)(typescript@5.7.2)
       sort-package-json:
         specifier: ^2.12.0
         version: 2.12.0
@@ -346,6 +346,9 @@ packages:
 
   '@types/node@22.10.2':
     resolution: {integrity: sha512-Xxr6BBRCAOQixvonOye19wnzyDiUtTeqldOOmj3CkeblonbccA12PFwlufvRdrpjXxqnmUaeiU5EOA+7s5diUQ==}
+
+  '@types/node@22.10.5':
+    resolution: {integrity: sha512-F8Q+SeGimwOo86fiovQh8qiXfFEh2/ocYv7tU5pJ3EXMSSxk1Joj5wefpFK2fHTf/N6HKGSxIDBT9f3gCxXPkQ==}
 
   '@types/ws@8.5.13':
     resolution: {integrity: sha512-osM/gWBTPKgHV8XkTunnegTRIsvF6owmf5w+JtAfOw472dptdm0dlGv4xCt6GwQRcC2XVOvvRE/0bAoQcL2QkA==}
@@ -1265,9 +1268,13 @@ snapshots:
     dependencies:
       undici-types: 6.20.0
 
+  '@types/node@22.10.5':
+    dependencies:
+      undici-types: 6.20.0
+
   '@types/ws@8.5.13':
     dependencies:
-      '@types/node': 22.10.2
+      '@types/node': 22.10.5
 
   '@zkochan/js-yaml@0.0.7':
     dependencies:
@@ -1513,11 +1520,11 @@ snapshots:
     optionalDependencies:
       graceful-fs: 4.2.11
 
-  knip@5.41.1(@types/node@22.10.2)(typescript@5.7.2):
+  knip@5.41.1(@types/node@22.10.5)(typescript@5.7.2):
     dependencies:
       '@nodelib/fs.walk': 1.2.8
       '@snyk/github-codeowners': 1.1.0
-      '@types/node': 22.10.2
+      '@types/node': 22.10.5
       easy-table: 1.2.0
       enhanced-resolve: 5.17.1
       fast-glob: 3.3.2

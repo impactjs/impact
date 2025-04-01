@@ -19,7 +19,7 @@ importers:
         version: 1.30.5
       knip:
         specifier: ^5.41.1
-        version: 5.41.1(@types/node@22.10.2)(typescript@5.7.2)
+        version: 5.41.1(@types/node@22.10.5)(typescript@5.7.2)
       sort-package-json:
         specifier: ^2.12.0
         version: 2.12.0
@@ -59,7 +59,7 @@ importers:
         version: 5.7.2
 
   configs/ts-config:
-    devDependencies:
+    dependencies:
       '@types/bun':
         specifier: ^1.1.14
         version: 1.1.14
@@ -78,6 +78,9 @@ importers:
       '@impacts/logger':
         specifier: workspace:*
         version: link:../logger
+      '@impacts/runtime-bun':
+        specifier: workspace:*
+        version: link:../runtime-bun
       '@impacts/ts-config':
         specifier: workspace:*
         version: link:../../configs/ts-config
@@ -119,10 +122,10 @@ importers:
     dependencies:
       '@impacts/ecmascript':
         specifier: workspace:*
-        version: link:../../plugins/scan/ecmascript
+        version: link:../../plugins/explore/ecmascript
       '@impacts/git':
         specifier: workspace:*
-        version: link:../git
+        version: link:../../plugins/vcs/git
       '@impacts/github':
         specifier: workspace:*
         version: link:../../plugins/augment/github
@@ -149,21 +152,6 @@ importers:
         specifier: ^5.7.2
         version: 5.7.2
 
-  packages/git:
-    devDependencies:
-      '@impacts/logger':
-        specifier: workspace:*
-        version: link:../logger
-      '@impacts/ts-config':
-        specifier: workspace:*
-        version: link:../../configs/ts-config
-      '@types/bun':
-        specifier: ^1.1.14
-        version: 1.1.14
-      typescript:
-        specifier: ^5.7.2
-        version: 5.7.2
-
   packages/logger:
     dependencies:
       ora:
@@ -176,6 +164,38 @@ importers:
       '@types/bun':
         specifier: ^1.1.14
         version: 1.1.14
+      typescript:
+        specifier: ^5.7.2
+        version: 5.7.2
+
+  packages/runtime-bun:
+    dependencies:
+      '@impacts/types':
+        specifier: workspace:*
+        version: link:../types
+    devDependencies:
+      '@impacts/ts-config':
+        specifier: workspace:*
+        version: link:../../configs/ts-config
+      '@types/bun':
+        specifier: ^1.1.14
+        version: 1.1.14
+      typescript:
+        specifier: ^5.7.2
+        version: 5.7.2
+
+  packages/runtime-node:
+    dependencies:
+      '@impacts/types':
+        specifier: workspace:*
+        version: link:../types
+    devDependencies:
+      '@impacts/ts-config':
+        specifier: workspace:*
+        version: link:../../configs/ts-config
+      '@types/node':
+        specifier: 22.10.5
+        version: 22.10.5
       typescript:
         specifier: ^5.7.2
         version: 5.7.2
@@ -246,7 +266,7 @@ importers:
         specifier: ^5.7.2
         version: 5.7.2
 
-  plugins/scan/ecmascript:
+  plugins/explore/ecmascript:
     dependencies:
       '@impacts/logger':
         specifier: workspace:*
@@ -261,6 +281,28 @@ importers:
       '@impacts/ts-config':
         specifier: workspace:*
         version: link:../../../configs/ts-config
+      '@types/bun':
+        specifier: ^1.1.14
+        version: 1.1.14
+      typescript:
+        specifier: ^5.7.2
+        version: 5.7.2
+
+  plugins/vcs/git:
+    dependencies:
+      zod:
+        specifier: ^3.24.1
+        version: 3.24.1
+    devDependencies:
+      '@impacts/logger':
+        specifier: workspace:*
+        version: link:../../../packages/logger
+      '@impacts/ts-config':
+        specifier: workspace:*
+        version: link:../../../configs/ts-config
+      '@impacts/types':
+        specifier: workspace:*
+        version: link:../../../packages/types
       '@types/bun':
         specifier: ^1.1.14
         version: 1.1.14
@@ -315,7 +357,7 @@ importers:
         version: 5.7.2
       vite:
         specifier: ^6.0.4
-        version: 6.0.4(@types/node@22.10.2)(jiti@2.4.2)(lightningcss@1.28.1)(yaml@2.6.1)
+        version: 6.0.4(@types/node@22.10.5)(jiti@2.4.2)(lightningcss@1.28.1)(yaml@2.6.1)
 
   ui/styled-system:
     dependencies:
@@ -1192,6 +1234,9 @@ packages:
 
   '@types/node@22.10.2':
     resolution: {integrity: sha512-Xxr6BBRCAOQixvonOye19wnzyDiUtTeqldOOmj3CkeblonbccA12PFwlufvRdrpjXxqnmUaeiU5EOA+7s5diUQ==}
+
+  '@types/node@22.10.5':
+    resolution: {integrity: sha512-F8Q+SeGimwOo86fiovQh8qiXfFEh2/ocYv7tU5pJ3EXMSSxk1Joj5wefpFK2fHTf/N6HKGSxIDBT9f3gCxXPkQ==}
 
   '@types/react-dom@19.0.2':
     resolution: {integrity: sha512-c1s+7TKFaDRRxr1TxccIX2u7sfCnc3RxkVyBIUA2lCpyqCF+QoAwQ/CBg7bsMdVwP120HEH143VQezKtef5nCg==}
@@ -3872,6 +3917,10 @@ snapshots:
     dependencies:
       undici-types: 6.20.0
 
+  '@types/node@22.10.5':
+    dependencies:
+      undici-types: 6.20.0
+
   '@types/react-dom@19.0.2(@types/react@19.0.2)':
     dependencies:
       '@types/react': 19.0.2
@@ -3886,7 +3935,7 @@ snapshots:
 
   '@types/ws@8.5.13':
     dependencies:
-      '@types/node': 22.10.2
+      '@types/node': 22.10.5
 
   '@ungap/structured-clone@1.2.1': {}
 
@@ -4967,11 +5016,11 @@ snapshots:
 
   klona@2.0.6: {}
 
-  knip@5.41.1(@types/node@22.10.2)(typescript@5.7.2):
+  knip@5.41.1(@types/node@22.10.5)(typescript@5.7.2):
     dependencies:
       '@nodelib/fs.walk': 1.2.8
       '@snyk/github-codeowners': 1.1.0
-      '@types/node': 22.10.2
+      '@types/node': 22.10.5
       easy-table: 1.2.0
       enhanced-resolve: 5.17.1
       fast-glob: 3.3.2
@@ -6023,13 +6072,13 @@ snapshots:
       '@types/unist': 3.0.3
       vfile-message: 4.0.2
 
-  vite@6.0.4(@types/node@22.10.2)(jiti@2.4.2)(lightningcss@1.28.1)(yaml@2.6.1):
+  vite@6.0.4(@types/node@22.10.5)(jiti@2.4.2)(lightningcss@1.28.1)(yaml@2.6.1):
     dependencies:
       esbuild: 0.24.0
       postcss: 8.4.49
       rollup: 4.28.1
     optionalDependencies:
-      '@types/node': 22.10.2
+      '@types/node': 22.10.5
       fsevents: 2.3.3
       jiti: 2.4.2
       lightningcss: 1.28.1
