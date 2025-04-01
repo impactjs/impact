@@ -14,7 +14,7 @@ import type {
 import type { Runtime } from "@impacts/types/runtime";
 
 export class PluginOrchestrator {
-  private enventHistory = new Set<string>();
+  private eventHistory = new Set<string>();
   private eventsManager: EventEmitter = new EventEmitter();
   private plugins = {
     explore: new Array<ScanPlugin>(),
@@ -80,12 +80,12 @@ export class PluginOrchestrator {
   }
 
   private async awaitEvent(event: string) {
-    if (this.enventHistory.has(event)) {
+    if (this.eventHistory.has(event)) {
       return;
     }
     return new Promise<void>((resolve) => {
       this.eventsManager.once(event, () => {
-        this.enventHistory.add(event);
+        this.eventHistory.add(event);
         resolve();
       });
     });
