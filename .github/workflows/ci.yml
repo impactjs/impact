@@ -119,6 +119,10 @@ jobs:
         run: echo "//registry.npmjs.org/:_authToken=${NODE_AUTH_TOKEN}" > ~/.npmrc
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+      - name: check auth using whoami
+        run: pnpm whoami
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
       - name: publish prerelease
         run: pnpm moonx prepublish -- --tag="pr-${{ github.event.number }}"
         if: github.event_name == 'pull_request'
