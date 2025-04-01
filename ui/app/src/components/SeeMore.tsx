@@ -69,7 +69,7 @@ export function SeeMore({ children, main, references }: SeeMoreProps) {
                         value={reference.id.toString()}
                       >
                         <Markdown>
-                          {`# ${reference.title}\n${reference.description}`}
+                          {`# ${reference.title}\n${reference.title}`}
                         </Markdown>
                       </Tabs.Content>
                     </Fragment>

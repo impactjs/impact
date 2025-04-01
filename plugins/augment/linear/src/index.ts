@@ -37,7 +37,6 @@ export function linear(options: LinearOptions): AugmentPlugin {
         teams,
         issues,
         linear: linearClient,
-        fields: options.fields ?? {},
       });
     },
   };
