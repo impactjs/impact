@@ -1,5 +1,5 @@
 {
-  "name": "@impacts/ts-config",
+  "name": "@impacts/runtime-bun",
   "version": "1.0.3",
   "license": "UNLICENSED",
   "author": {
@@ -8,10 +8,16 @@
   },
   "type": "module",
   "exports": {
-    ".": "./tsconfig.json",
-    "./meta": "./tsconfig.meta.json"
+    ".": "./src/index.ts"
   },
+  "files": [
+    "src"
+  ],
   "dependencies": {
+    "@impacts/types": "workspace:*"
+  },
+  "devDependencies": {
+    "@impacts/ts-config": "workspace:*",
     "@types/bun": "^1.1.14",
     "typescript": "^5.7.2"
   }

@@ -1,5 +1,6 @@
 import { EventEmitter } from "node:stream";
 import { createEcmascriptPlugin } from "@impacts/ecmascript";
+import { createGitPlugin } from "@impacts/git";
 import { createGithubPlugin } from "@impacts/github";
 import { createLinearPlugin } from "@impacts/linear";
 import { logger } from "@impacts/logger";
@@ -8,29 +9,39 @@ import type {
   AugmentPlugin,
   PluginContext,
   ScanPlugin,
+  VcsPlugin,
 } from "@impacts/types/plugins";
+import type { Runtime } from "@impacts/types/runtime";
 
 export class PluginOrchestrator {
   private enventHistory = new Set<string>();
   private eventsManager: EventEmitter = new EventEmitter();
   private plugins = {
-    scan: new Array<ScanPlugin>(),
+    explore: new Array<ScanPlugin>(),
     augment: new Array<AugmentPlugin>(),
   };
 
-  constructor(private config: ImpactConfig) {
+  private vcs!: VcsPlugin;
+
+  constructor(
+    private config: ImpactConfig,
+    private runtime: Runtime,
+  ) {
     for (const plugin of config.plugins) {
       if (Array.isArray(plugin)) {
         const [name, options] = plugin;
         switch (name) {
           case "ecmascript":
-            this.plugins.scan.push(createEcmascriptPlugin(options));
+            this.plugins.explore.push(createEcmascriptPlugin(options));
             break;
           case "linear":
             this.plugins.augment.push(createLinearPlugin(options));
             break;
           case "github":
             this.plugins.augment.push(createGithubPlugin(options));
+            break;
+          case "git":
+            this.vcs = createGitPlugin(options);
             break;
           default:
             logger.warn(`unknown plugin: ${name}`);
@@ -42,24 +53,30 @@ export class PluginOrchestrator {
         case "augment":
           this.plugins.augment.push(plugin);
           break;
-        case "scan":
-          this.plugins.scan.push(plugin);
+        case "explore":
+          this.plugins.explore.push(plugin);
+          break;
+        case "vcs":
+          this.vcs = plugin;
           break;
         default:
           logger.warn(`unknown plugin: ${plugin}`);
           break;
       }
     }
+    if (!this.vcs) {
+      throw new Error("no vcs plugin found");
+    }
   }
 
-  public async scan(entry: string) {
-    const plugin = this.plugins.scan.find((plugin) =>
+  public async explore(entry: string) {
+    const plugin = this.plugins.explore.find((plugin) =>
       plugin.shouldScan(entry, this.config),
     );
     if (!plugin) {
-      throw new Error(`no scan plugin found for entry: ${entry}`);
+      throw new Error(`no explore plugin found for entry: ${entry}`);
     }
-    return plugin.scan(entry, this.config);
+    return plugin.explore(entry, this.config);
   }
 
   private async awaitEvent(event: string) {
@@ -76,7 +93,10 @@ export class PluginOrchestrator {
 
   getOutputPriority() {
     const outputPriority = [...(this.config.outputPriority ?? [])];
-    const keys = [...this.plugins.augment.map((plugin) => plugin.name), "git"];
+    const keys = [
+      ...this.plugins.augment.map((plugin) => plugin.name),
+      this.vcs.name,
+    ];
     for (const key of keys) {
       if (!outputPriority.includes(key)) {
         outputPriority.push(key);
@@ -87,7 +107,7 @@ export class PluginOrchestrator {
 
   public async run() {
     const context: PluginContext = {
-      commits: new Map(),
+      updates: new Map(),
       plugins: {},
     };
     await this.transform(context);
@@ -114,5 +134,19 @@ export class PluginOrchestrator {
       }),
     );
     return context;
+  }
+
+  public async listFiles() {
+    if (!this.vcs) {
+      throw new Error("no vcs plugin found");
+    }
+    return this.vcs.files(this.config, this.runtime);
+  }
+
+  public async listUpdates(files: Iterable<string>) {
+    if (!this.vcs) {
+      throw new Error("no vcs plugin found");
+    }
+    return this.vcs.updates(new Set(files), this.runtime);
   }
 }

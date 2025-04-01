@@ -9,8 +9,8 @@ export function extractLinearFiltersFromContext(context: PluginContext) {
   const teams = new Set<string>();
   const issuesMap = new Map<string, Set<string>>();
 
-  for (const [sha, commit] of context.commits) {
-    const issues = extractIssues(commit.message);
+  for (const [sha, commit] of context.updates) {
+    const issues = extractIssues(commit.title);
     for (const issue of issues) {
       const team = issue.split("-")[0];
       teams.add(team);

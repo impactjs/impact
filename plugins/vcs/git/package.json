@@ -1,5 +1,5 @@
 {
-  "name": "@impacts/cli",
+  "name": "@impacts/git",
   "version": "1.0.3",
   "license": "UNLICENSED",
   "author": {
@@ -10,26 +10,14 @@
   "exports": {
     ".": "./src/index.ts"
   },
-  "bin": {
-    "impact": "./bin/impact"
-  },
-  "files": [
-    "bin",
-    "scripts/setup-binary"
-  ],
-  "scripts": {
-    "postinstall": "sh scripts/setup-binary"
+  "dependencies": {
+    "zod": "^3.24.1"
   },
   "devDependencies": {
-    "@impacts/config": "workspace:*",
-    "@impacts/core": "workspace:*",
     "@impacts/logger": "workspace:*",
-    "@impacts/runtime-bun": "workspace:*",
     "@impacts/ts-config": "workspace:*",
     "@impacts/types": "workspace:*",
     "@types/bun": "^1.1.14",
-    "cac": "^6.7.14",
-    "typescript": "^5.7.2",
-    "yaml": "^2.6.1"
+    "typescript": "^5.7.2"
   }
 }
