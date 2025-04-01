@@ -2,7 +2,6 @@ import { join } from "node:path";
 import type { ImpactConfig } from "@impacts/types/config";
 import type { VcsUpdate } from "@impacts/types/plugins";
 import type {
-  ImpactPluginResultEntry,
   ImpactResult,
   ImpactResultRawEntry,
   ImpactResultSummaryEntry,

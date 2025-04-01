@@ -1,9 +1,6 @@
 import { z } from "zod";
 import { baseConfigSchema } from "./private/shared.js";
-import {
-  impactPluginResultEntry,
-  impactPluginResultEntryReference,
-} from "./results.js";
+import { impactPluginResultEntryReference } from "./results.js";
 import { runtimeSchema } from "./runtime.js";
 
 const basePluginSchema = z.object({

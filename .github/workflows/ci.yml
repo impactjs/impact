@@ -117,9 +117,13 @@ jobs:
       - name: publish prerelease
         run: pnpm moonx prepublish -- --tag="pr-${{ github.event.number }}"
         if: github.event_name == 'pull_request'
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
       - name: publish
         run: pnpm moonx publish
         if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
       - id: expose-cli-version
         run: echo "impacts-cli-version=$(jq -r '.version' packages/cli/package.json)" >> $GITHUB_OUTPUT
 
