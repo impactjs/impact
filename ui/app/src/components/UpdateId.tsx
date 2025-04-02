@@ -1,8 +1,13 @@
 import { styled } from "@impacts/styled-system/jsx";
-import type { ImpactPluginResultEntry } from "@impacts/types/results";
+import type {
+  ImpactPluginResultEntry,
+  ImpactPluginResultEntryReference,
+} from "@impacts/types/results";
 import { useMemo } from "react";
 
-export function UpdateId(entry: ImpactPluginResultEntry) {
+export function UpdateId(
+  entry: ImpactPluginResultEntry | ImpactPluginResultEntryReference,
+) {
   const label = useMemo(() => {
     switch (entry.origin) {
       case "github":
