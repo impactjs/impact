@@ -1,6 +1,6 @@
 {
   "name": "@impacts/split-lockfile",
-  "version": "1.0.4",
+  "version": "1.0.5",
   "private": true,
   "license": "UNLICENSED",
   "type": "module",
