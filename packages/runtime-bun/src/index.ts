@@ -20,6 +20,9 @@ export function createRuntime(): Runtime {
       write(path, content) {
         return Bun.write(path, content);
       },
+      exists(path) {
+        return Bun.file(path).exists();
+      },
     },
   };
 }

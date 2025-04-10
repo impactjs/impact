@@ -1,12 +1,14 @@
 #! /usr/bin/env bun
 
 import { loadConfig } from "@impacts/config/internal";
-import { impact } from "@impacts/core";
 import { logger } from "@impacts/logger";
 import { createRuntime } from "@impacts/runtime-bun";
+import { globalImpactconfigSchema } from "@impacts/types/config";
 import { cac } from "cac";
 import pkg from "../package.json" with { type: "json" };
-import { write } from "./utils/output.js";
+import { runImpact } from "./commands/run.js";
+import { showConfig } from "./commands/show-config.js";
+import { whoami } from "./commands/whoami.js";
 
 const cli = cac("impact");
 
@@ -21,34 +23,14 @@ cli
 
 cli
   .command("", "run impact")
-  .option("--branch <branch>", "Use branch")
+  .alias("run")
   .option("-o, --outfile <outfile>", "Output file")
   .option("--format <format>", "Output format")
-  .action(async (options) => {
-    const config = await loadConfig({
-      cwd: options.cwd,
-      config: options.config,
-    });
+  .action(runImpact);
 
-    const result = await impact(config, {
-      runtime: createRuntime(),
-    });
+cli.command("show-config", "Show config").action(showConfig);
 
-    await write(result, {
-      outfile: options.outfile ?? config.outfile,
-      format: options.format ?? config.format,
-    });
-  });
-
-cli.command("show-config", "Show config").action(async (options) => {
-  console.log("show config", options);
-  const config = await loadConfig({
-    cwd: options.cwd,
-    config: options.config,
-  });
-
-  logger.success(JSON.stringify(config, null, 2));
-});
+cli.command("whoami", "Show current user").action(whoami);
 
 cli.help();
 
