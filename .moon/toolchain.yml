@@ -8,6 +8,6 @@ node:
   packageManager: pnpm
   dedupeOnLockfileChange: false
   pnpm:
-    version: 9.0.6
+    version: 10.12.1
     installArgs:
       - --frozen-lockfile

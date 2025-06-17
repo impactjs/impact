@@ -16,8 +16,8 @@ export class PluginOrchestrator {
   private eventHistory = new Set<string>();
   private eventsManager: EventEmitter = new EventEmitter();
   private plugins = {
-    explore: new Array<ScanPlugin>(),
-    augment: new Array<AugmentPlugin>(),
+    explore: [] as ScanPlugin[],
+    augment: [] as AugmentPlugin[],
   };
 
   private vcs!: VcsPlugin;

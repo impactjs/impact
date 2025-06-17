@@ -26,7 +26,7 @@ export async function impact(
   const updatedFiles = await orchestrator.listFiles();
   logger.info(`found ${updatedFiles.size} updated files from base branch`);
 
-  const entryResults = new Array<ImpactResultEntry>();
+  const entryResults: ImpactResultEntry[] = [];
   const updates = new Map<string, ImpactResultUpdate>();
   const files = new Map<string, ImpactResultFile>();
 
@@ -66,8 +66,8 @@ export async function impact(
       path: entry.path,
       description: entry.description,
       updates: filteredUpdates.map((update) => {
-        const primary = new Array<string>();
-        const secondary = new Array<string>();
+        const primary: string[] = [];
+        const secondary: string[] = [];
         for (const file of update.files) {
           const hash = hasher.h64ToString(file.path + file.status);
           files.set(hash, {
