@@ -1,7 +1,6 @@
 packages:
   - "packages/*"
   - "configs/*"
-  - "ui/*"
   - "plugins/augment/*"
   - "plugins/explore/*"
   - "plugins/vcs/*"

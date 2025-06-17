@@ -17,7 +17,7 @@ const order = [
 ];
 
 class Logger {
-  private logLevel: LogLevel = LogLevel.SUCCESS;
+  private logLevel: LogLevel = LogLevel.INFO;
 
   private shouldLog(logLevel: LogLevel) {
     return order.indexOf(logLevel) >= order.indexOf(this.logLevel);
@@ -43,11 +43,17 @@ class Logger {
         set text(value: string) {
           console.log("[debug:spinner:update]: %s", value);
         },
+        start(message: string) {
+          console.log("[debug:spinner:start]: %s", message);
+        },
         succeed(message: string) {
           console.log("[debug:spinner:succeed]: %s", message);
         },
         fail(message: string) {
           console.log("[debug:spinner:fail]: %s", message);
+        },
+        warn(message: string) {
+          console.log("[debug:spinner:warn]: %s", message);
         },
       };
     }

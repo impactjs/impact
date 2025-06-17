@@ -16,6 +16,7 @@ export async function write(result: ImpactResult, options: WriteOptions = {}) {
   }
 
   await Bun.write(options.outfile, output);
+  console.log(`wrote to: ${options.outfile}`);
 }
 
 function render(result: ImpactResult, format: string | undefined) {

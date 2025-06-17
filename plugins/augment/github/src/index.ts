@@ -44,19 +44,24 @@ export function github(options: GithubOptions): AugmentPlugin {
   return {
     name: "github",
     type: "augment",
-    async augment(context) {
+    async augment(updates) {
       const octokit = new Octokit({
         auth,
       });
-      return await findPullRequestsByMergeCommits({
+      const issues = await findPullRequestsByMergeCommits({
         octokit,
         repository: {
           owner: options.owner,
           repo: options.repo,
         },
         limit: options.limit,
-        shas: new Set(context.updates.keys()),
+        shas: new Set(updates.keys()),
       });
+      for (const update of updates.values()) {
+        for (const issue of issues.get(update.id) ?? []) {
+          update.references.push(issue);
+        }
+      }
     },
   };
 }

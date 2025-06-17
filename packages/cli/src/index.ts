@@ -16,7 +16,7 @@ cli
   })
   .option("-c, --config <config>", "Use config file")
   .option("--log-level <level>", "Set log level", {
-    default: "success",
+    default: "info",
   });
 
 cli
@@ -70,6 +70,7 @@ try {
   logger.debug(`Running command ${cli.matchedCommand.name || "[root]"}`);
   logger.debug(`Options: ${JSON.stringify(options)}`);
   await cli.runMatchedCommand();
+  process.exit(0);
 } catch (error) {
   if (error instanceof Error) {
     logger.error(error.message);

@@ -1,5 +1,7 @@
 #!/usr/bin/env node
 
+import { renameSync } from "node:fs";
+import path, { resolve } from "node:path";
 import { createExportableManifest } from "@pnpm/exportable-manifest";
 import { findWorkspaceDir } from "@pnpm/find-workspace-dir";
 import {
@@ -10,9 +12,6 @@ import {
 import { pruneSharedLockfile } from "@pnpm/prune-lockfile";
 import { readProjectManifest } from "@pnpm/read-project-manifest";
 import { DEPENDENCIES_FIELDS } from "@pnpm/types";
-
-import { renameSync } from "node:fs";
-import path, { resolve } from "node:path";
 import renameOverwrite from "rename-overwrite";
 
 async function makeDedicatedLockfile() {

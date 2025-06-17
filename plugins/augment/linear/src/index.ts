@@ -2,7 +2,7 @@ import type { AugmentPlugin } from "@impacts/types/plugins";
 import { LinearClient } from "@linear/sdk";
 import { z } from "zod";
 import { findIssues } from "./find-issues.js";
-import { extractLinearFiltersFromContext } from "./utils.js";
+import { extractLinearFiltersFromUpdates } from "./utils.js";
 
 const linearOptionsSchema = z.object({
   apiKey: z.string(),
@@ -29,21 +29,25 @@ export function linear(options: LinearOptions): AugmentPlugin {
     type: "augment",
     name: "linear",
     awaits: ["github"],
-    async augment(context) {
+    async augment(updates) {
       const linearClient = new LinearClient({
         apiKey,
       });
 
       const availableTeams = await linearClient.teams();
-      const { teams, issues } = extractLinearFiltersFromContext(
-        context,
+      const filters = extractLinearFiltersFromUpdates(
+        updates,
         availableTeams.nodes.map((team) => team.key),
       );
-      return await findIssues({
-        teams,
-        issues,
+      const issues = await findIssues({
+        ...filters,
         linear: linearClient,
       });
+      for (const update of updates.values()) {
+        for (const issue of issues.get(update.id) ?? []) {
+          update.references.push(issue);
+        }
+      }
     },
   };
 }

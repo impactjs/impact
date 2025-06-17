@@ -20,7 +20,9 @@
     "@impacts/github": "workspace:*",
     "@impacts/linear": "workspace:*",
     "@impacts/logger": "workspace:*",
-    "@impacts/types": "workspace:*"
+    "@impacts/types": "workspace:*",
+    "minimatch": "^10.0.1",
+    "xxhash-wasm": "^1.1.0"
   },
   "devDependencies": {
     "@impacts/ts-config": "workspace:*",
