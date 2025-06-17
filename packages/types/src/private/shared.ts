@@ -10,5 +10,6 @@ export const baseConfigSchema = z.object({
   branch: z.string().optional(),
   outfile: z.string().optional(),
   ignore: z.array(z.string()).optional(),
+  primary: z.array(z.string()).min(1).optional(),
   format: z.union([z.literal("json"), z.literal("yaml")]).optional(),
 });

@@ -1,72 +1,78 @@
 import { z } from "zod";
-import { vcsUpdateSchema } from "./plugins.js";
 
-export const baseImpactPluginResultEntry = z.object({
+const fileEntry = z.object({
+  path: z.string(),
+  status: z.enum(["added", "modified", "deleted"]),
+});
+
+// VCS
+export const baseVcsResultEntry = z.object({
+  id: z.string(),
+  title: z.string(),
+  meta: z.array(z.string()),
+});
+const gitResultEntry = baseVcsResultEntry.extend({
+  author: z.string(),
+  timestamp: z.number(),
+});
+
+const vcsResultEntry = gitResultEntry; // .or(anotherVcsResultEntry)
+
+// AUGMENT
+
+const baseAugmentResultEntry = z.object({
   title: z.string(),
   meta: z.array(z.string()),
   id: z.union([z.string(), z.number()]),
 });
 
-const gitPluginResultEntry = baseImpactPluginResultEntry.extend({
-  author: z.string(),
-  origin: z.literal("git"),
-  files: z.array(
-    z.object({
-      path: z.string(),
-      status: z.enum(["added", "modified", "deleted"]),
-    }),
-  ),
-});
-
-const githubPluginResultEntry = baseImpactPluginResultEntry.extend({
+const githubResultEntry = baseAugmentResultEntry.extend({
   url: z.string(),
   origin: z.literal("github"),
 });
-
-const linearPluginResultEntry = baseImpactPluginResultEntry.extend({
+const linearResultEntry = baseAugmentResultEntry.extend({
   url: z.string(),
   origin: z.literal("linear"),
 });
 
-export const impactPluginResultEntry = gitPluginResultEntry; // append vcs entries
+export const updateReferenceSchema = githubResultEntry.or(linearResultEntry);
 
-export const impactPluginResultEntryReference = githubPluginResultEntry.or(
-  linearPluginResultEntry,
-);
+// ENTRY
 
-const impactResultRawEntry = z.object({
-  id: z.string(),
+export const updateSchema = z
+  .object({
+    references: z.array(updateReferenceSchema),
+  })
+  .and(vcsResultEntry); // append vcs entries (replace the second gitPluginResultEntry with any)
+
+const entryResultSchema = z.object({
   path: z.string(),
   description: z.string(),
-  diff: z.array(z.string()),
-  updates: z.array(vcsUpdateSchema),
-});
-
-const impactResultSummaryUpdate = z.object({
-  timestamp: z.number(),
-  main: impactPluginResultEntry,
-  references: z.array(impactPluginResultEntryReference),
-});
-
-const impactResultSummaryEntry = z.object({
-  id: z.string(),
-  description: z.string(),
-  path: z.string(),
-  updates: z.array(impactResultSummaryUpdate),
+  updates: z.array(
+    z.object({
+      update: z.string(),
+      files: z.object({
+        primary: z.array(z.string()),
+        secondary: z.array(z.string()),
+      }),
+    }),
+  ),
 });
 
 export const impactResultSchema = z.object({
-  raw: z.array(impactResultRawEntry),
-  entrypoints: z.array(impactResultSummaryEntry),
+  updates: z.record(
+    updateSchema.and(
+      z.object({
+        references: z.array(updateReferenceSchema),
+      }),
+    ),
+  ),
+  files: z.record(fileEntry),
+  entries: z.array(entryResultSchema),
 });
 
+export type ImpactResultFile = z.infer<typeof fileEntry>;
 export type ImpactResult = z.infer<typeof impactResultSchema>;
-export type ImpactResultRawEntry = z.infer<typeof impactResultRawEntry>;
-export type ImpactPluginResultEntry = z.infer<typeof impactPluginResultEntry>;
-export type ImpactPluginResultEntryReference = z.infer<
-  typeof impactPluginResultEntryReference
->;
-export type ImpactResultSummaryEntry = z.infer<typeof impactResultSummaryEntry>;
-export type ImpactResultSummaryUpdate = z.infer<
-  typeof impactResultSummaryUpdate
->;
+export type ImpactResultUpdate = z.infer<typeof updateSchema>;
+export type ImpactResultEntry = z.infer<typeof entryResultSchema>;
+export type ImpactResultUpdateReference = z.infer<typeof updateReferenceSchema>;

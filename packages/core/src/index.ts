@@ -1,100 +1,112 @@
 import { join } from "node:path";
+import { logger } from "@impacts/logger";
 import type { ImpactConfig } from "@impacts/types/config";
-import type { VcsUpdate } from "@impacts/types/plugins";
 import type {
   ImpactResult,
-  ImpactResultRawEntry,
-  ImpactResultSummaryEntry,
+  ImpactResultEntry,
+  ImpactResultFile,
+  ImpactResultUpdate,
 } from "@impacts/types/results";
 import type { Runtime } from "@impacts/types/runtime";
+import { minimatch } from "minimatch";
+import xxhash from "xxhash-wasm";
 import { PluginOrchestrator } from "./utils/plugin-orchestrator.js";
 
 type ImpactOptions = {
   runtime: Runtime;
 };
 
+const hasher = await xxhash();
+
 export async function impact(
   config: ImpactConfig,
   options: ImpactOptions,
 ): Promise<ImpactResult> {
   const orchestrator = new PluginOrchestrator(config, options.runtime);
-  const diff = await orchestrator.listFiles();
-  const result = new Array<ImpactResultRawEntry>();
+  const updatedFiles = await orchestrator.listFiles();
+  logger.info(`found ${updatedFiles.size} updated files from base branch`);
+
+  const entryResults: ImpactResultEntry[] = [];
+  const updates = new Map<string, ImpactResultUpdate>();
+  const files = new Map<string, ImpactResultFile>();
 
   for await (const entry of config.entries) {
-    const tree = await orchestrator.explore(join(process.cwd(), entry.path));
-    const files = tree.intersection(diff);
+    const importTree = await orchestrator.explore(
+      entry.id,
+      join(process.cwd(), entry.path),
+    );
+    const updatedEntryFiles = importTree.intersection(updatedFiles);
 
-    if (!files.size) {
+    if (!updatedEntryFiles.size) {
+      entryResults.push({
+        updates: [],
+        path: entry.path,
+        description: entry.description,
+      });
       continue;
     }
-    const updates = await orchestrator.listUpdates(files);
-    result.push({
-      id: entry.id,
+    const listUpdatesSpinner = logger.spinner(
+      `listing updates concerning ${entry.path} files`,
+    );
+    const filteredUpdates = await orchestrator.listUpdates(updatedEntryFiles);
+    listUpdatesSpinner.succeed(
+      `${entry.path}: ${filteredUpdates.length} updates found`,
+    );
+    for (const update of filteredUpdates) {
+      updates.set(update.id, {
+        id: update.id,
+        references: [],
+        title: update.title,
+        author: update.author,
+        timestamp: update.timestamp,
+        meta: [update.id, update.title],
+      });
+    }
+    entryResults.push({
       path: entry.path,
       description: entry.description,
-      diff: Array.from(files),
-      updates,
+      updates: filteredUpdates.map((update) => {
+        const primary: string[] = [];
+        const secondary: string[] = [];
+        for (const file of update.files) {
+          const hash = hasher.h64ToString(file.path + file.status);
+          files.set(hash, {
+            path: file.path,
+            status: file.status,
+          });
+          if (!config.primary) {
+            primary.push(hash);
+            continue;
+          }
+          const primaries = config.primary.map((primary) =>
+            join(process.cwd(), primary),
+          );
+          if (primaries.some((primary) => minimatch(file.path, primary))) {
+            primary.push(hash);
+            continue;
+          }
+          secondary.push(hash);
+        }
+        return {
+          update: update.id,
+          files: {
+            primary,
+            secondary,
+          },
+        };
+      }),
     });
   }
 
-  const vcsUpdates = new Map<string, VcsUpdate>();
-  for (const update of result.flatMap((entry) => entry.updates)) {
-    vcsUpdates.set(update.id, update);
-  }
+  logger.info(`found a total of ${updates.size} updates`);
 
-  const updates = await orchestrator.transform({
-    updates: vcsUpdates,
-    plugins: {},
-  });
-
-  const entrypoints = result.reduce<ImpactResultSummaryEntry[]>(
-    (acc, entry) => {
-      acc.push({
-        id: entry.id,
-        description: entry.description,
-        path: entry.path,
-        updates: entry.updates.reduce<ImpactResultSummaryEntry["updates"]>(
-          (acc, commit) => {
-            const outputPriority = orchestrator.getOutputPriority();
-            const references = Object.entries(updates.plugins)
-              .map(([plugin, pluginUpdates]) => {
-                const update = pluginUpdates.get(commit.id);
-                if (!update) {
-                  return null;
-                }
-                return [plugin, update] as const;
-              })
-              .filter((entry) => !!entry)
-              .sort(([left], [right]) => {
-                return (
-                  outputPriority.indexOf(left) - outputPriority.indexOf(right)
-                );
-              });
-            acc.push({
-              main: {
-                meta: [],
-                origin: "git",
-                id: commit.id,
-                files: commit.files,
-                title: commit.title,
-                author: commit.author,
-              },
-              timestamp: new Date(commit.date).getTime(),
-              references: references.flatMap(([, entries]) => entries),
-            });
-            return acc;
-          },
-          [],
-        ),
-      });
-      return acc;
-    },
-    [],
-  );
+  const augmentSpinner = logger.spinner("augmenting updates");
+  await orchestrator.augment(updates);
+  augmentSpinner.succeed("updates augmented");
 
   return {
-    entrypoints,
-    raw: result,
+    entries: entryResults,
+    files: Object.fromEntries(files.entries()),
+    updates: Object.fromEntries(updates.entries()),
   };
 }

@@ -7,18 +7,17 @@ import { logger } from "@impacts/logger";
 import type { ImpactConfig } from "@impacts/types/config";
 import type {
   AugmentPlugin,
-  PluginContext,
   ScanPlugin,
   VcsPlugin,
 } from "@impacts/types/plugins";
+import type { ImpactResultUpdate } from "@impacts/types/results";
 import type { Runtime } from "@impacts/types/runtime";
-
 export class PluginOrchestrator {
   private eventHistory = new Set<string>();
   private eventsManager: EventEmitter = new EventEmitter();
   private plugins = {
-    explore: new Array<ScanPlugin>(),
-    augment: new Array<AugmentPlugin>(),
+    explore: [] as ScanPlugin[],
+    augment: [] as AugmentPlugin[],
   };
 
   private vcs!: VcsPlugin;
@@ -69,14 +68,14 @@ export class PluginOrchestrator {
     }
   }
 
-  public async explore(entry: string) {
+  public async explore(id: string, entry: string) {
     const plugin = this.plugins.explore.find((plugin) =>
       plugin.shouldScan(entry, this.config),
     );
     if (!plugin) {
       throw new Error(`no explore plugin found for entry: ${entry}`);
     }
-    return plugin.explore(entry, this.config);
+    return plugin.explore(id, entry, this.config, this.runtime);
   }
 
   private async awaitEvent(event: string) {
@@ -91,30 +90,7 @@ export class PluginOrchestrator {
     });
   }
 
-  getOutputPriority() {
-    const outputPriority = [...(this.config.outputPriority ?? [])];
-    const keys = [
-      this.vcs.name,
-      ...this.plugins.augment.map((plugin) => plugin.name),
-    ];
-    for (const key of keys) {
-      if (!outputPriority.includes(key)) {
-        outputPriority.push(key);
-      }
-    }
-    return outputPriority;
-  }
-
-  public async run() {
-    const context: PluginContext = {
-      updates: new Map(),
-      plugins: {},
-    };
-    await this.transform(context);
-    return context;
-  }
-
-  async transform(context: PluginContext) {
+  async augment(updates: Map<string, ImpactResultUpdate>) {
     logger.debug("apllying transform plugins");
     await Promise.all(
       this.plugins.augment.map(async (plugin) => {
@@ -131,13 +107,11 @@ export class PluginOrchestrator {
             }),
         );
         logger.debug(`applying transform plugin: ${plugin.name}`);
-        const result = await plugin.augment(context, this.config);
-        context.plugins[plugin.name] = result;
+        await plugin.augment(updates, this.config);
         logger.debug(`plugin: ${plugin.name} finished`);
-        this.eventsManager.emit(`plugin:transformed:${plugin.name}`, result);
+        this.eventsManager.emit(`plugin:transformed:${plugin.name}`);
       }),
     );
-    return context;
   }
 
   public async listFiles() {

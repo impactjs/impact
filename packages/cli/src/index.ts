@@ -16,12 +16,11 @@ cli
   })
   .option("-c, --config <config>", "Use config file")
   .option("--log-level <level>", "Set log level", {
-    default: "success",
+    default: "info",
   });
 
 cli
-  .command("", "run impact")
-  .option("--branch <branch>", "Use branch")
+  .command("run", "run impact")
   .option("-o, --outfile <outfile>", "Output file")
   .option("--format <format>", "Output format")
   .action(async (options) => {
@@ -70,6 +69,7 @@ try {
   logger.debug(`Running command ${cli.matchedCommand.name || "[root]"}`);
   logger.debug(`Options: ${JSON.stringify(options)}`);
   await cli.runMatchedCommand();
+  process.exit(0);
 } catch (error) {
   if (error instanceof Error) {
     logger.error(error.message);

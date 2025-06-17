@@ -1,5 +1,5 @@
 import { logger } from "@impacts/logger";
-import type { ImpactPluginResultEntryReference } from "@impacts/types/results";
+import type { ImpactResultUpdateReference } from "@impacts/types/results";
 import type { LinearClient, LinearDocument } from "@linear/sdk";
 
 type FindIssuesOptions = {
@@ -31,24 +31,46 @@ export async function findIssues({
   issues,
   teams,
   limit = 3,
-}: FindIssuesOptions): Promise<
-  Map<string, ImpactPluginResultEntryReference[]>
-> {
+}: FindIssuesOptions): Promise<Map<string, ImpactResultUpdateReference[]>> {
   const uniqueComits = new Set(
     Array.from(issues.values()).flatMap((s) => Array.from(s)),
   );
+
+  const issuesPerTeam = new Map<string, number[]>();
+  for (const team of teams) {
+    issuesPerTeam.set(
+      team,
+      Array.from(issues.keys())
+        .filter((id) => id.startsWith(team))
+        .map((id) => {
+          const [_, issueId] = id.split("-");
+          return Number.parseInt(issueId, 10);
+        }),
+    );
+  }
   const payload: LinearDocument.IssuesQueryVariables = {
     first: 250,
     filter: {
-      team: {
-        key: {
-          in: Array.from(teams),
-        },
-      },
+      or: Array.from(issuesPerTeam.entries()).map(([team, issues]) => ({
+        and: [
+          {
+            team: {
+              key: {
+                eq: team,
+              },
+            },
+          },
+          {
+            number: {
+              in: issues,
+            },
+          },
+        ],
+      })),
     },
   };
 
-  const shas = new Map<string, ImpactPluginResultEntryReference[]>();
+  const shas = new Map<string, ImpactResultUpdateReference[]>();
 
   const spinner = logger.spinner(`retrieving issues (0/${issues.size})`);
 
@@ -64,7 +86,7 @@ export async function findIssues({
         spinner.text = `retrieving issues (${shas.size}/${issues.size})`;
         for (const sha of issues.get(issue.identifier) ?? []) {
           const existing = shas.get(sha) ?? [];
-          const reference: ImpactPluginResultEntryReference = {
+          const reference: ImpactResultUpdateReference = {
             meta: [],
             url: issue.url,
             origin: "linear",
@@ -85,7 +107,8 @@ export async function findIssues({
     }
     spinner.succeed(`retrieved ${issuesRetrieved} issues`);
     return shas;
-  } catch {
+  } catch (error) {
+    console.log(error, payload);
     spinner.fail("failed to retrieve issues");
     console.error("failed to retrieve issues");
     return new Map();

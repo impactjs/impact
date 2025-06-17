@@ -1,6 +1,7 @@
 import { z } from "zod";
+import { impactPluginResultEntryReference } from "./old-results.js";
 import { baseConfigSchema } from "./private/shared.js";
-import { impactPluginResultEntryReference } from "./results.js";
+import { updateSchema } from "./results.js";
 import { runtimeSchema } from "./runtime.js";
 
 const basePluginSchema = z.object({
@@ -14,6 +15,7 @@ export const vcsUpdateSchema = z.object({
   description: z.string(),
   date: z.string(),
   author: z.string(),
+  timestamp: z.number(),
   files: z.array(
     z.object({
       path: z.string(),
@@ -50,12 +52,10 @@ const augmentPluginSchema = basePluginSchema.extend({
   augment: z
     .function()
     .args(
-      pluginContext,
+      z.map(z.string(), updateSchema),
       z.lazy(() => baseConfigSchema),
     )
-    .returns(
-      z.promise(z.map(z.string(), z.array(impactPluginResultEntryReference))),
-    ),
+    .returns(z.promise(z.void())),
 });
 
 const explorePluginSchema = basePluginSchema.extend({
@@ -71,7 +71,9 @@ const explorePluginSchema = basePluginSchema.extend({
     .function()
     .args(
       z.string(),
+      z.string(),
       z.lazy(() => baseConfigSchema),
+      runtimeSchema,
     )
     .returns(z.promise(z.set(z.string()))),
 });

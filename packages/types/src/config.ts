@@ -3,7 +3,6 @@ import { knownPluginNameSchema, pluginSchema } from "./plugins.js";
 import { baseConfigSchema, type entrySchema } from "./private/shared.js";
 
 export const impactConfigSchema = baseConfigSchema.extend({
-  outputPriority: z.array(z.string()).optional(),
   plugins: z.array(
     z.union([pluginSchema, z.tuple([knownPluginNameSchema, z.unknown()])]),
   ),

@@ -1,5 +1,5 @@
 import { logger } from "@impacts/logger";
-import type { ImpactPluginResultEntryReference } from "@impacts/types/results";
+import type { ImpactResultUpdateReference } from "@impacts/types/results";
 import type { Octokit } from "@octokit/rest";
 
 interface FindPullRequestsByMergeCommitsParams {
@@ -43,7 +43,7 @@ export async function findPullRequestsByMergeCommits({
   limit = 3,
   repository,
 }: FindPullRequestsByMergeCommitsParams) {
-  const pullRequests = new Map<string, ImpactPluginResultEntryReference[]>();
+  const pullRequests = new Map<string, ImpactResultUpdateReference[]>();
 
   const payload = {
     page: 1,

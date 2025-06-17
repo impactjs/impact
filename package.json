@@ -17,11 +17,14 @@
     "sort": "moonx sort"
   },
   "dependencies": {
-    "@biomejs/biome": "^1.9.4",
+    "@biomejs/biome": "2.0.0",
     "@maastrich/moonx": "0.1.6",
     "@moonrepo/cli": "^1.30.5",
     "knip": "^5.41.1",
     "sort-package-json": "^3.0.0"
   },
-  "packageManager": "pnpm@9.0.6"
+  "packageManager": "pnpm@10.12.1",
+  "engines": {
+    "node": "24.2.0"
+  }
 }

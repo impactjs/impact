@@ -1,4 +1,4 @@
-import type { PluginContext } from "@impacts/types/plugins";
+import type { ImpactResultUpdate } from "@impacts/types/results";
 
 function extractIssues(text: string, availableTeams: Array<string>) {
   const pattern = availableTeams
@@ -11,44 +11,37 @@ function extractIssues(text: string, availableTeams: Array<string>) {
   );
 }
 
-export function extractLinearFiltersFromContext(
-  context: PluginContext,
+export function extractLinearFiltersFromUpdates(
+  updates: Map<string, ImpactResultUpdate>,
   availableTeams: Array<string>,
 ) {
   const teams = new Set<string>();
   const issuesMap = new Map<string, Set<string>>();
 
-  for (const [sha, commit] of context.updates) {
-    const issues = extractIssues(commit.title, availableTeams);
+  for (const update of updates.values()) {
+    // const issues = extractIssues(update.title, availableTeams);
+
+    const issues = new Set(
+      [
+        extractIssues(update.title, availableTeams),
+        ...update.references.map((reference) =>
+          extractIssues(reference.title, availableTeams),
+        ),
+        ...update.references
+          .flatMap((reference) => reference.meta)
+          .flatMap((meta) => extractIssues(meta, availableTeams)),
+      ].flatMap((issues) => [...issues]),
+    );
+
     for (const issue of issues) {
       const team = issue.split("-")[0];
       teams.add(team);
     }
-    const all = Object.values(context.plugins).reduce((acc, plugin) => {
-      const entity = plugin.get(sha);
-      if (!entity) {
-        return acc;
-      }
-      const issues = new Set(
-        [entity]
-          .flat()
-          .flatMap((entity) =>
-            [
-              [...extractIssues(entity.title, availableTeams).values()],
-              ...entity.meta.map((meta) => [
-                ...extractIssues(meta, availableTeams),
-              ]),
-            ].flat(),
-          ),
+    for (const issue of issues) {
+      issuesMap.set(
+        issue,
+        new Set([update.id, ...(issuesMap.get(issue) ?? [])]),
       );
-      for (const issue of issues) {
-        const team = issue.split("-")[0];
-        teams.add(team);
-      }
-      return acc.union(issues);
-    }, issues);
-    for (const issue of all) {
-      issuesMap.set(issue, new Set([sha, ...(issuesMap.get(issue) ?? [])]));
     }
   }
 
