@@ -1,6 +1,6 @@
 {
   "name": "@impacts/monorepo",
-  "version": "1.0.5",
+  "version": "1.0.6",
   "private": true,
   "keywords": [],
   "license": "UNLICENSED",
@@ -11,6 +11,9 @@
   "scripts": {
     "check": "moonx check",
     "dev": "moonx dev",
+    "docs:build": "vitepress build docs",
+    "docs:dev": "vitepress dev docs",
+    "docs:preview": "vitepress preview docs",
     "format": "moonx format",
     "lint": "moonx lint",
     "prepare": "moonx make-dedicated-lockfile",
@@ -22,6 +25,9 @@
     "@moonrepo/cli": "^1.30.5",
     "knip": "^5.41.1",
     "sort-package-json": "^3.0.0"
+  },
+  "devDependencies": {
+    "vitepress": "2.0.0-alpha.6"
   },
   "packageManager": "pnpm@10.12.1",
   "engines": {

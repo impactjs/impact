@@ -318,3 +318,7 @@ dist
 # End of https://www.toptal.com/developers/gitignore/api/macos,node,yarn,visualstudiocode,test,git
 
 packages/cli/bin/*
+
+# vitepress
+docs/.vitepress/cache
+docs/.vitepress/dist

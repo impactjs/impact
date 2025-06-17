@@ -1,0 +1,95 @@
+# Getting Started
+
+Welcome to Impact! This guide will help you get started with analyzing and tracking changes in your codebase.
+
+## Installation
+
+You can install Impact using your preferred package manager:
+
+```bash
+# Using npm
+npm install @impacts/cli
+
+# Using yarn
+yarn add @impacts/cli
+
+# Using pnpm
+pnpm add @impacts/cli
+```
+
+## Quick Start
+
+1. Create an `impact.config.ts` file in your project root:
+
+```typescript
+import { defineConfig } from '@impacts/config'
+
+export default defineConfig({
+  entries: [
+    {
+      path: 'src',
+      description: 'Source code'
+    }
+  ]
+})
+```
+
+2. Run Impact:
+
+```bash
+npx impact run
+```
+
+## Basic Usage
+
+The Impact CLI provides several options for customization:
+
+```bash
+# Basic analysis
+impact run
+
+# Custom config file
+impact run -c custom.impact.config.ts
+
+# Output to file
+impact run -o impact-report.json --format json
+
+# Set log level
+impact run --log-level debug
+```
+
+## Environment Variables
+
+Impact supports various environment variables for configuration and authentication:
+
+- `LINEAR_API_KEY`: API key for Linear integration
+- `JIRA_USERNAME`: Username for Jira integration
+- `JIRA_API_TOKEN`: API token for Jira integration
+- `SVN_USERNAME`: Username for SVN integration
+- `SVN_PASSWORD`: Password for SVN integration
+
+Example configuration with environment variables:
+
+```typescript
+export default defineConfig({
+  entries: [...],
+  plugins: [
+    {
+      type: 'linear',
+      options: {
+        apiKey: process.env.LINEAR_API_KEY
+      }
+    }
+  ]
+})
+```
+
+## Next Steps
+
+- Read the [Configuration Guide](/guide/configuration) to learn about available options
+- Check out the [CLI Documentation](/guide/cli) for command-line tools
+- Explore [Plugins](/plugins/) to extend functionality:
+  - [Explore Plugins](/plugins/explore)
+  - [VCS Plugins](/plugins/vcs)
+  - [Augment Plugins](/plugins/augment)
+- Learn about [Output Formats](/guide/output-formats) for your reports 
