@@ -4,3 +4,9 @@ packages:
   - "plugins/augment/*"
   - "plugins/explore/*"
   - "plugins/vcs/*"
+
+onlyBuiltDependencies:
+  - "@maastrich/moonx"
+  - "@moonrepo/cli"
+  - "bun"
+  - "esbuild"
