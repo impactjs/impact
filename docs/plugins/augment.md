@@ -12,24 +12,7 @@ The Linear plugin integrates with Linear to:
 - Track issue status and priority
 - Include team information
 
-```typescript
-export default defineConfig({
-  entries: [...],
-  plugins: [
-    {
-      type: 'linear',
-      options: {
-        apiKey: process.env.LINEAR_API_KEY,
-        teams: ['ENG', 'DESIGN']
-      }
-    }
-  ]
-})
-```
-
-## Linear Plugin Configuration
-
-The Linear plugin supports various configuration options:
+### Configuration
 
 ```typescript
 export default defineConfig({
@@ -39,24 +22,64 @@ export default defineConfig({
       type: 'linear',
       options: {
         apiKey: process.env.LINEAR_API_KEY,
-        teams: ['ENG', 'DESIGN'],
-        includeLabels: true,
-        includeComments: true,
-        maxIssues: 100
+        teams: ['ENG', 'DESIGN'], // Optional: Filter by teams
+        states: ['TODO', 'IN_PROGRESS'], // Optional: Filter by issue states
+        labels: ['bug', 'feature'] // Optional: Filter by labels
       }
     }
   ]
 })
 ```
 
-### Linear Plugin Options
+### Environment Variables
 
-- `apiKey`: Linear API key (required)
-- `teams`: Array of team identifiers to include
-- `includeLabels`: Whether to include issue labels (default: true)
-- `includeComments`: Whether to include issue comments (default: false)
-- `maxIssues`: Maximum number of issues to fetch (default: 100)
-- `since`: Time range for issues (e.g., '1 week ago')
+- `LINEAR_API_KEY`: Your Linear API key (required)
+
+### Features
+
+- Tracks Linear issues referenced in commits
+- Adds issue metadata to the analysis
+- Groups changes by Linear issues
+- Provides issue status and priority information
+
+### Output Integration
+
+The Linear plugin adds the following information to the output:
+
+```json
+{
+  "updates": {
+    "abc123": {
+      "id": "abc123",
+      "title": "Update feature X",
+      "linear": {
+        "issue": "ENG-123",
+        "status": "IN_PROGRESS",
+        "priority": "HIGH",
+        "team": "ENG",
+        "labels": ["feature"]
+      }
+    }
+  }
+}
+```
+
+### Best Practices
+
+1. **API Key Security**
+   - Never commit your Linear API key
+   - Use environment variables for configuration
+   - Rotate keys regularly
+
+2. **Team Organization**
+   - Use team filters to focus on relevant changes
+   - Align teams with your project structure
+   - Consider using multiple team configurations
+
+3. **Issue Tracking**
+   - Reference Linear issues in commit messages
+   - Keep issue status up to date
+   - Use labels for better categorization
 
 ## Creating Custom Augment Plugins
 
@@ -179,7 +202,6 @@ function extractIssueKeys(text: string): string[] {
   const regex = /[A-Z]+-\d+/g;
   return text.match(regex) || [];
 }
-```
 
 ## Common Use Cases
 

@@ -90,20 +90,6 @@ export class PluginOrchestrator {
     });
   }
 
-  getOutputPriority() {
-    const outputPriority = [...(this.config.outputPriority ?? [])];
-    const keys = [
-      this.vcs.name,
-      ...this.plugins.augment.map((plugin) => plugin.name),
-    ];
-    for (const key of keys) {
-      if (!outputPriority.includes(key)) {
-        outputPriority.push(key);
-      }
-    }
-    return outputPriority;
-  }
-
   async augment(updates: Map<string, ImpactResultUpdate>) {
     logger.debug("apllying transform plugins");
     await Promise.all(

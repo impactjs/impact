@@ -119,6 +119,24 @@ export default defineConfig({
 
 The output structure is consistent across all formats and includes:
 
+### Output Priority
+
+The `outputPriority` configuration option allows you to control the order of information in the output. By default, the priority is determined by the plugins in use. You can override this by specifying your own priority order:
+
+```typescript
+export default defineConfig({
+  entries: [...],
+  outputPriority: ['critical', 'high', 'medium', 'low'],
+  // This will ensure that critical updates appear first in the output,
+  // followed by high, medium, and low priority updates
+})
+```
+
+The priority affects:
+- The order of updates in the output
+- The grouping of related changes
+- The visual hierarchy in HTML reports
+
 ### Entries
 
 Array of entry points that were analyzed:

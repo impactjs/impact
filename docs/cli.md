@@ -49,130 +49,27 @@ impact -o impact-report.json --format json
 impact --log-level debug
 ```
 
-## JSON Configuration
-
-Impact supports configuration through a JSON file. This is useful for environments where TypeScript is not available or when you prefer a simpler configuration format.
-
-### Basic JSON Configuration
-
-Create an `impact.config.json` file:
-
-```json
-{
-  "entries": [
-    {
-      "path": "src",
-      "description": "Source code"
-    }
-  ]
-}
-```
-
-### Advanced JSON Configuration
-
-```json
-{
-  "entries": [
-    {
-      "path": "src",
-      "description": "Source code"
-    },
-    {
-      "path": "tests",
-      "description": "Test files"
-    }
-  ],
-  "plugins": [
-    "git",
-    {
-      "type": "linear",
-      "options": {
-        "apiKey": "env:LINEAR_API_KEY",
-        "teams": ["ENG", "DESIGN"]
-      }
-    }
-  ],
-  "outputPriority": ["critical", "high", "medium", "low"],
-  "format": "json",
-  "outfile": "impact-report.json"
-}
-```
-
-### Environment Variables in JSON
-
-You can use environment variables in your JSON configuration using the `${VARIABLE_NAME}` syntax:
-
-```json
-{
-  "plugins": [
-    {
-      "type": "linear",
-      "options": {
-        "apiKey": "env:LINEAR_API_KEY",
-        "username": "env:LINEAR_USERNAME"
-      }
-    }
-  ]
-}
-```
-
-### JSON Configuration Options
-
-| Option | Type | Description | Required |
-|--------|------|-------------|----------|
-| `entries` | Array | List of entry points to analyze | Yes |
-| `plugins` | Array | List of plugins to use | No |
-| `outputPriority` | Array | Priority levels for output | No |
-| `format` | String | Output format (json, yaml, html) | No |
-| `outfile` | String | Output file path | No |
-
-### Entry Configuration
-
-```json
-{
-  "entries": [
-    {
-      "path": "src",
-      "description": "Source code"
-    }
-  ]
-}
-```
-
-| Field | Type | Description | Required |
-|-------|------|-------------|----------|
-| `path` | String | Path to the entry point | Yes |
-| `description` | String | Description of the entry point | Yes |
-
-### Plugin Configuration
-
-```json
-{
-  "plugins": [
-    "git",
-    {
-      "type": "linear",
-      "options": {
-        "apiKey": "env:LINEAR_API_KEY",
-        "teams": ["ENG", "DESIGN"]
-      }
-    }
-  ]
-}
-```
-
-| Field | Type | Description | Required |
-|-------|------|-------------|----------|
-| `type` | String | Plugin type | Yes |
-| `options` | Object | Plugin-specific options | No |
-
 ## Output Formats
 
 Impact supports multiple output formats:
 
-- `json`: JSON format (default)
-- `yaml`: YAML format
+- `yaml`: YAML format (default)
+- `json`: JSON format
 - `html`: HTML report with visual representation
+
+The default format is YAML if not specified. The format can be set using the `--format` option or in the configuration file.
+
+Example:
+```bash
+# Output as YAML (default)
+impact
+
+# Output as JSON
+impact --format json
+
+# Output as HTML
+impact --format html
+```
 
 ## Exit Codes
 
@@ -181,5 +78,48 @@ Impact supports multiple output formats:
 
 ## Environment Variables
 
-- `IMPACT_CONFIG`: Path to the config file
-- `IMPACT_LOG_LEVEL`: Set the log level 
+Impact supports environment variables for configuration and authentication. You need to provide these variables in your environment before running Impact.
+
+### Common Environment Variables
+
+- `LINEAR_API_KEY`: API key for Linear integration
+- `JIRA_USERNAME`: Username for Jira integration
+- `JIRA_API_TOKEN`: API token for Jira integration
+- `SVN_USERNAME`: Username for SVN integration
+- `SVN_PASSWORD`: Password for SVN integration
+
+### Using Environment Variables
+
+#### In TypeScript Configuration
+
+```typescript
+export default defineConfig({
+  entries: [...],
+  plugins: [
+    {
+      type: 'linear',
+      options: {
+        apiKey: process.env.LINEAR_API_KEY
+      }
+    }
+  ]
+})
+```
+
+#### In JSON Configuration
+
+```json
+{
+  "entries": [...],
+  "plugins": [
+    {
+      "type": "linear",
+      "options": {
+        "apiKey": "env:LINEAR_API_KEY"
+      }
+    }
+  ]
+}
+```
+
+Note: When using JSON configuration, environment variables must be prefixed with `env:` to be properly resolved. The actual environment variable values need to be set in your environment before running Impact.
