@@ -14,7 +14,10 @@
     "format": "moonx format",
     "lint": "moonx lint",
     "prepare": "moonx make-dedicated-lockfile",
-    "sort": "moonx sort"
+    "sort": "moonx sort",
+    "docs:dev": "vitepress dev docs",
+    "docs:build": "vitepress build docs",
+    "docs:preview": "vitepress preview docs"
   },
   "dependencies": {
     "@biomejs/biome": "2.0.0",
@@ -22,6 +25,9 @@
     "@moonrepo/cli": "^1.30.5",
     "knip": "^5.41.1",
     "sort-package-json": "^3.0.0"
+  },
+  "devDependencies": {
+    "vitepress": "2.0.0-alpha.6"
   },
   "packageManager": "pnpm@10.12.1",
   "engines": {
