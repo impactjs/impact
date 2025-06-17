@@ -20,8 +20,7 @@ cli
   });
 
 cli
-  .command("", "run impact")
-  .option("--branch <branch>", "Use branch")
+  .command("run", "run impact")
   .option("-o, --outfile <outfile>", "Output file")
   .option("--format <format>", "Output format")
   .action(async (options) => {

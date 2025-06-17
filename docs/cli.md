@@ -15,7 +15,7 @@ impact [options]
 - `--log-level <level>`: Set the log level (default: "info")
 - `--branch <branch>`: Specify the branch to analyze
 - `-o, --outfile <outfile>`: Specify the output file
-- `--format <format>`: Specify the output format (json, yaml, or html)
+- `--format <format>`: Specify the output format (json or yaml)
 
 ## Examples
 
@@ -55,7 +55,6 @@ Impact supports multiple output formats:
 
 - `yaml`: YAML format (default)
 - `json`: JSON format
-- `html`: HTML report with visual representation
 
 The default format is YAML if not specified. The format can be set using the `--format` option or in the configuration file.
 
@@ -66,9 +65,6 @@ impact
 
 # Output as JSON
 impact --format json
-
-# Output as HTML
-impact --format html
 ```
 
 ## Exit Codes

@@ -86,21 +86,6 @@ updates:
       - Update feature X
 ```
 
-### HTML
-
-The HTML format provides a visual representation of the analysis results with an interactive interface.
-
-```bash
-impact --format html --outfile impact.html
-```
-
-The HTML output includes:
-- Interactive file tree
-- Change visualization
-- Filtering options
-- Search functionality
-- Export options
-
 ## Configuration
 
 You can specify the default output format in your `impact.config.ts`:
@@ -110,32 +95,14 @@ import { defineConfig } from '@impacts/config'
 
 export default defineConfig({
   entries: [...],
-  format: 'html',
-  outfile: 'impact.html'
+  format: 'yaml',
+  outfile: 'impact.yaml'
 })
 ```
 
 ## Output Structure
 
 The output structure is consistent across all formats and includes:
-
-### Output Priority
-
-The `outputPriority` configuration option allows you to control the order of information in the output. By default, the priority is determined by the plugins in use. You can override this by specifying your own priority order:
-
-```typescript
-export default defineConfig({
-  entries: [...],
-  outputPriority: ['critical', 'high', 'medium', 'low'],
-  // This will ensure that critical updates appear first in the output,
-  // followed by high, medium, and low priority updates
-})
-```
-
-The priority affects:
-- The order of updates in the output
-- The grouping of related changes
-- The visual hierarchy in HTML reports
 
 ### Entries
 
@@ -160,50 +127,11 @@ Map of updates that were found:
 - `references`: Array of references
 - `meta`: Additional metadata
 
-## Custom Output Formats
-
-You can create custom output formats by implementing the appropriate interface:
-
-```typescript
-interface OutputFormatter {
-  format: (result: ImpactResult) => string;
-  extension: string;
-}
-```
-
-Example custom formatter:
-
-```typescript
-const markdownFormatter: OutputFormatter = {
-  format: (result: ImpactResult) => {
-    let output = '# Impact Analysis Report\n\n';
-    
-    // Add entries section
-    output += '## Entries\n\n';
-    for (const entry of result.entries) {
-      output += `### ${entry.path}\n`;
-      output += `${entry.description}\n\n`;
-      
-      // Add updates
-      for (const update of entry.updates) {
-        const updateData = result.updates[update.update];
-        output += `- ${updateData.title} (${updateData.author})\n`;
-      }
-      output += '\n';
-    }
-    
-    return output;
-  },
-  extension: 'md'
-};
-```
-
 ## Best Practices
 
 1. **Format Selection**
    - Use JSON for programmatic processing
    - Use YAML for human readability
-   - Use HTML for visual presentation
 
 2. **File Naming**
    - Include timestamp in filename

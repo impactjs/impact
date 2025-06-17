@@ -47,9 +47,8 @@ Create an `impact.config.json` file in your project root:
 ### Optional Options
 
 - `plugins`: Array of plugins to use
-- `outputPriority`: Array of strings defining output priority
 - `outfile`: Default output file path
-- `format`: Default output format (json, yaml, or html)
+- `format`: Default output format (json or yaml)
 - `branch`: Branch to analyze
 - `ignore`: Array of paths to ignore
 - `primary`: Array of primary paths to analyze
@@ -136,8 +135,8 @@ export default defineConfig({
     }
   ],
   plugins: [['git', {}]],
-  format: 'html',
-  outfile: 'impact-report.html'
+  format: 'yaml',
+  outfile: 'impact-report.yaml'
 })
 
 // JSON
@@ -153,8 +152,8 @@ export default defineConfig({
     }
   ],
   "plugins": [["git", {}]],
-  "format": "html",
-  "outfile": "impact-report.html"
+  "format": "yaml",
+  "outfile": "impact-report.yaml"
 }
 ```
 
@@ -181,7 +180,6 @@ export default defineConfig({
       }
     }
   ],
-  outputPriority: ['critical', 'high', 'medium', 'low'],
   format: 'json',
   outfile: 'impact-report.json'
 })
@@ -204,7 +202,6 @@ export default defineConfig({
       }
     }
   ],
-  "outputPriority": ["critical", "high", "medium", "low"],
   "format": "json",
   "outfile": "impact-report.json"
 }
