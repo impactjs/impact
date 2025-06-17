@@ -5,7 +5,7 @@ The Impact CLI provides a command-line interface for analyzing changes in your c
 ## Basic Usage
 
 ```bash
-impact [options]
+impact run [options]
 ```
 
 ## Options
@@ -13,7 +13,6 @@ impact [options]
 - `--cwd <cwd>`: Specify the current working directory (default: process.cwd())
 - `-c, --config <config>`: Specify a custom config file
 - `--log-level <level>`: Set the log level (default: "info")
-- `--branch <branch>`: Specify the branch to analyze
 - `-o, --outfile <outfile>`: Specify the output file
 - `--format <format>`: Specify the output format (json or yaml)
 
@@ -22,31 +21,25 @@ impact [options]
 ### Basic Analysis
 
 ```bash
-impact
-```
-
-### Analyze Specific Branch
-
-```bash
-impact --branch feature/new-feature
+impact run
 ```
 
 ### Custom Config File
 
 ```bash
-impact -c custom.impact.config.ts
+impact run -c custom.impact.config.ts
 ```
 
 ### Output to File
 
 ```bash
-impact -o impact-report.json --format json
+impact run -o impact-report.json --format json
 ```
 
 ### Set Log Level
 
 ```bash
-impact --log-level debug
+impact run --log-level debug
 ```
 
 ## Output Formats
@@ -61,10 +54,10 @@ The default format is YAML if not specified. The format can be set using the `--
 Example:
 ```bash
 # Output as YAML (default)
-impact
+impact run
 
 # Output as JSON
-impact --format json
+impact run --format json
 ```
 
 ## Exit Codes
