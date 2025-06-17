@@ -6,7 +6,7 @@ packages:
   - "plugins/vcs/*"
 
 onlyBuiltDependencies:
-  - "@maastrich/moonx"
-  - "@moonrepo/cli"
   - "bun"
   - "esbuild"
+  - "@moonrepo/cli"
+  - "@maastrich/moonx"
