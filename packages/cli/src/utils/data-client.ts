@@ -29,13 +29,11 @@ export function authenticate(
 ) {
   switch (authKey) {
     case "x-api-key": {
-      // biome-ignore lint/performance/noDelete: we need to delete the key
       delete headers.authorization;
       headers["X-API-Key"] = value;
       break;
     }
     case "authorization": {
-      // biome-ignore lint/performance/noDelete: we need to delete the key
       delete headers["X-API-Key"];
       headers.authorization = value;
     }
