@@ -3,7 +3,7 @@ import { Amplify } from "aws-amplify";
 import { generateClient } from "aws-amplify/api";
 import { z } from "zod";
 
-// @ts-nocheck - will handle this later
+// @ts-ignore - will handle this later
 let client = null as unknown as ReturnType<typeof generateClient> | null;
 
 const outputSchema = z

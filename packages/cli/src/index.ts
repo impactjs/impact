@@ -1,9 +1,6 @@
 #! /usr/bin/env bun
 
-import { loadConfig } from "@impacts/config/internal";
 import { logger } from "@impacts/logger";
-import { createRuntime } from "@impacts/runtime-bun";
-import { globalImpactconfigSchema } from "@impacts/types/config";
 import { cac } from "cac";
 import pkg from "../package.json" with { type: "json" };
 import { runImpact } from "./commands/run.js";
