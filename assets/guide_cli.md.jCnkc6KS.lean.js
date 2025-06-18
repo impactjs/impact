@@ -1,1 +1,0 @@
-import{_ as s,c as a,o as e,af as n}from"./chunks/framework.DR0978mf.js";const c=JSON.parse('{"title":"CLI Usage","description":"","frontmatter":{},"headers":[],"relativePath":"guide/cli.md","filePath":"guide/cli.md"}'),t={name:"guide/cli.md"};function l(h,i,p,r,o,k){return e(),a("div",null,i[0]||(i[0]=[n("",33)]))}const g=s(t,[["render",l]]);export{c as __pageData,g as default};
