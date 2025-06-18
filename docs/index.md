@@ -1,9 +1,9 @@
 ---
 layout: home
 hero:
-  name: Impact.js
-  text: A powerful JavaScript framework
-  tagline: Build amazing applications with ease
+  name: impact
+  text: Make your changelogs better
+  tagline: Build more precise changelogs
   actions:
     - theme: brand
       text: Get Started
@@ -13,7 +13,7 @@ hero:
       link: https://github.com/impactjs/impact
 features:
   - title: Simple & Intuitive
-    details: Easy to learn and use, with a clean and intuitive API that makes development a breeze.
+    details: Easy to learn and use, with a clean and intuitive API that makes integrating with your project a breeze.
   - title: Powerful & Flexible
     details: Built with modern JavaScript features and designed to be flexible enough for any use case.
   - title: Well Documented

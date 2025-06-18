@@ -17,6 +17,27 @@ yarn add @impacts/cli
 pnpm add @impacts/cli
 ```
 
+## Authentication Setup
+
+Some Impact features require authentication. Set up your global configuration:
+
+1. Create the global config directory:
+```bash
+mkdir -p ~/.config/impact
+```
+
+2. Create a global configuration file at `~/.config/impact/config.json`:
+```json
+{
+  "secret": "your-authentication-secret"
+}
+```
+
+3. Verify your authentication:
+```bash
+npx impact whoami
+```
+
 ## Quick Start
 
 1. Create an `impact.config.ts` file in your project root:
@@ -25,6 +46,7 @@ pnpm add @impacts/cli
 import { defineConfig } from '@impacts/config'
 
 export default defineConfig({
+  id: 'my-project', // Optional project identifier
   entries: [
     {
       path: 'src',
@@ -42,20 +64,26 @@ npx impact run
 
 ## Basic Usage
 
-The Impact CLI provides several options for customization:
+The Impact CLI provides several commands and options for customization:
 
 ```bash
 # Basic analysis
-impact run
+npx impact run
 
 # Custom config file
-impact run -c custom.impact.config.ts
+npx impact run -c custom.impact.config.ts
 
 # Output to file
-impact run -o impact-report.json --format json
+npx impact run -o impact-report.json --format json
+
+# Show current configuration
+npx impact show-config
+
+# Check authenticated user
+npx impact whoami
 
 # Set log level
-impact run --log-level debug
+npx impact run --log-level debug
 ```
 
 ## Environment Variables
@@ -72,6 +100,7 @@ Example configuration with environment variables:
 
 ```typescript
 export default defineConfig({
+  id: 'my-project',
   entries: [...],
   plugins: [
     {

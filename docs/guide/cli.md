@@ -2,44 +2,87 @@
 
 The Impact CLI provides a command-line interface for analyzing changes in your codebase.
 
-## Basic Usage
+## Commands
+
+### `run`
+
+Run impact analysis on your codebase.
 
 ```bash
-impact run [options]
+npx impact run [options]
 ```
 
-## Options
+**Options:**
+- `-o, --outfile <outfile>`: Specify the output file
+- `--format <format>`: Specify the output format (json, yaml, serve, impact)
+- `-c, --config <config>`: Specify a custom config file
+- `--cwd <cwd>`: Specify the current working directory (default: process.cwd())
+- `--log-level <level>`: Set the log level (default: "info")
+
+### `show-config`
+
+Display the current configuration.
+
+```bash
+npx impact show-config [options]
+```
+
+**Options:**
+- `-c, --config <config>`: Specify a custom config file
+- `--cwd <cwd>`: Specify the current working directory
+
+### `whoami`
+
+Show the currently authenticated user.
+
+```bash
+npx impact whoami
+```
+
+This command requires a global configuration file at `~/.config/impact/config.json` with authentication credentials.
+
+## Global Options
 
 - `--cwd <cwd>`: Specify the current working directory (default: process.cwd())
 - `-c, --config <config>`: Specify a custom config file
 - `--log-level <level>`: Set the log level (default: "info")
-- `-o, --outfile <outfile>`: Specify the output file
-- `--format <format>`: Specify the output format (json or yaml)
 
 ## Examples
 
 ### Basic Analysis
 
 ```bash
-impact run
+npx impact run
 ```
 
 ### Custom Config File
 
 ```bash
-impact run -c custom.impact.config.ts
+npx impact run -c custom.impact.config.ts
 ```
 
 ### Output to File
 
 ```bash
-impact run -o impact-report.json --format json
+npx impact run -o impact-report.json --format json
+```
+
+### Show Configuration
+
+```bash
+npx impact show-config
+```
+
+### Check Authentication
+
+```bash
+npx impact whoami
 ```
 
 ### Set Log Level
 
 ```bash
-impact run --log-level debug
+npx impact run --log-level debug
 ```
 
 ## Output Formats
@@ -48,6 +91,8 @@ Impact supports multiple output formats:
 
 - `yaml`: YAML format (default)
 - `json`: JSON format
+- `serve`: Serve as JSON API on localhost:3630
+- `impact`: Upload to Impact platform
 
 The default format is YAML if not specified. The format can be set using the `--format` option or in the configuration file.
 
@@ -55,16 +100,23 @@ Example:
 
 ```bash
 # Output as YAML (default)
-impact run
+npx impact run
 
 # Output as JSON
-impact run --format json
+npx impact run --format json
+
+# Serve results on localhost:3630
+npx impact run --format serve
+
+# Upload to Impact platform
+npx impact run --format impact
 ```
 
 ## Exit Codes
 
 - `0`: Success
 - `1`: Error occurred during execution
+- `2`: Unknown error type
 
 ## Environment Variables
 
@@ -84,6 +136,7 @@ Impact supports environment variables for configuration and authentication. You 
 
 ```typescript
 export default defineConfig({
+  id: 'my-project',
   entries: [...],
   plugins: [
     {
@@ -100,6 +153,7 @@ export default defineConfig({
 
 ```json
 {
+  "id": "my-project",
   "entries": [...],
   "plugins": [
     {

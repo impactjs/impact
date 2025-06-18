@@ -10,6 +10,7 @@ export const runtimeSchema = z.object({
       .function()
       .args(z.string(), z.string())
       .returns(maybePromise(z.void().or(z.number()))),
+    exists: z.function().args(z.string()).returns(maybePromise(z.boolean())),
   }),
   exec: z
     .function()

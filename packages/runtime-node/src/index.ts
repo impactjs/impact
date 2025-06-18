@@ -1,5 +1,5 @@
 import { spawnSync } from "node:child_process";
-import { readFileSync, writeFileSync } from "node:fs";
+import { existsSync, readFileSync, writeFileSync } from "node:fs";
 import type { Runtime } from "@impacts/types/runtime";
 
 export function createRuntime(): Runtime {
@@ -20,6 +20,9 @@ export function createRuntime(): Runtime {
       },
       write(path, content) {
         return writeFileSync(path, content, "utf-8");
+      },
+      exists(path) {
+        return existsSync(path);
       },
     },
   };

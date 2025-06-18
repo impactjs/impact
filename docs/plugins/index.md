@@ -27,6 +27,7 @@ Plugins can be configured in your `impact.config.ts` file:
 import { defineConfig } from '@impacts/config'
 
 export default defineConfig({
+  id: 'my-project',
   entries: [...],
   plugins: [
     // Using plugin name
@@ -43,6 +44,22 @@ export default defineConfig({
   ]
 })
 ```
+
+## Plugin Authentication
+
+Some plugins require authentication tokens. You can configure these in your global configuration file at `~/.config/impact/config.json`:
+
+```json
+{
+  "secret": "your-authentication-secret",
+  "pluginAuth": {
+    "linear": "your-linear-api-key",
+    "github": "your-github-token"
+  }
+}
+```
+
+The `pluginAuth` object allows you to store authentication tokens for specific plugins. These tokens will be automatically used when the corresponding plugins are loaded.
 
 ## Built-in Plugins
 
@@ -77,6 +94,7 @@ const myCustomPlugin = {
 }
 
 export default defineConfig({
+  id: 'my-project',
   entries: [...],
   plugins: [myCustomPlugin]
 })

@@ -9,7 +9,7 @@ Impact supports multiple output formats for its analysis results. You can specif
 The JSON format provides a structured representation of the analysis results.
 
 ```bash
-impact --format json --outfile impact.json
+npx impact run --format json --outfile impact.json
 ```
 
 Example output:
@@ -54,7 +54,7 @@ Example output:
 The YAML format provides a human-readable representation of the analysis results.
 
 ```bash
-impact --format yaml --outfile impact.yaml
+npx impact run --format yaml --outfile impact.yaml
 ```
 
 Example output:
@@ -86,6 +86,29 @@ updates:
       - Update feature X
 ```
 
+### Serve
+
+Serves the analysis results as a JSON API endpoint on port 3630.
+
+```bash
+npx impact run --format serve
+```
+
+This will start a local server at `http://localhost:3630` that serves the analysis results as JSON. The server supports CORS and can be accessed from web applications.
+
+### Impact
+
+Uploads the analysis results to the Impact platform for storage and sharing.
+
+```bash
+npx impact run --format impact
+```
+
+This format requires:
+- A project `id` in your configuration
+- Authentication via global configuration (`~/.config/impact/config.json`)
+- The results will be uploaded to the Impact platform and associated with your project
+
 ## Configuration
 
 You can specify the default output format in your `impact.config.ts`:
@@ -94,9 +117,12 @@ You can specify the default output format in your `impact.config.ts`:
 import { defineConfig } from '@impacts/config'
 
 export default defineConfig({
+  id: 'my-project', // Required for 'impact' format
   entries: [...],
-  format: 'yaml',
-  outfile: 'impact.yaml'
+  output: {
+    format: 'yaml', // 'json', 'yaml', 'serve', or 'impact'
+    outfile: 'impact.yaml'
+  }
 })
 ```
 
@@ -132,6 +158,8 @@ Map of updates that were found:
 1. **Format Selection**
    - Use JSON for programmatic processing
    - Use YAML for human readability
+   - Use `serve` for web application integration
+   - Use `impact` for platform storage and sharing
 
 2. **File Naming**
    - Include timestamp in filename
@@ -146,4 +174,8 @@ Map of updates that were found:
 4. **Error Handling**
    - Handle file system errors
    - Validate output before writing
-   - Implement proper error reporting 
+   - Implement proper error reporting
+
+5. **Authentication**
+   - Ensure global configuration is set up for `impact` format
+   - Verify project ID is configured for platform uploads 

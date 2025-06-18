@@ -1,8 +1,8 @@
 import { defineConfig } from "vitepress";
 
 export default defineConfig({
-  title: "Impact.js",
-  description: "Documentation for Impact.js",
+  title: "@impacts/*",
+  description: "Documentation for impact",
   base: "/impact/",
   themeConfig: {
     nav: [
