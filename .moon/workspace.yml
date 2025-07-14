@@ -11,3 +11,4 @@ projects:
     - "plugins/augment/*"
     - "plugins/explore/*"
     - "plugins/vcs/*"
+    - "plugins/load/*"

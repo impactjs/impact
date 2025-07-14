@@ -4,6 +4,7 @@ packages:
   - "plugins/augment/*"
   - "plugins/explore/*"
   - "plugins/vcs/*"
+  - "plugins/load/*"
 
 onlyBuiltDependencies:
   - "bun"
