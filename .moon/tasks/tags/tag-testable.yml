@@ -1,0 +1,9 @@
+tasks:
+  test:
+    command: pnpm vitest run
+    options:
+      cache: false
+
+  test-watch:
+    command: pnpm vitest
+    preset: watcher

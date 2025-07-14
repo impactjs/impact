@@ -1,5 +1,5 @@
+import { Plugin } from "@impacts/plugin-api/plugin";
 import { z } from "zod";
-import { knownPluginNameSchema, pluginSchema } from "./plugins.js";
 import { baseConfigSchema, type entrySchema } from "./private/shared.js";
 
 export const globalImpactconfigSchema = z.object({
@@ -9,9 +9,7 @@ export const globalImpactconfigSchema = z.object({
 
 export const impactConfigSchema = baseConfigSchema.extend({
   id: z.string().optional(),
-  plugins: z.array(
-    z.union([pluginSchema, z.tuple([knownPluginNameSchema, z.unknown()])]),
-  ),
+  plugins: z.array(z.instanceof(Plugin)),
 });
 
 export const publicImpactConfigSchema = impactConfigSchema.extend({});
