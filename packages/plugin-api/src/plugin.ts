@@ -7,6 +7,7 @@ import type {
   LogHook,
   ResolveIdHook,
   VcsUpdate,
+  VersionControlHook,
 } from "./types.js";
 import { validatePluginConfig } from "./utils.js";
 
@@ -17,6 +18,7 @@ interface IPlugin {
   load: LoadHook;
   log: LogHook;
   augment: AugmentHook;
+  versions: VersionControlHook;
 }
 
 type PluginOptions = {
@@ -50,8 +52,11 @@ export class Plugin implements IPlugin {
     return this._config.load?.(id, config) ?? new Set();
   }
 
-  public async log(file: string, config: ImpactConfig): Promise<VcsUpdate[]> {
-    return this._config.log?.(file, config) ?? [];
+  public async log(
+    file: string,
+    config: ImpactConfig,
+  ): Promise<Map<string, VcsUpdate>> {
+    return this._config.log?.(file, config) ?? new Map();
   }
 
   public async augment(
@@ -59,6 +64,10 @@ export class Plugin implements IPlugin {
     config: ImpactConfig,
   ): Promise<void> {
     return this._config.augment?.(updates, config);
+  }
+
+  public async versions(config: ImpactConfig): Promise<Map<string, VcsUpdate>> {
+    return this._config.versions?.(config) ?? new Map();
   }
 }
 

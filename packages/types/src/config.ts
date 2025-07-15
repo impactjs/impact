@@ -7,6 +7,11 @@ export const globalImpactconfigSchema = z.object({
   pluginAuth: z.record(z.string()).optional(),
 });
 
+export const rawConfigSchema = baseConfigSchema.extend({
+  id: z.string().optional(),
+  plugins: z.array(z.instanceof(Plugin).or(z.tuple([z.string(), z.unknown()]))),
+});
+
 export const impactConfigSchema = baseConfigSchema.extend({
   id: z.string().optional(),
   plugins: z.array(z.instanceof(Plugin)),

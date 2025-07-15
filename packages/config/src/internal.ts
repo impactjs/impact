@@ -1,4 +1,9 @@
-import { type ImpactConfig, impactConfigSchema } from "@impacts/types/config";
+import { Plugin } from "@impacts/plugin-api/plugin";
+import {
+  type ImpactConfig,
+  impactConfigSchema,
+  rawConfigSchema,
+} from "@impacts/types/config";
 import { cosmiconfig } from "cosmiconfig";
 
 const explorer = cosmiconfig("impact");
@@ -26,9 +31,19 @@ export async function loadConfig(
   if (!result) {
     throw new Error("Config not found");
   }
-  const validate = impactConfigSchema.safeParse(result.config);
+  const validate = rawConfigSchema.safeParse(result.config);
   if (!validate.success) {
     throw new Error(validate.error.errors.join("\n"));
   }
-  return validate.data;
+  const plugins: Plugin[] = await Promise.all(
+    validate.data.plugins.map(async (plugin) => {
+      if (plugin instanceof Plugin) {
+        return plugin;
+      }
+      const [id, options] = plugin;
+      const { _impact_auto_create } = await import(id);
+      return _impact_auto_create(options);
+    }),
+  );
+  return { ...validate.data, plugins };
 }

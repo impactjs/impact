@@ -37,7 +37,10 @@ export type LoadHook = (
 export type LogHook = (
   file: string,
   config: ImpactConfig,
-) => MaybePromise<VcsUpdate[]>;
+) => MaybePromise<Map<string, VcsUpdate>>;
+export type VersionControlHook = (
+  config: ImpactConfig,
+) => MaybePromise<Map<string, VcsUpdate>>;
 export type AugmentHook = (
   updates: Map<string, ImpactResultUpdate>,
   config: ImpactConfig,
