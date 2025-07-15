@@ -1,6 +1,5 @@
 import { loadConfig } from "@impacts/config/internal";
 import { impact } from "@impacts/core";
-import { createRuntime } from "@impacts/runtime-bun";
 import { write } from "../utils/output.js";
 
 type ImpactOptions = {
@@ -16,9 +15,7 @@ export async function runImpact(options: ImpactOptions) {
     config: options.config,
   });
 
-  const result = await impact(config, {
-    runtime: createRuntime(),
-  });
+  const result = await impact(config);
 
   await write(result, config, {
     outfile: options.outfile ?? config.outfile,

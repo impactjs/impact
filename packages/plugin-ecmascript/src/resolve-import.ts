@@ -1,10 +1,10 @@
 import fs from "node:fs";
+import { join } from "node:path";
 import {
   CachedInputFileSystem,
   type Resolver,
   ResolverFactory,
 } from "enhanced-resolve";
-export type { Resolver };
 
 export function createResolver() {
   return ResolverFactory.createResolver({
@@ -21,7 +21,7 @@ export function createResolver() {
       ".astro",
       ".svelte",
     ],
-    conditionNames: ["import", "require", "node"],
+    conditionNames: ["import", "require", "node", "webpack"],
     fileSystem: new CachedInputFileSystem(fs, 4000),
   });
 }
@@ -32,8 +32,9 @@ export async function resolveImport(
   importName: string,
 ) {
   const resolved = await new Promise<string | false>((resolve, reject) =>
-    resolver.resolve({}, importSource, importName, {}, (err, res) => {
+    resolver.resolve({}, importSource, importName, {}, (err, res, req) => {
       if (err) {
+        console.log(req, res);
         reject(err);
       }
       resolve(res ?? false);

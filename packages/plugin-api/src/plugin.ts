@@ -4,7 +4,6 @@ import type {
   AugmentHook,
   ConfigHook,
   LoadHook,
-  LogHook,
   ResolveIdHook,
   VcsUpdate,
   VersionControlHook,
@@ -16,7 +15,6 @@ interface IPlugin {
   config: ConfigHook;
   resolveId: ResolveIdHook;
   load: LoadHook;
-  log: LogHook;
   augment: AugmentHook;
   versions: VersionControlHook;
 }
@@ -37,7 +35,7 @@ export class Plugin implements IPlugin {
   }
 
   public async config(config: ImpactConfig): Promise<ImpactConfig> {
-    return this._config.config?.(config) ?? config;
+    return this._config.config?.(config) || config;
   }
 
   public async resolveId(
@@ -45,18 +43,11 @@ export class Plugin implements IPlugin {
     importer: string,
     config: ImpactConfig,
   ): Promise<string | null> {
-    return this._config.resolveId?.(id, importer, config) ?? null;
+    return this._config.resolveId?.(id, importer, config) || null;
   }
 
   public async load(id: string, config: ImpactConfig): Promise<Set<string>> {
-    return this._config.load?.(id, config) ?? new Set();
-  }
-
-  public async log(
-    file: string,
-    config: ImpactConfig,
-  ): Promise<Map<string, VcsUpdate>> {
-    return this._config.log?.(file, config) ?? new Map();
+    return this._config.load?.(id, config) || new Set();
   }
 
   public async augment(
@@ -67,7 +58,9 @@ export class Plugin implements IPlugin {
   }
 
   public async versions(config: ImpactConfig): Promise<Map<string, VcsUpdate>> {
-    return this._config.versions?.(config) ?? new Map();
+    const result = this._config.versions?.(config) || new Map();
+    console.log(result);
+    return result;
   }
 }
 

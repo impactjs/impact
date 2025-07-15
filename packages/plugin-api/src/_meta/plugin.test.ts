@@ -25,12 +25,12 @@ describe("Plugin", () => {
     const configHook = vi.fn();
     const resolveIdHook = vi.fn();
     const loadHook = vi.fn();
-    const logHook = vi.fn();
+    const versionControlHook = vi.fn();
     const augmentHook = vi.fn();
 
     const plugin = new Plugin({
       name: "full-plugin",
-      log: logHook,
+      versions: versionControlHook,
       load: loadHook,
       config: configHook,
       augment: augmentHook,
@@ -42,12 +42,12 @@ describe("Plugin", () => {
 
   it("should create plugin with partial hooks", () => {
     const configHook = vi.fn();
-    const logHook = vi.fn();
+    const versionControlHook = vi.fn();
 
     const plugin = new Plugin({
       name: "partial-plugin",
       config: configHook,
-      log: logHook,
+      versions: versionControlHook,
     });
 
     expect(plugin.name).toBe("partial-plugin");
@@ -189,9 +189,9 @@ describe("Plugin", () => {
   it("should return empty array when no log hook provided", async () => {
     const plugin = new Plugin({ name: "no-log-plugin" });
 
-    const result = await plugin.log("file.ts", mockConfig);
+    const result = await plugin.versions(mockConfig);
 
-    expect(result).toEqual([]);
+    expect(result.size).toBe(0);
   });
 
   it("should call log hook when provided", async () => {
@@ -210,31 +210,33 @@ describe("Plugin", () => {
       ],
     };
 
-    const logHook = vi.fn().mockResolvedValue([vcsUpdate]);
+    const versionControlHook = vi
+      .fn()
+      .mockResolvedValue(new Map([[vcsUpdate.id, vcsUpdate]]));
 
     const plugin = new Plugin({
-      name: "log-plugin",
-      log: logHook,
+      name: "version-control-plugin",
+      versions: versionControlHook,
     });
 
-    const result = await plugin.log("file.ts", mockConfig);
+    const result = await plugin.versions(mockConfig);
 
-    expect(logHook).toHaveBeenCalledWith("file.ts", mockConfig);
-    expect(result).toHaveLength(1);
-    expect(result[0]).toEqual(vcsUpdate);
+    expect(versionControlHook).toHaveBeenCalledWith(mockConfig);
+    expect(result.size).toBe(1);
+    expect(result.get("update1")).toEqual(vcsUpdate);
   });
 
-  it("should handle log hook returning empty array", async () => {
-    const logHook = vi.fn().mockResolvedValue([]);
+  it("should handle versionControl hook returning empty array", async () => {
+    const versionControlHook = vi.fn().mockResolvedValue(new Map());
 
     const plugin = new Plugin({
-      name: "log-empty-plugin",
-      log: logHook,
+      name: "version-control-empty-plugin",
+      versions: versionControlHook,
     });
 
-    const result = await plugin.log("file.ts", mockConfig);
+    const result = await plugin.versions(mockConfig);
 
-    expect(result).toEqual([]);
+    expect(result.size).toBe(0);
   });
 
   it("should return undefined when no augment hook provided", async () => {
@@ -300,7 +302,7 @@ describe("Plugin", () => {
     }));
     const resolveIdHook = vi.fn().mockResolvedValue("resolved");
     const loadHook = vi.fn().mockResolvedValue(new Set(["dep.ts"]));
-    const logHook = vi.fn().mockResolvedValue([]);
+    const versionControlHook = vi.fn().mockResolvedValue(new Map());
     const augmentHook = vi.fn().mockResolvedValue(undefined);
 
     const plugin = new Plugin({
@@ -308,7 +310,7 @@ describe("Plugin", () => {
       config: configHook,
       resolveId: resolveIdHook,
       load: loadHook,
-      log: logHook,
+      versions: versionControlHook,
       augment: augmentHook,
     });
 
@@ -336,9 +338,9 @@ describe("Plugin", () => {
     expect(loadResult).toEqual(new Set(["dep.ts"]));
 
     // Test log
-    const logResult = await plugin.log("file.ts", mockConfig);
-    expect(logHook).toHaveBeenCalledWith("file.ts", mockConfig);
-    expect(logResult).toEqual([]);
+    const versionControlResult = await plugin.versions(mockConfig);
+    expect(versionControlHook).toHaveBeenCalledWith(mockConfig);
+    expect(versionControlResult.size).toBe(0);
 
     // Test augment
     const updates = new Map();
@@ -386,17 +388,15 @@ describe("Plugin", () => {
   });
 
   it("should handle undefined hook return values correctly", async () => {
-    const configHook = vi.fn().mockResolvedValue(undefined);
     const resolveIdHook = vi.fn().mockResolvedValue(undefined);
     const loadHook = vi.fn().mockResolvedValue(undefined);
-    const logHook = vi.fn().mockResolvedValue(undefined);
+    const versionControlHook = vi.fn().mockResolvedValue(undefined);
 
     const plugin = new Plugin({
       name: "undefined-returns-plugin",
-      config: configHook,
       resolveId: resolveIdHook,
       load: loadHook,
-      log: logHook,
+      versions: versionControlHook,
     });
 
     // Should fall back to defaults when hooks return undefined
@@ -413,7 +413,7 @@ describe("Plugin", () => {
     const loadResult = await plugin.load("file.ts", mockConfig);
     expect(loadResult).toEqual(new Set());
 
-    const logResult = await plugin.log("file.ts", mockConfig);
-    expect(logResult).toEqual([]);
+    const versionControlResult = await plugin.versions(mockConfig);
+    expect(versionControlResult.size).toBe(0);
   });
 });

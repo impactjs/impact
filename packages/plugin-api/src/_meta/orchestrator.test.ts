@@ -98,16 +98,16 @@ describe("PluginOrchestrator", () => {
     expect(result).toEqual(new Set());
   });
 
-  it("should return empty array when no plugins are registered for log", async () => {
-    const result = await orchestrator.log("file.ts");
-    expect(result).toEqual([]);
+  it("should return empty map when no plugins are registered for versions", async () => {
+    const result = await orchestrator.versions();
+    expect(result.size).toBe(0);
   });
 
-  it("should demonstrate log bug - uses empty this.plugins instead of this.config.plugins", async () => {
+  it("should demonstrate versions bug - uses empty this.plugins instead of this.config.plugins", async () => {
     // Note: This test demonstrates the bug in the orchestrator - it uses this.plugins
     // but plugins are stored in this.config.plugins
-    const result = await orchestrator.log("file.ts");
-    expect(result).toEqual([]);
+    const result = await orchestrator.versions();
+    expect(result.size).toBe(0);
   });
 
   it("should handle empty plugins gracefully in augment", async () => {
@@ -173,8 +173,8 @@ describe("PluginOrchestrator", () => {
     await expect(orchestrator.load("file.ts")).resolves.toEqual(new Set());
   });
 
-  it("should handle missing plugins gracefully in log", async () => {
-    await expect(orchestrator.log("file.ts")).resolves.toEqual([]);
+  it("should handle missing plugins gracefully in versions", async () => {
+    await expect(orchestrator.versions()).resolves.toEqual(new Map());
   });
 
   it("should handle missing plugins gracefully in augment", async () => {
@@ -186,21 +186,26 @@ describe("PluginOrchestrator", () => {
     const configHook = vi.fn().mockImplementation((config) => config);
     const resolveHook = vi.fn().mockResolvedValue("resolved-path");
     const loadHook = vi.fn().mockResolvedValue(new Set(["dep.ts"]));
-    const logHook = vi.fn().mockResolvedValue([
-      {
-        id: "update1",
-        title: "Update 1",
-        date: "2023-12-01",
-        author: "Author",
-        timestamp: Date.now(),
-        files: [
+    const versionsHook = vi.fn().mockResolvedValue(
+      new Map([
+        [
+          "update1",
           {
-            path: "file.ts",
-            status: "modified" as const,
+            id: "update1",
+            title: "Update 1",
+            date: "2023-12-01",
+            author: "Author",
+            timestamp: Date.now(),
+            files: [
+              {
+                path: "file.ts",
+                status: "modified" as const,
+              },
+            ],
           },
         ],
-      },
-    ]);
+      ]),
+    );
     const augmentHook = vi.fn().mockResolvedValue(undefined);
 
     const plugin = new Plugin({
@@ -208,7 +213,7 @@ describe("PluginOrchestrator", () => {
       config: configHook,
       resolveId: resolveHook,
       load: loadHook,
-      log: logHook,
+      versions: versionsHook,
       augment: augmentHook,
     });
 
@@ -229,8 +234,8 @@ describe("PluginOrchestrator", () => {
     const loadResult = await plugin.load("file.ts", testConfig);
     expect(loadResult).toEqual(new Set(["dep.ts"]));
 
-    const logResult = await plugin.log("file.ts", testConfig);
-    expect(logResult).toHaveLength(1);
+    const versionsResult = await plugin.versions(testConfig);
+    expect(versionsResult.size).toBe(1);
 
     const updates = new Map();
     await plugin.augment(updates, testConfig);
@@ -249,7 +254,7 @@ describe("PluginOrchestrator", () => {
     // Should return defaults for undefined hooks
     expect(await plugin.resolveId("./test", "importer", testConfig)).toBeNull();
     expect(await plugin.load("file.ts", testConfig)).toEqual(new Set());
-    expect(await plugin.log("file.ts", testConfig)).toEqual([]);
+    expect(await plugin.versions(testConfig)).toEqual(new Map());
 
     const updates = new Map();
     await expect(plugin.augment(updates, testConfig)).resolves.toBeUndefined();

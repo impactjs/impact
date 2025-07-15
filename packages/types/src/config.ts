@@ -4,12 +4,7 @@ import { baseConfigSchema, type entrySchema } from "./private/shared.js";
 
 export const globalImpactconfigSchema = z.object({
   secret: z.string().optional(),
-  pluginAuth: z.record(z.string()).optional(),
-});
-
-export const rawConfigSchema = baseConfigSchema.extend({
-  id: z.string().optional(),
-  plugins: z.array(z.instanceof(Plugin).or(z.tuple([z.string(), z.unknown()]))),
+  pluginAuth: z.record(z.string(), z.string()).optional(),
 });
 
 export const impactConfigSchema = baseConfigSchema.extend({

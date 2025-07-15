@@ -2,6 +2,7 @@ import { describe, expect, it, vi } from "vitest";
 import { createPlugin } from "../plugin.js";
 import type { VcsUpdate } from "../types.js";
 import { PluginPhase, pluginSchema, vcsUpdateSchema } from "../types.js";
+import { validatePluginConfig } from "../utils.js";
 
 describe("Plugin Types", () => {
   describe("PluginPhase", () => {
@@ -72,7 +73,7 @@ describe("Plugin Types", () => {
         config: vi.fn(),
         resolveId: vi.fn(),
         load: vi.fn(),
-        log: vi.fn(),
+        versions: vi.fn(),
         augment: vi.fn(),
       });
 
@@ -85,11 +86,9 @@ describe("Plugin Types", () => {
         config: vi.fn(),
       };
 
-      const result = pluginSchema.safeParse(invalidPlugin);
-      expect(result.success).toBe(false);
-      if (!result.success) {
-        expect(result.error.issues[0].message).toContain("Required");
-      }
+      expect(() => validatePluginConfig(invalidPlugin)).toThrow(
+        "Plugin validation failed",
+      );
     });
 
     it("should reject plugin with empty name", () => {
@@ -97,68 +96,9 @@ describe("Plugin Types", () => {
         name: "",
       };
 
-      const result = pluginSchema.safeParse(invalidPlugin);
-      expect(result.success).toBe(false);
-      if (!result.success) {
-        expect(result.error.issues[0].message).toContain(
-          "Plugin name is required",
-        );
-      }
-    });
-
-    it("should enforce resolveId/load coupling - resolveId without load", () => {
-      const invalidPlugin = {
-        name: "invalid-plugin",
-        resolveId: vi.fn(),
-        // Missing load function
-      };
-
-      const result = pluginSchema.safeParse(invalidPlugin);
-      expect(result.success).toBe(false);
-      if (!result.success) {
-        expect(result.error.issues[0].message).toContain(
-          "both resolveId and load hooks together",
-        );
-      }
-    });
-
-    it("should enforce resolveId/load coupling - load without resolveId", () => {
-      const invalidPlugin = {
-        name: "invalid-plugin",
-        load: vi.fn(),
-        // Missing resolveId function
-      };
-
-      const result = pluginSchema.safeParse(invalidPlugin);
-      expect(result.success).toBe(false);
-      if (!result.success) {
-        expect(result.error.issues[0].message).toContain(
-          "both resolveId and load hooks together",
-        );
-      }
-    });
-
-    it("should allow resolveId and load together", () => {
-      const validPlugin = {
-        name: "valid-plugin",
-        resolveId: vi.fn(),
-        load: vi.fn(),
-      };
-
-      const result = pluginSchema.safeParse(validPlugin);
-      expect(result.success).toBe(true);
-    });
-
-    it("should allow other hooks without resolveId/load", () => {
-      const validPlugin = {
-        name: "valid-plugin",
-        config: vi.fn(),
-        log: vi.fn(),
-        augment: vi.fn(),
-      };
-
-      const result = pluginSchema.safeParse(validPlugin);
-      expect(result.success).toBe(true);
+      expect(() => validatePluginConfig(invalidPlugin)).toThrow(
+        "Plugin validation failed",
+      );
     });
   });
 });

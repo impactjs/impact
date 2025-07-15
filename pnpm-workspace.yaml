@@ -1,13 +1,8 @@
 packages:
-  - "packages/*"
-  - "configs/*"
-  - "plugins/augment/*"
-  - "plugins/explore/*"
-  - "plugins/vcs/*"
-  - "plugins/load/*"
-
+- packages/*
+- configs/*
 onlyBuiltDependencies:
-  - "bun"
-  - "esbuild"
-  - "@moonrepo/cli"
-  - "@maastrich/moonx"
+- bun
+- esbuild
+- '@moonrepo/cli'
+- '@maastrich/moonx'

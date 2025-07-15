@@ -28,8 +28,8 @@ export function git(options: GitOptions): Plugin {
                 ...commit,
                 files: getFilesAndStatus(commit.id),
               },
-            ] as const,
-        ),
+            ] as const
+        )
       );
 
       return updates;

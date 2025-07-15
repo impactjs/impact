@@ -1,7 +1,8 @@
 import { tmpdir } from "node:os";
+import { relative } from "node:path";
 import { createPlugin, type Plugin } from "@impacts/plugin-api";
 import { Generator, getConfig } from "@tanstack/router-generator";
-import { Project } from "ts-morph";
+// import { Project } from "ts-morph";
 import { z } from "zod";
 
 const tanstackRouterOptionsSchema = z
@@ -30,29 +31,29 @@ export function tanstackRouter(options: TanstackRouterOptions = {}): Plugin {
 
       await generator.run();
       const res = generator.getRoutesByFileMap();
-      const project = new Project();
+      // const project = new Project();
 
       for (const [key, value] of res.entries()) {
-        const sourceFile = project.addSourceFileAtPath(key);
-        const symbols = sourceFile.getExportSymbols();
-        const route = symbols.find((symbol) => symbol.getName() === "Route");
-        if (!route) {
-          config.entries.push({
-            id: key,
-            description: "",
-            path: value.routePath,
-          });
-          continue;
-        }
-        const comments = route.getJsDocTags();
-        const comment = comments.find(
-          (comment) => comment.getName() === "description",
-        );
         config.entries.push({
-          id: key,
-          path: value.routePath,
-          description: comment?.getText().join("\n") ?? "",
+          id: value.routePath,
+          description: "",
+          path: relative(process.cwd(), key),
         });
+        // const sourceFile = project.addSourceFileAtPath(key);
+        // const symbols = sourceFile.getExportSymbols();
+        // const route = null;symbols.find((symbol) => symbol.getName() === "Route");
+        // if (!route) {
+        //   continue;
+        // }
+        // const comments = route.getJsDocTags();
+        // const comment = comments.find(
+        //   (comment) => comment.getName() === "description",
+        // );
+        // config.entries.push({
+        //   id: value.routePath,
+        //   path: relative(process.cwd(), key),
+        //   description: comment?.getText().join("\n") ?? "",
+        // });
       }
       return config;
     },

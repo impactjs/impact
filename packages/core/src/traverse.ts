@@ -6,16 +6,20 @@ export async function traverse(
   set: Set<string> = new Set(),
 ) {
   const load = await orcherstrator.load(entry);
-  for (const file of load) {
-    const resolved = await orcherstrator.resolveId(file, entry);
-    if (resolved === null) {
-      continue;
-    }
-    if (set.has(resolved)) {
-      continue;
-    }
-    set.add(resolved);
-    await traverse(resolved, orcherstrator, set);
-  }
-  return set;
+  return new Set(
+    await Promise.all(
+      Array.from(load).map(async (file) => {
+        const resolved = await orcherstrator.resolveId(file, entry);
+        if (resolved === null) {
+          return [];
+        }
+        if (set.has(resolved)) {
+          return [];
+        }
+        set.add(resolved);
+        await traverse(resolved, orcherstrator, set);
+        return resolved;
+      }),
+    ),
+  );
 }

@@ -53,13 +53,14 @@ const entryResultSchema = z.object({
 
 export const impactResultSchema = z.object({
   updates: z.record(
+    z.string(),
     updateSchema.and(
       z.object({
         references: z.array(updateReferenceSchema),
       }),
     ),
   ),
-  files: z.record(fileEntry),
+  files: z.record(z.string(), fileEntry),
   entries: z.array(entryResultSchema),
 });
 

@@ -1,6 +1,5 @@
 import type { ImpactConfig } from "@impacts/types/config";
 import type { ImpactResultUpdate } from "@impacts/types/results";
-import type { Runtime } from "@impacts/types/runtime";
 import { z } from "zod";
 
 // VCS Update schema for log hooks
@@ -34,10 +33,6 @@ export type LoadHook = (
   id: string,
   config: ImpactConfig,
 ) => MaybePromise<Set<string>>;
-export type LogHook = (
-  file: string,
-  config: ImpactConfig,
-) => MaybePromise<Map<string, VcsUpdate>>;
 export type VersionControlHook = (
   config: ImpactConfig,
 ) => MaybePromise<Map<string, VcsUpdate>>;
@@ -47,40 +42,18 @@ export type AugmentHook = (
 ) => MaybePromise<void>;
 
 // Plugin validation schema
-export const pluginSchema = z
-  .object({
-    name: z.string().min(1, "Plugin name is required"),
-    config: z.function().optional(),
-    resolveId: z.function().optional(),
-    load: z.function().optional(),
-    log: z.function().optional(),
-    augment: z.function().optional(),
-  })
-  .refine(
-    (plugin) => {
-      // If resolveId is provided, load must also be provided
-      const hasResolveId = typeof plugin.resolveId === "function";
-      const hasLoad = typeof plugin.load === "function";
-
-      if (hasResolveId && !hasLoad) {
-        return false;
-      }
-      if (hasLoad && !hasResolveId) {
-        return false;
-      }
-
-      return true;
-    },
-    {
-      message:
-        "Plugin must provide both resolveId and load hooks together, or neither",
-    },
-  );
+export const pluginSchema = z.object({
+  name: z.string().min(1, "Plugin name is required"),
+  config: z.instanceof(Function).optional(),
+  load: z.instanceof(Function).optional(),
+  augment: z.instanceof(Function).optional(),
+  resolveId: z.instanceof(Function).optional(),
+  versionControl: z.instanceof(Function).optional(),
+});
 
 // Plugin context for hook execution
 export interface PluginContext {
   config: ImpactConfig;
-  runtime: Runtime;
   allFiles: Set<string>;
   resolvedFiles: Map<string, Set<string>>; // file -> dependencies
   updates: Map<string, VcsUpdate[]>; // file -> updates

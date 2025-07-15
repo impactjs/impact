@@ -15,7 +15,8 @@
     "src"
   ],
   "dependencies": {
-    "@impacts/plugin-api": "workspace:*"
+    "@impacts/plugin-api": "workspace:*",
+    "zod": "^4.0.5"
   },
   "devDependencies": {
     "@impacts/ts-config": "workspace:*",

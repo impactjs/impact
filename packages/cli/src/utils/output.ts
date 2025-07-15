@@ -1,4 +1,4 @@
-import { createRuntime } from "@impacts/runtime-bun";
+import { writeFileSync } from "node:fs";
 import type { ImpactConfig } from "@impacts/types/config";
 import type { ImpactResult } from "@impacts/types/results";
 import { uploadData } from "aws-amplify/storage";
@@ -20,7 +20,7 @@ export async function write(
   const output = await render(result, options.format, config);
   console.log("Writing to", config.outfile, options.format);
 
-  await output(config.outfile);
+  await output(options.outfile);
 }
 
 async function render(
@@ -28,7 +28,6 @@ async function render(
   format: string | undefined,
   config: ImpactConfig,
 ) {
-  const runtime = createRuntime();
   switch (format ?? "yaml") {
     case "json":
       return async (outfile?: string) => {
@@ -36,7 +35,7 @@ async function render(
           console.log(JSON.stringify(result, null, 2));
           return;
         }
-        await runtime.fs.write(outfile, JSON.stringify(result, null, 2));
+        writeFileSync(outfile, JSON.stringify(result, null, 2));
       };
     case "yaml":
       return async (outfile?: string) => {
@@ -45,7 +44,7 @@ async function render(
           console.log(yamlString);
           return;
         }
-        await runtime.fs.write(outfile, yamlString);
+        writeFileSync(outfile, yamlString);
       };
     case "serve": {
       // Serve the result as a json file on port 3630
@@ -85,6 +84,7 @@ async function render(
         await login(globalConfig.secret);
         const outputs = await getAmplifyOutputs();
         await uploadData({
+          // @ts-expect-error TODO: fix this
           data: blob,
           path: `projects/${config.id}.json`,
           options: {

@@ -10,10 +10,11 @@ export class PluginOrchestrator {
   constructor(public config: ImpactConfig) {}
 
   public async init(): Promise<void> {
-    for (const plugin of this.config.plugins) {
+    for await (const plugin of this.config.plugins) {
       const pluginConfig = await plugin.config(this.config);
       this.config = pluginConfig;
     }
+    this.plugins = this.config.plugins;
   }
 
   /**
@@ -38,20 +39,6 @@ export class PluginOrchestrator {
       resolved.push(...result);
     }
     return new Set(resolved);
-  }
-
-  public async log(file: string): Promise<Map<string, VcsUpdate>> {
-    const updates: Map<string, VcsUpdate> = new Map();
-    for (const plugin of this.plugins) {
-      const result = await plugin.log(file, this.config);
-      for (const [id, update] of result.entries()) {
-        if (updates.has(id)) {
-          continue;
-        }
-        updates.set(id, update);
-      }
-    }
-    return updates;
   }
 
   public async augment(

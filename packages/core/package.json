@@ -15,20 +15,14 @@
     "dist"
   ],
   "dependencies": {
-    "@impacts/ecmascript": "workspace:*",
-    "@impacts/git": "workspace:*",
-    "@impacts/github": "workspace:*",
-    "@impacts/linear": "workspace:*",
     "@impacts/logger": "workspace:*",
     "@impacts/plugin-api": "workspace:*",
-    "@impacts/types": "workspace:*",
-    "minimatch": "^10.0.1",
-    "xxhash-wasm": "^1.1.0"
+    "@impacts/types": "workspace:*"
   },
   "devDependencies": {
     "@impacts/ts-config": "workspace:*",
     "@types/bun": "^1.1.14",
-    "@types/node": "^22.10.2",
+    "@types/node": "22.10.5",
     "typescript": "^5.7.2"
   }
 }

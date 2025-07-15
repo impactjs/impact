@@ -8,7 +8,7 @@ type Parsers = {
   ".svelte": typeof import("svelte");
 };
 
-export function getParser<T extends Preprocessable>(extension: T): Parsers[T] {
+function getParser<T extends Preprocessable>(extension: T): Parsers[T] {
   switch (extension) {
     case ".jsx":
     case ".tsx": {
