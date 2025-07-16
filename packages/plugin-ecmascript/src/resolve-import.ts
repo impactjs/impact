@@ -32,9 +32,8 @@ export async function resolveImport(
   importName: string,
 ) {
   const resolved = await new Promise<string | false>((resolve, reject) =>
-    resolver.resolve({}, importSource, importName, {}, (err, res, req) => {
+    resolver.resolve({}, importSource, importName, {}, (err, res) => {
       if (err) {
-        console.log(req, res);
         reject(err);
       }
       resolve(res ?? false);

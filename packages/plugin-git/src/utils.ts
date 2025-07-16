@@ -1,4 +1,5 @@
 import { execSync } from "node:child_process";
+import { join } from "node:path";
 
 export async function getCurrentBranch() {
   const output = execSync("git branch --show-current");
@@ -33,6 +34,7 @@ enum FileStatus {
 }
 
 export function getFilesAndStatus(commitId: string) {
+  const root = execSync("git rev-parse --show-toplevel").toString().trim();
   const output = execSync(
     `git diff-tree --no-commit-id --name-status -r ${commitId}`,
   );
@@ -43,7 +45,7 @@ export function getFilesAndStatus(commitId: string) {
     .map((line) => {
       const [status, path] = line.split("\t");
       return {
-        path,
+        path: join(root, path),
         status:
           status === "A"
             ? FileStatus.Added

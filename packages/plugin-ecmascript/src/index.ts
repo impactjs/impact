@@ -1,4 +1,5 @@
 import { dirname } from "node:path";
+import { logger } from "@impacts/logger";
 import { createPlugin, type Plugin } from "@impacts/plugin-api";
 import { init } from "es-module-lexer";
 import z from "zod";
@@ -39,7 +40,7 @@ export function ecmascript(options: EcmascriptOptions = {}): Plugin {
         resolvedHistory.set(`${importer} -> ${id}`, resolved || null);
         return resolved || null;
       } catch {
-        console.error(
+        logger.warn(
           `[${this.name}]: could not resolve '${id}' from '${importer}'`,
         );
         resolvedHistory.set(`${importer} -> ${id}`, null);
@@ -47,6 +48,9 @@ export function ecmascript(options: EcmascriptOptions = {}): Plugin {
       }
     },
     async load(file) {
+      if (exclude.some((ex) => ex.test(file))) {
+        return new Set();
+      }
       const saved = history.get(file);
       if (saved) {
         return saved;

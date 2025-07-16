@@ -48,6 +48,7 @@ export const updateSchema = z
 const entryResultSchema = z.object({
   path: z.string(),
   description: z.string(),
+  files: z.array(z.string()),
   updates: z.array(z.string()),
 });
 

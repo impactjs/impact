@@ -1,4 +1,5 @@
 import { writeFileSync } from "node:fs";
+import { logger } from "@impacts/logger";
 import type { ImpactConfig } from "@impacts/types/config";
 import type { ImpactResult } from "@impacts/types/results";
 import { uploadData } from "aws-amplify/storage";
@@ -18,7 +19,8 @@ export async function write(
   options: WriteOptions = {},
 ) {
   const output = await render(result, options.format, config);
-  console.log("Writing to", config.outfile, options.format);
+  const outfile = options.outfile ?? config.outfile;
+  logger.debug("Writing to", outfile, options.format);
 
   await output(options.outfile);
 }

@@ -11,6 +11,7 @@
     ".": "./src/index.ts"
   },
   "dependencies": {
+    "@impacts/logger": "workspace:*",
     "@impacts/plugin-api": "workspace:*",
     "enhanced-resolve": "^5.18.1",
     "es-module-lexer": "^1.6.0",

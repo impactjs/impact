@@ -59,7 +59,6 @@ export class Plugin implements IPlugin {
 
   public async versions(config: ImpactConfig): Promise<Map<string, VcsUpdate>> {
     const result = this._config.versions?.(config) || new Map();
-    console.log(result);
     return result;
   }
 }

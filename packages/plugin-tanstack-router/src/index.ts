@@ -1,8 +1,9 @@
+import { readFile } from "node:fs/promises";
 import { tmpdir } from "node:os";
 import { relative } from "node:path";
 import { createPlugin, type Plugin } from "@impacts/plugin-api";
 import { Generator, getConfig } from "@tanstack/router-generator";
-// import { Project } from "ts-morph";
+import { parse } from "comment-parser";
 import { z } from "zod";
 
 const tanstackRouterOptionsSchema = z
@@ -31,30 +32,33 @@ export function tanstackRouter(options: TanstackRouterOptions = {}): Plugin {
 
       await generator.run();
       const res = generator.getRoutesByFileMap();
-      // const project = new Project();
 
-      for (const [key, value] of res.entries()) {
-        config.entries.push({
-          id: value.routePath,
-          description: "",
-          path: relative(process.cwd(), key),
-        });
-        // const sourceFile = project.addSourceFileAtPath(key);
-        // const symbols = sourceFile.getExportSymbols();
-        // const route = null;symbols.find((symbol) => symbol.getName() === "Route");
-        // if (!route) {
-        //   continue;
-        // }
-        // const comments = route.getJsDocTags();
-        // const comment = comments.find(
-        //   (comment) => comment.getName() === "description",
-        // );
-        // config.entries.push({
-        //   id: value.routePath,
-        //   path: relative(process.cwd(), key),
-        //   description: comment?.getText().join("\n") ?? "",
-        // });
-      }
+      const entries = await Promise.all(
+        Array.from(res.entries()).map(async ([key, value]) => {
+          const entry = {
+            id: value.routePath,
+            description: "",
+            path: relative(process.cwd(), key),
+          };
+          const content = await readFile(key, "utf-8");
+          const comments =
+            /\/\*\*[\r\n\t .\w@*'"()[\]{}:;,\-\\/+=!#$%^&|<>?]*?\*\//g.exec(
+              content,
+            );
+          if (!comments) {
+            return entry;
+          }
+          const resolved = comments.flatMap((comment) =>
+            parse(comment).flatMap((item) => item.tags),
+          );
+          const impact = resolved.find((item) => item.tag === "impact");
+          if (impact) {
+            entry.description = [impact.name, impact.description].join(" ");
+          }
+          return entry;
+        }),
+      );
+      config.entries.push(...entries);
       return config;
     },
   });

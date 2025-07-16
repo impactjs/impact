@@ -30,9 +30,15 @@ class Logger {
     this.logLevel = logLevel;
   }
 
-  public info(message: string) {
+  public info(message: string, ...args: unknown[]) {
     if (this.shouldLog(LogLevel.INFO)) {
-      console.log("[info]: %s", message);
+      const prefix = this.colorizePrefix("[info]", "cyan");
+      console.log(
+        "%s %s",
+        prefix,
+        message,
+        ...args.map((item) => (item instanceof Error ? item.message : item)),
+      );
     }
   }
 
@@ -71,23 +77,59 @@ class Logger {
         console.log(message);
         return;
       }
-      console.log("[success]: %s", message);
+      const prefix = this.colorizePrefix("[success]", "green");
+      console.log("%s %s", prefix, message);
     }
   }
 
-  public warn(message: string) {
+  public warn(message: string, ...args: unknown[]) {
     if (this.shouldLog(LogLevel.WARN)) {
-      console.warn("[warn]: %s", message);
+      const prefix = this.colorizePrefix("[warn]", "yellow");
+      console.warn(
+        "%s %s",
+        prefix,
+        message,
+        ...args.map((item) => (item instanceof Error ? item.message : item)),
+      );
     }
   }
 
-  public error(message: string) {
+  public error(message: string, ...args: unknown[]) {
     if (this.shouldLog(LogLevel.ERROR)) {
-      console.error("[error]: %s", message);
+      const prefix = this.colorizePrefix("[error]", "red");
+      console.error(
+        "%s %s",
+        prefix,
+        message,
+        ...args.map((item) => (item instanceof Error ? item.message : item)),
+      );
     }
   }
 
-  public debug(message: string | (() => string)) {
+  private colorizePrefix(
+    prefix: string,
+    color: "green" | "yellow" | "red" | "cyan",
+  ) {
+    const supportsColor =
+      typeof process !== "undefined" &&
+      process.stdout &&
+      process.stdout.isTTY &&
+      !process.env.NO_COLOR &&
+      !process.env.FORCE_NO_COLOR;
+    if (!supportsColor) {
+      return prefix;
+    }
+    const colorCodes: Record<string, [string, string]> = {
+      green: ["\x1b[32m", "\x1b[0m"],
+      yellow: ["\x1b[33m", "\x1b[0m"],
+      red: ["\x1b[31m", "\x1b[0m"],
+      cyan: ["\x1b[36m", "\x1b[0m"],
+    };
+    const [start, end] = colorCodes[color] || ["", ""];
+    return `${start}${prefix}${end}`;
+  }
+
+  public debug(message: string | (() => string), ...args: unknown[]) {
     if (this.shouldLog(LogLevel.DEBUG)) {
       console.debug(
         "[debug]: %s",
