@@ -1,6 +1,6 @@
 {
 	"name": "@impacts/plugin-tanstack-router",
-	"version": "1.0.7",
+	"version": "1.0.8",
 	"license": "UNLICENSED",
 	"author": {
 		"name": "maastrich",
@@ -12,11 +12,8 @@
 	},
 	"dependencies": {
 		"@impacts/plugin-api": "workspace:*",
-		"@microsoft/tsdoc": "^0.15.1",
-		"@swc/core": "^1.12.14",
 		"@tanstack/router-generator": "^1.127.5",
 		"comment-parser": "^1.4.1",
-		"ts-morph": "^26.0.0",
 		"zod": "^4.0.5"
 	},
 	"devDependencies": {

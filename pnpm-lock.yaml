@@ -280,21 +280,12 @@ importers:
       '@impacts/plugin-api':
         specifier: workspace:*
         version: link:../plugin-api
-      '@microsoft/tsdoc':
-        specifier: ^0.15.1
-        version: 0.15.1
-      '@swc/core':
-        specifier: ^1.12.14
-        version: 1.12.14
       '@tanstack/router-generator':
         specifier: ^1.127.5
         version: 1.127.5
       comment-parser:
         specifier: ^1.4.1
         version: 1.4.1
-      ts-morph:
-        specifier: ^26.0.0
-        version: 26.0.0
       zod:
         specifier: ^4.0.5
         version: 4.0.5
@@ -1010,9 +1001,6 @@ packages:
     resolution: {integrity: sha512-glQ2dooWW+shXgfcOz8OYz0chHmcTJiGj0Q0ZHTLvKOrL3Dk16vw/L2vyRYQm98TkRshl+aTdDGkTK8Q7Mm7Qw==}
     hasBin: true
 
-  '@microsoft/tsdoc@0.15.1':
-    resolution: {integrity: sha512-4aErSrCR/On/e5G2hDP0wjooqDdauzEbIq8hIkIe5pXV0rtWJZvdCEKL0ykZxex+IxIwBp0eGeV48hQN07dXtw==}
-
   '@moonrepo/cli@1.30.5':
     resolution: {integrity: sha512-emJ8qXSKKvlh4fkKr6geWYcYTHJnVAf43cpbRI00dsb+j9pGnqe/KXKlb+0e4FX8YvY+UhdJhK1b/O16/Yg7mA==}
     hasBin: true
@@ -1566,81 +1554,6 @@ packages:
     peerDependencies:
       acorn: ^8.9.0
 
-  '@swc/core-darwin-arm64@1.12.14':
-    resolution: {integrity: sha512-HNukQoOKgMsHSETj8vgGGKK3SEcH7Cz6k4bpntCxBKNkO3sH7RcBTDulWGGHJfZaDNix7Rw2ExUVWtLZlzkzXg==}
-    engines: {node: '>=10'}
-    cpu: [arm64]
-    os: [darwin]
-
-  '@swc/core-darwin-x64@1.12.14':
-    resolution: {integrity: sha512-4Ttf3Obtk3MvFrR0e04qr6HfXh4L1Z+K3dRej63TAFuYpo+cPXeOZdPUddAW73lSUGkj+61IHnGPoXD3OQYy4Q==}
-    engines: {node: '>=10'}
-    cpu: [x64]
-    os: [darwin]
-
-  '@swc/core-linux-arm-gnueabihf@1.12.14':
-    resolution: {integrity: sha512-zhJOH2KWjtQpzJ27Xjw/RKLVOa1aiEJC2b70xbCwEX6ZTVAl8tKbhkZ3GMphhfVmLJ9gf/2UQR58oxVnsXqX5Q==}
-    engines: {node: '>=10'}
-    cpu: [arm]
-    os: [linux]
-
-  '@swc/core-linux-arm64-gnu@1.12.14':
-    resolution: {integrity: sha512-akUAe1YrBqZf1EDdUxahQ8QZnJi8Ts6Ya0jf6GBIMvnXL4Y6QIuvKTRwfNxy7rJ+x9zpzP1Vlh14ZZkSKZ1EGA==}
-    engines: {node: '>=10'}
-    cpu: [arm64]
-    os: [linux]
-
-  '@swc/core-linux-arm64-musl@1.12.14':
-    resolution: {integrity: sha512-ZkOOIpSMXuPAjfOXEIAEQcrPOgLi6CaXvA5W+GYnpIpFG21Nd0qb0WbwFRv4K8BRtl993Q21v0gPpOaFHU+wdA==}
-    engines: {node: '>=10'}
-    cpu: [arm64]
-    os: [linux]
-
-  '@swc/core-linux-x64-gnu@1.12.14':
-    resolution: {integrity: sha512-71EPPccwJiJUxd2aMwNlTfom2mqWEWYGdbeTju01tzSHsEuD7E6ePlgC3P3ngBqB3urj41qKs87z7zPOswT5Iw==}
-    engines: {node: '>=10'}
-    cpu: [x64]
-    os: [linux]
-
-  '@swc/core-linux-x64-musl@1.12.14':
-    resolution: {integrity: sha512-nImF1hZJqKTcl0WWjHqlelOhvuB9rU9kHIw/CmISBUZXogjLIvGyop1TtJNz0ULcz2Oxr3Q2YpwfrzsgvgbGkA==}
-    engines: {node: '>=10'}
-    cpu: [x64]
-    os: [linux]
-
-  '@swc/core-win32-arm64-msvc@1.12.14':
-    resolution: {integrity: sha512-sABFQFxSuStFoxvEWZUHWYldtB1B4A9eDNFd4Ty50q7cemxp7uoscFoaCqfXSGNBwwBwpS5EiPB6YN4y6hqmLQ==}
-    engines: {node: '>=10'}
-    cpu: [arm64]
-    os: [win32]
-
-  '@swc/core-win32-ia32-msvc@1.12.14':
-    resolution: {integrity: sha512-KBznRB02NASkpepRdWIK4f1AvmaJCDipKWdW1M1xV9QL2tE4aySJFojVuG1+t0tVDkjRfwcZjycQfRoJ4RjD7Q==}
-    engines: {node: '>=10'}
-    cpu: [ia32]
-    os: [win32]
-
-  '@swc/core-win32-x64-msvc@1.12.14':
-    resolution: {integrity: sha512-SymoP2CJHzrYaFKjWvuQljcF7BkTpzaS1vpywv7K9EzdTb5N8qPDvNd+PhWUqBz9JHBhbJxpaeTDQBXF/WWPmw==}
-    engines: {node: '>=10'}
-    cpu: [x64]
-    os: [win32]
-
-  '@swc/core@1.12.14':
-    resolution: {integrity: sha512-CJSn2vstd17ddWIHBsjuD4OQnn9krQfaq6EO+w9YfId5DKznyPmzxAARlOXG99cC8/3Kli8ysKy6phL43bSr0w==}
-    engines: {node: '>=10'}
-    peerDependencies:
-      '@swc/helpers': '>=0.5.17'
-    peerDependenciesMeta:
-      '@swc/helpers':
-        optional: true
-
-  '@swc/counter@0.1.3':
-    resolution: {integrity: sha512-e2BR4lsJkkRlKZ/qCHPw9ZaSxc0MVUd7gtbtaB7aMvHeJVYe8sOB8DBZkP2DtISHGSku9sCK6T6cnY0CtXrOCQ==}
-
-  '@swc/types@0.1.23':
-    resolution: {integrity: sha512-u1iIVZV9Q0jxY+yM2vw/hZGDNudsN85bBpTqzAQ9rzkxW9D+e3aEM4Han+ow518gSewkXgjmEK0BD79ZcNVgPw==}
-
   '@tanstack/history@1.121.34':
     resolution: {integrity: sha512-YL8dGi5ZU+xvtav2boRlw4zrRghkY6hvdcmHhA0RGSJ/CBgzv+cbADW9eYJLx74XMZvIQ1pp6VMbrpXnnM5gHA==}
     engines: {node: '>=12'}
@@ -1667,9 +1580,6 @@ packages:
   '@tootallnate/once@2.0.0':
     resolution: {integrity: sha512-XCuKFP5PS55gnMVu3dty8KPatLqUoy/ZYzDzAGCQ8JNFCkLXzmI7vNHCR+XpbZaMWQK/vQubr7PkYq8g470J/A==}
     engines: {node: '>= 10'}
-
-  '@ts-morph/common@0.27.0':
-    resolution: {integrity: sha512-Wf29UqxWDpc+i61k3oIOzcUfQt79PIT9y/MWfAGlrkjg6lBC1hwDECLXPVJAhWjiGbfBCxZd65F/LIZF3+jeJQ==}
 
   '@types/aws-lambda@8.10.148':
     resolution: {integrity: sha512-JL+2cfkY9ODQeE06hOxSFNkafjNk4JRBgY837kpoq1GHDttq2U3BA9IzKOWxS4DLjKoymGB4i9uBrlCkjUl1yg==}
@@ -2021,9 +1931,6 @@ packages:
   clsx@2.1.1:
     resolution: {integrity: sha512-eYm0QWBtUrBWZWG0d386OGAw16Z995PiOVo2B7bjWSbHedGl5e0ZWaq65kOGgUSNesEIDkB9ISbTg/JK9dhCZA==}
     engines: {node: '>=6'}
-
-  code-block-writer@13.0.3:
-    resolution: {integrity: sha512-Oofo0pq3IKnsFtuHqSF7TqBfr71aeyZDVJ0HpmqB7FBM2qEigL0iPONSCZSO9pE9dZTAxANe5XHG9Uy0YMv8cg==}
 
   color-convert@2.0.1:
     resolution: {integrity: sha512-RRECPsj7iu/xb5oKYcsFHSppFNnsj/52OVTRKb4zP5onXwVF3zVmmToNcOfGC+CRDpfK/U584fMg38ZHCaElKQ==}
@@ -2606,10 +2513,6 @@ packages:
     resolution: {integrity: sha512-VP79XUPxV2CigYP3jWwAUFSku2aKqBH7uTAapFWCBqutsbmDo96KY5o8uh6U+/YSIn5OxJnXp73beVkpqMIGhA==}
     engines: {node: '>=18'}
 
-  minimatch@10.0.1:
-    resolution: {integrity: sha512-ethXTt3SGGR+95gudmqJ1eNhRO7eGEGIgYA9vnPatK4/etz2MEVDno5GMCibdMTuBMyElzIlgxMna3K94XDIDQ==}
-    engines: {node: 20 || >=22}
-
   minimatch@9.0.5:
     resolution: {integrity: sha512-G6T0ZX48xgozx7587koeX9Ys2NYy6Gmv//P89sEte9V9whIapMNF4idKxnW2QtCcLiTWlb/wfCabAtAFWhhBow==}
     engines: {node: '>=16 || 14 >=14.17'}
@@ -2702,9 +2605,6 @@ packages:
   parse-ms@4.0.0:
     resolution: {integrity: sha512-TXfryirbmq34y8QBwgqCVLi+8oA3oWx2eAnSn62ITyEhEYaWRlVZ2DvMM9eZbMs/RfxPu/PK/aBLyGj4IrqMHw==}
     engines: {node: '>=18'}
-
-  path-browserify@1.0.1:
-    resolution: {integrity: sha512-b7uo2UCUOYZcnF/3ID0lulOJi/bafxa1xPe7ZPsammBSpjSWQkjNxlt635YGS2MiR9GjvuXCtz2emr3jbsz98g==}
 
   path-exists@4.0.0:
     resolution: {integrity: sha512-ak9Qy5Q7jYb2Wwcey5Fpvg2KoAc/ZIhLSLOSBmRmygPsGwkVVt0fZa0qrtMz+m6tJTAHfZQ8FnmB4MG4LWy7/w==}
@@ -3094,9 +2994,6 @@ packages:
 
   trim-lines@3.0.1:
     resolution: {integrity: sha512-kRj8B+YHZCc9kQYdWfJB2/oUl9rA99qbowYYBtr4ui4mZyAQ2JpvVBd/6U2YloATfqBhBTSMhTpgBHtU0Mf3Rg==}
-
-  ts-morph@26.0.0:
-    resolution: {integrity: sha512-ztMO++owQnz8c/gIENcM9XfCEzgoGphTv+nKpYNM1bgsdOVC/jRZuEBf6N+mLLDNg68Kl+GgUZfOySaRiG1/Ug==}
 
   tslib@2.8.1:
     resolution: {integrity: sha512-oJFu94HQb+KVduSUQL7wnpmqnfmLsOA/nAh6b6EH0wCEoK0/mPeXU6c3wKDV83MkOuHPRHtSXKKU99IBazS/2w==}
@@ -4402,8 +4299,6 @@ snapshots:
 
   '@maastrich/moonx@0.1.6': {}
 
-  '@microsoft/tsdoc@0.15.1': {}
-
   '@moonrepo/cli@1.30.5':
     dependencies:
       detect-libc: 2.0.3
@@ -5141,58 +5036,6 @@ snapshots:
     dependencies:
       acorn: 8.14.1
 
-  '@swc/core-darwin-arm64@1.12.14':
-    optional: true
-
-  '@swc/core-darwin-x64@1.12.14':
-    optional: true
-
-  '@swc/core-linux-arm-gnueabihf@1.12.14':
-    optional: true
-
-  '@swc/core-linux-arm64-gnu@1.12.14':
-    optional: true
-
-  '@swc/core-linux-arm64-musl@1.12.14':
-    optional: true
-
-  '@swc/core-linux-x64-gnu@1.12.14':
-    optional: true
-
-  '@swc/core-linux-x64-musl@1.12.14':
-    optional: true
-
-  '@swc/core-win32-arm64-msvc@1.12.14':
-    optional: true
-
-  '@swc/core-win32-ia32-msvc@1.12.14':
-    optional: true
-
-  '@swc/core-win32-x64-msvc@1.12.14':
-    optional: true
-
-  '@swc/core@1.12.14':
-    dependencies:
-      '@swc/counter': 0.1.3
-      '@swc/types': 0.1.23
-    optionalDependencies:
-      '@swc/core-darwin-arm64': 1.12.14
-      '@swc/core-darwin-x64': 1.12.14
-      '@swc/core-linux-arm-gnueabihf': 1.12.14
-      '@swc/core-linux-arm64-gnu': 1.12.14
-      '@swc/core-linux-arm64-musl': 1.12.14
-      '@swc/core-linux-x64-gnu': 1.12.14
-      '@swc/core-linux-x64-musl': 1.12.14
-      '@swc/core-win32-arm64-msvc': 1.12.14
-      '@swc/core-win32-ia32-msvc': 1.12.14
-      '@swc/core-win32-x64-msvc': 1.12.14
-
-  '@swc/counter@0.1.3': {}
-
-  '@swc/types@0.1.23':
-    dependencies:
-      '@swc/counter': 0.1.3
-
   '@tanstack/history@1.121.34': {}
 
   '@tanstack/router-core@1.127.3':
@@ -5234,12 +5077,6 @@ snapshots:
   '@tanstack/virtual-file-routes@1.121.21': {}
 
   '@tootallnate/once@2.0.0': {}
-
-  '@ts-morph/common@0.27.0':
-    dependencies:
-      fast-glob: 3.3.3
-      minimatch: 10.0.1
-      path-browserify: 1.0.1
 
   '@types/aws-lambda@8.10.148': {}
 
@@ -5611,8 +5448,6 @@ snapshots:
     optional: true
 
   clsx@2.1.1: {}
-
-  code-block-writer@13.0.3: {}
 
   color-convert@2.0.1:
     dependencies:
@@ -6158,10 +5993,6 @@ snapshots:
 
   mimic-function@5.0.1: {}
 
-  minimatch@10.0.1:
-    dependencies:
-      brace-expansion: 2.0.1
-
   minimatch@9.0.5:
     dependencies:
       brace-expansion: 2.0.1
@@ -6252,8 +6083,6 @@ snapshots:
       lines-and-columns: 1.2.4
 
   parse-ms@4.0.0: {}
-
-  path-browserify@1.0.1: {}
 
   path-exists@4.0.0: {}
 
@@ -6634,11 +6463,6 @@ snapshots:
       is-number: 7.0.0
 
   trim-lines@3.0.1: {}
-
-  ts-morph@26.0.0:
-    dependencies:
-      '@ts-morph/common': 0.27.0
-      code-block-writer: 13.0.3
 
   tslib@2.8.1: {}
 

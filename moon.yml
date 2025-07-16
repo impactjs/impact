@@ -13,3 +13,9 @@ workspace:
       - format
       - lint
       - knip
+
+tasks:
+  sherif:
+    command: "sherif"
+    options:
+      cache: false
