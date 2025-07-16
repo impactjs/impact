@@ -1,6 +1,6 @@
 {
   "name": "@impacts/core",
-  "version": "1.0.7",
+  "version": "1.0.8",
   "license": "UNLICENSED",
   "author": {
     "name": "maastrich",
@@ -15,19 +15,15 @@
     "dist"
   ],
   "dependencies": {
-    "@impacts/ecmascript": "workspace:*",
-    "@impacts/git": "workspace:*",
-    "@impacts/github": "workspace:*",
-    "@impacts/linear": "workspace:*",
     "@impacts/logger": "workspace:*",
+    "@impacts/plugin-api": "workspace:*",
     "@impacts/types": "workspace:*",
-    "minimatch": "^10.0.1",
     "xxhash-wasm": "^1.1.0"
   },
   "devDependencies": {
     "@impacts/ts-config": "workspace:*",
     "@types/bun": "^1.1.14",
-    "@types/node": "^22.10.2",
+    "@types/node": "22.10.5",
     "typescript": "^5.7.2"
   }
 }

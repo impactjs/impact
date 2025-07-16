@@ -48,26 +48,20 @@ export const updateSchema = z
 const entryResultSchema = z.object({
   path: z.string(),
   description: z.string(),
-  updates: z.array(
-    z.object({
-      update: z.string(),
-      files: z.object({
-        primary: z.array(z.string()),
-        secondary: z.array(z.string()),
-      }),
-    }),
-  ),
+  files: z.array(z.string()),
+  updates: z.array(z.string()),
 });
 
 export const impactResultSchema = z.object({
   updates: z.record(
+    z.string(),
     updateSchema.and(
       z.object({
         references: z.array(updateReferenceSchema),
       }),
     ),
   ),
-  files: z.record(fileEntry),
+  files: z.record(z.string(), fileEntry),
   entries: z.array(entryResultSchema),
 });
 

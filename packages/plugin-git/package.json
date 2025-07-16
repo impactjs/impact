@@ -1,0 +1,22 @@
+{
+  "name": "@impacts/plugin-git",
+  "version": "1.0.8",
+  "license": "UNLICENSED",
+  "author": {
+    "name": "maastrich",
+    "email": "pinsaultm@gmail.com"
+  },
+  "type": "module",
+  "exports": {
+    ".": "./src/index.ts"
+  },
+  "dependencies": {
+    "@impacts/plugin-api": "workspace:*",
+    "zod": "^4.0.5"
+  },
+  "devDependencies": {
+    "@impacts/ts-config": "workspace:*",
+    "@types/bun": "^1.1.14",
+    "typescript": "^5.7.2"
+  }
+}

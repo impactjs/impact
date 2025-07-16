@@ -1,0 +1,29 @@
+{
+  "name": "@impacts/plugin-ecmascript",
+  "version": "1.0.8",
+  "license": "UNLICENSED",
+  "author": {
+    "name": "maastrich",
+    "email": "pinsaultm@gmail.com"
+  },
+  "type": "module",
+  "exports": {
+    ".": "./src/index.ts"
+  },
+  "dependencies": {
+    "@impacts/logger": "workspace:*",
+    "@impacts/plugin-api": "workspace:*",
+    "enhanced-resolve": "^5.18.1",
+    "es-module-lexer": "^1.6.0",
+    "zod": "^4.0.5"
+  },
+  "devDependencies": {
+    "@astrojs/compiler": "^2.11.0",
+    "@impacts/ts-config": "workspace:*",
+    "@types/bun": "^1.1.14",
+    "@vue/compiler-sfc": "^3.5.13",
+    "esbuild": "^0.25.2",
+    "svelte": "^5.26.3",
+    "typescript": "^5.7.2"
+  }
+}

@@ -1,6 +1,6 @@
 {
   "name": "@impacts/types",
-  "version": "1.0.7",
+  "version": "1.0.8",
   "license": "UNLICENSED",
   "author": {
     "name": "maastrich",
@@ -12,7 +12,8 @@
     "./*": "./src/*.ts"
   },
   "dependencies": {
-    "zod": "^3.24.1"
+    "@impacts/plugin-api": "workspace:*",
+    "zod": "^4.0.5"
   },
   "devDependencies": {
     "@impacts/ts-config": "workspace:*",

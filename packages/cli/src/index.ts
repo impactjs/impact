@@ -33,6 +33,7 @@ cli.help();
 cli.version(pkg.version);
 
 try {
+  const start = performance.now();
   const { options } = cli.parse(process.argv, { run: false });
   if (options.cwd) {
     process.chdir(options.cwd);
@@ -48,6 +49,8 @@ try {
   logger.debug(`Running command ${cli.matchedCommand.name || "[root]"}`);
   logger.debug(`Options: ${JSON.stringify(options)}`);
   await cli.runMatchedCommand();
+  const end = performance.now();
+  console.log(`Time taken: ${end - start}ms`);
   process.exit(0);
 } catch (error) {
   if (error instanceof Error) {

@@ -1,6 +1,6 @@
 {
   "name": "@impacts/cli",
-  "version": "1.0.7",
+  "version": "1.0.8",
   "license": "UNLICENSED",
   "author": {
     "name": "maastrich",
@@ -21,16 +21,13 @@
     "postinstall": "sh scripts/setup-binary"
   },
   "dependencies": {
-    "@aws-amplify/core": "^6.11.1",
-    "@aws-amplify/data-schema": "^1.20.3",
     "aws-amplify": "^6.14.1",
-    "zod": "^3.24.1"
+    "zod": "^4.0.5"
   },
   "devDependencies": {
     "@impacts/config": "workspace:*",
     "@impacts/core": "workspace:*",
     "@impacts/logger": "workspace:*",
-    "@impacts/runtime-bun": "workspace:*",
     "@impacts/ts-config": "workspace:*",
     "@impacts/types": "workspace:*",
     "@types/bun": "^1.1.14",

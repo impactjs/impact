@@ -1,5 +1,8 @@
+// import { join } from "node:path";
+
 import { join } from "node:path";
 import { logger } from "@impacts/logger";
+import { PluginOrchestrator } from "@impacts/plugin-api";
 import type { ImpactConfig } from "@impacts/types/config";
 import type {
   ImpactResult,
@@ -7,97 +10,60 @@ import type {
   ImpactResultFile,
   ImpactResultUpdate,
 } from "@impacts/types/results";
-import type { Runtime } from "@impacts/types/runtime";
-import { minimatch } from "minimatch";
+// import { minimatch } from "minimatch";
 import xxhash from "xxhash-wasm";
-import { PluginOrchestrator } from "./utils/plugin-orchestrator.js";
-
-type ImpactOptions = {
-  runtime: Runtime;
-};
+import { traverse } from "./traverse.js";
 
 const hasher = await xxhash();
 
-export async function impact(
-  config: ImpactConfig,
-  options: ImpactOptions,
-): Promise<ImpactResult> {
-  const orchestrator = new PluginOrchestrator(config, options.runtime);
-  const updatedFiles = await orchestrator.listFiles();
-  logger.info(`found ${updatedFiles.size} updated files from base branch`);
+export async function impact(config: ImpactConfig): Promise<ImpactResult> {
+  const orchestrator = new PluginOrchestrator(config);
+  console.time("init");
+  await orchestrator.init();
+  console.timeEnd("init");
+  const versions = await orchestrator.versions();
+  logger.info(`found ${versions.size} versions changes`);
 
   const entryResults: ImpactResultEntry[] = [];
   const updates = new Map<string, ImpactResultUpdate>();
-  const files = new Map<string, ImpactResultFile>();
+  const filesMap = new Map<string, ImpactResultFile>();
 
   for await (const entry of config.entries) {
-    const importTree = await orchestrator.explore(
-      entry.id,
-      join(process.cwd(), entry.path),
-    );
-    const updatedEntryFiles = importTree.intersection(updatedFiles);
+    console.time(`traverse ${entry.path}`);
+    const entryUpdates = new Set<string>();
+    const tree = await traverse(join(process.cwd(), entry.path), orchestrator);
+    const entryFiles = new Set<string>();
+    for (const { files, ...version } of versions.values()) {
+      const intersection = files.filter((file) => tree.has(file.path));
+      if (intersection.length) {
+        for (const file of intersection) {
+          const hash = hasher.h32(file.path + file.status, 0).toString(16);
+          entryFiles.add(hash);
+          if (!filesMap.has(hash)) {
+            filesMap.set(hash, file);
+          }
+        }
+        entryUpdates.add(version.id);
+        if (!updates.has(version.id)) {
+          updates.set(version.id, {
+            ...version,
+            references: [],
+            meta: [version.title, version.description],
+          });
+        }
+      }
+    }
 
-    if (!updatedEntryFiles.size) {
+    if (entryUpdates.size) {
       entryResults.push({
-        updates: [],
         path: entry.path,
         description: entry.description,
-      });
-      continue;
-    }
-    const listUpdatesSpinner = logger.spinner(
-      `listing updates concerning ${entry.path} files`,
-    );
-    const filteredUpdates = await orchestrator.listUpdates(updatedEntryFiles);
-    listUpdatesSpinner.succeed(
-      `${entry.path}: ${filteredUpdates.length} updates found`,
-    );
-    for (const update of filteredUpdates) {
-      updates.set(update.id, {
-        id: update.id,
-        references: [],
-        title: update.title,
-        author: update.author,
-        timestamp: update.timestamp,
-        meta: [update.id, update.title],
+        files: Array.from(entryFiles),
+        updates: Array.from(entryUpdates),
       });
     }
-    entryResults.push({
-      path: entry.path,
-      description: entry.description,
-      updates: filteredUpdates.map((update) => {
-        const primary: string[] = [];
-        const secondary: string[] = [];
-        for (const file of update.files) {
-          const hash = hasher.h64ToString(file.path + file.status);
-          files.set(hash, {
-            path: file.path,
-            status: file.status,
-          });
-          if (!config.primary) {
-            primary.push(hash);
-            continue;
-          }
-          const primaries = config.primary.map((primary) =>
-            join(process.cwd(), primary),
-          );
-          if (primaries.some((primary) => minimatch(file.path, primary))) {
-            primary.push(hash);
-            continue;
-          }
-          secondary.push(hash);
-        }
-        return {
-          update: update.id,
-          files: {
-            primary,
-            secondary,
-          },
-        };
-      }),
-    });
+    console.timeEnd(`traverse ${entry.path}`);
   }
-
   logger.info(`found a total of ${updates.size} updates`);
 
   const augmentSpinner = logger.spinner("augmenting updates");
@@ -106,7 +72,7 @@ export async function impact(
 
   return {
     entries: entryResults,
-    files: Object.fromEntries(files.entries()),
+    files: Object.fromEntries(filesMap.entries()),
     updates: Object.fromEntries(updates.entries()),
   };
 }

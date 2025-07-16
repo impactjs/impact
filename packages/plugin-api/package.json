@@ -1,0 +1,39 @@
+{
+	"name": "@impacts/plugin-api",
+	"version": "1.0.0",
+	"license": "UNLICENSED",
+	"author": {
+		"name": "maastrich",
+		"email": "pinsaultm@gmail.com"
+	},
+	"type": "module",
+	"exports": {
+		".": "./src/index.ts",
+		"./plugin": "./src/plugin.ts"
+	},
+	"files": [
+		"src",
+		"dist"
+	],
+	"scripts": {
+		"build": "tsc",
+		"dev": "tsc --watch",
+		"test": "vitest",
+		"test:coverage": "vitest --coverage",
+		"test:watch": "vitest --watch"
+	},
+	"dependencies": {
+		"@impacts/logger": "workspace:*",
+		"@impacts/types": "workspace:*",
+		"zod": "^4.0.5"
+	},
+	"devDependencies": {
+		"@impacts/ts-config": "workspace:*",
+		"@raegen/vite-plugin-vitest-cache": "^0.3.7",
+		"@types/bun": "^1.1.14",
+		"@types/node": "22.10.5",
+		"@vitest/coverage-v8": "^3.2.4",
+		"typescript": "^5.7.2",
+		"vitest": "^3.2.4"
+	}
+}
